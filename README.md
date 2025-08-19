@@ -155,7 +155,7 @@ Nesta seção serão apresentados os resultados finais do projeto.
 
 ## ✍️ Autor
 
-* **[Seu Nome Completo]**
+* **Arthur Henrique Bando Ueda**
 * **Email:** `[arthurhbu@gmail.com]`
 * **LinkedIn:** `[linkedin.com/in/arthurhbu]`
 * **GitHub:** `[github.com/arthurhbu]`
