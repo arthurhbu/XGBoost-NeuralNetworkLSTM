@@ -1,7 +1,6 @@
 # Predição do Movimento de Ações com IA: Uma Análise Comparativa
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python)
 
 Este repositório contém o código-fonte e os resultados do meu Trabalho de Conclusão de Curso (TCC) em Ciência da Computação. O projeto foca na predição da direção do movimento de preços de ações do mercado brasileiro, utilizando uma análise comparativa entre dois modelos de Inteligência Artificial.
 
@@ -25,7 +24,7 @@ Este repositório contém o código-fonte e os resultados do meu Trabalho de Con
 
 O mercado financeiro é um ambiente complexo e dinâmico, tornando a predição de preços de ativos um dos problemas mais desafiadores em finanças quantitativas. Este projeto aborda esse desafio tratando-o como um problema de **classificação binária**: o objetivo não é prever o valor exato de uma ação, mas sim sua direção (se o preço irá **subir** ou **descer** no dia seguinte).
 
-Para avaliar a eficácia dessa abordagem, dois modelos híbridos e de deep learning são desenvolvidos, treinados e comparados. A performance final é medida não apenas por métricas de classificação (Acurácia, Precisão, F1-Score), but também através de um backtesting, simulando uma estratégia de investimento baseada nas predições dos modelos para calcular o retorno financeiro.
+Para avaliar a eficácia dessa abordagem, dois modelos híbridos e de deep learning são desenvolvidos, treinados e comparados. A performance final é medida não apenas por métricas de classificação (Acurácia, Precisão, F1-Score), mas também através de um backtesting, simulando uma estratégia de investimento baseada nas predições dos modelos para calcular o retorno financeiro.
 
 ---
 
@@ -39,40 +38,46 @@ Para avaliar a eficácia dessa abordagem, dois modelos híbridos e de deep learn
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Linguagem:** Python 3.9+
+* **Linguagem:** Python 3.10
+* **Gerenciamento de Ambiente:** Conda
 * **Manipulação de Dados:** Pandas, NumPy
 * **Aquisição de Dados:** yfinance
-* **Engenharia de Features:** pandas_ta, PyWavelets
+* **Engenharia de Features:** TA-Lib, PyWavelets
 * **Machine Learning / Deep Learning:**
     * XGBoost
-    * TensorFlow / Keras (para o modelo LSTM)
     * Scikit-learn (para métricas de avaliação e pré-processamento)
-* **Visualização de Dados:** Matplotlib, Seaborn
+* **Visualização de Dados:** Matplotlib
+* **Jupyter Notebooks** para exploração e desenvolvimento
+* **Configuração:** YAML para parâmetros do projeto
 
 ---
 
 ## 📂 Estrutura do Projeto
 
-A estrutura de pastas está organizada para separar as diferentes responsabilidades do projeto:
+A estrutura de pastas está organizada seguindo as melhores práticas de projetos de ciência de dados:
 
 ```
 /
-├── data/                  # Datasets brutos e processados
-│   ├── raw/
-│   └── processed/
-├── notebooks/             # Jupyter Notebooks para exploração e testes
-│   └── 01_data_exploration.ipynb
-├── src/                   # Código fonte principal
-│   ├── data_processing.py # Scripts para baixar e processar os dados
-│   ├── feature_engineering.py # Scripts para criar indicadores e features
-│   ├── train_model.py     # Script para treinar os modelos (XGBoost e LSTM)
-│   ├── evaluate.py        # Script para avaliar os modelos com métricas
-│   └── backtesting.py     # Script para a simulação da estratégia
-├── results/               # Gráficos, tabelas e resultados finais
-│   └── portfolio_performance.png
-├── .gitignore             # Arquivos a serem ignorados pelo Git
-├── README.md              # Este arquivo
-└── requirements.txt       # Lista de dependências do projeto
+├── config.yaml              # Configurações do projeto (tickers, datas, parâmetros)
+├── environment.yml           # Ambiente Conda com todas as dependências
+├── requirements.txt          # Dependências pip (complementar ao Conda)
+├── data/                    # Datasets brutos e processados
+│   ├── 01_raw/             # Dados brutos baixados do Yahoo Finance
+│   ├── 02_processed/       # Dados processados e limpos
+│   └── 03_features/        # Dados com features técnicas e wavelet
+├── notebooks/               # Jupyter Notebooks para exploração e testes
+│   ├── 01_XGBoostModel.ipynb
+│   └── 02_DataCleaning_Example.ipynb
+├── src/                     # Código fonte principal
+│   ├── data/
+│   │   └── make_dataset.py  # Scripts para baixar dados do Yahoo Finance
+│   ├── features/
+│   │   └── build_features.py # Scripts para criar indicadores técnicos e features wavelet
+│   └── models/
+│       └── train_models.py  # Script para treinar os modelos
+├── models/                  # Modelos treinados salvos
+├── reports/                 # Relatórios e resultados
+└── README.md                # Este arquivo
 ```
 
 ---
@@ -81,51 +86,89 @@ A estrutura de pastas está organizada para separar as diferentes responsabilida
 
 Para configurar o ambiente e rodar o projeto localmente, siga os passos abaixo:
 
+### Pré-requisitos
+* **Conda** instalado no seu sistema (recomendado: Miniconda ou Anaconda)
+* **Git** para clonar o repositório
+
+### Passos de Instalação
+
 1.  **Clone o repositório:**
     ```sh
-    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
-    cd seu-repositorio
+    git clone https://github.com/arthurhbu/XGBoost-NeuralNetworkLSTM.git
+    cd XGBoost-NeuralNetworkLSTM
     ```
 
-2.  **Crie e ative um ambiente virtual (recomendado):**
+2.  **Crie e ative o ambiente Conda:**
     ```sh
-    # Para Linux/macOS
-    python3 -m venv venv
-    source venv/bin/activate
-
-    # Para Windows
-    python -m venv venv
-    .\venv\Scripts\activate
+    # Criar o ambiente com todas as dependências
+    conda env create -f environment.yml
+    
+    # Ativar o ambiente
+    conda activate projeto-analise-financeira
     ```
 
-3.  **Instale as dependências:**
-    (Certifique-se de ter criado um arquivo `requirements.txt` com todas as bibliotecas necessárias)
+3.  **Verifique a instalação:**
     ```sh
-    pip install -r requirements.txt
+    # Verificar se o ambiente está ativo
+    conda info --envs
+    
+    # Verificar se as dependências estão instaladas
+    python -c "import pandas, numpy, yfinance, talib, pywt, xgboost; print('Todas as dependências instaladas com sucesso!')"
     ```
+
+### Alternativa com pip (não recomendado)
+Se preferir usar apenas pip (não recomendado devido a possíveis conflitos com TA-Lib):
+```sh
+pip install -r requirements.txt
+pip install pandas numpy matplotlib scikit-learn jupyter ta-lib xgboost yfinance pywavelets
+```
 
 ---
 
 ## 🚀 Como Usar
 
-As instruções detalhadas para executar cada etapa do projeto estarão nos scripts dentro da pasta `src/`. O fluxo de trabalho geral é:
+### 1. Configuração Inicial
+O projeto utiliza um arquivo `config.yaml` para centralizar todas as configurações:
+- **Tickers das ações** a serem analisadas
+- **Período de dados** (data início/fim)
+- **Parâmetros dos indicadores técnicos**
+- **Configurações da transformada wavelet**
 
-1.  **Executar o processamento de dados:**
-    ```sh
-    python src/data_processing.py
-    ```
-2.  **Treinar um dos modelos:**
-    ```sh
-    # Para treinar o XGBoost
-    python src/train_model.py --model xgboost
+### 2. Fluxo de Trabalho
 
-    # Para treinar o LSTM
-    python src/train_model.py --model lstm
-    ```
-3.  **Avaliar e simular a estratégia:**
-    ```sh
-    python src/evaluate.py --model xgboost
-    ```
+#### Download dos Dados
+```sh
+# Baixar dados das ações configuradas no config.yaml
+python src/data/make_dataset.py
+```
+
+#### Criação de Features
+```sh
+# Criar indicadores técnicos e features wavelet
+python src/features/build_features.py
+```
+
+#### Desenvolvimento e Testes
+```sh
+# Abrir Jupyter Notebook para desenvolvimento
+jupyter notebook notebooks/
+```
+
+### 3. Notebooks Disponíveis
+- **`01_XGBoostModel.ipynb`**: Desenvolvimento do modelo XGBoost com indicadores técnicos
+- **`02_DataCleaning_Example.ipynb`**: Exemplos de limpeza e processamento de dados
+
+### 4. Estrutura de Dados
+O projeto trabalha com as seguintes ações brasileiras:
+- PETR4.SA (Petrobras)
+- VALE3.SA (Vale)
+- BBDC4.SA (Bradesco)
+- ITUB4.SA (Itaú)
+- BBAS3.SA (Banco do Brasil)
+- B3SA3.SA (B3)
+- ABEV3.SA (Ambev)
+- VIVT3.SA (Vivo)
+
 ---
 
 ## 📊 Resultados
@@ -150,12 +193,14 @@ Nesta seção serão apresentados os resultados finais do projeto.
 * Teste dos modelos com um portfólio de múltiplos ativos simultaneamente.
 * Incorporação de dados alternativos, como análise de sentimento de notícias.
 * Otimização avançada de hiperparâmetros com ferramentas como Optuna.
+* Implementação completa do modelo LSTM (atualmente em desenvolvimento).
+* Sistema de backtesting automatizado para avaliação de performance.
 
 ---
 
 ## ✍️ Autor
 
 * **Arthur Henrique Bando Ueda**
-* **Email:** `[arthurhbu@gmail.com]`
-* **LinkedIn:** `[linkedin.com/in/arthurhbu]`
-* **GitHub:** `[github.com/arthurhbu]`
+* **Email:** arthurhbu@gmail.com
+* **LinkedIn:** [linkedin.com/in/arthurhbu](https://linkedin.com/in/arthurhbu)
+* **GitHub:** [github.com/arthurhbu](https://github.com/arthurhbu)

@@ -7,6 +7,7 @@ data:
     - "BBAS3.SA"
     - "B3SA3.SA"
     - "ABEV3.SA"
+    - "VIVT3.SA"
   start_date: "2017-01-01"
   end_date: "2025-08-18"
   
