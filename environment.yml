@@ -1,0 +1,17 @@
+name: projeto-analise-financeira
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - matplotlib
+  - scikit-learn
+  - jupyter
+  - ta-lib
+  - xgboost
+  - yfinance
+  - pywavelets

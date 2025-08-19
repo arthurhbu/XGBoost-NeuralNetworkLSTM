@@ -1,0 +1,30 @@
+data:
+  tickers:
+    - "PETR4.SA"
+    - "VALE3.SA"
+    - "BBDC4.SA"
+    - "ITUB4.SA"
+    - "BBAS3.SA"
+    - "B3SA3.SA"
+    - "ABEV3.SA"
+  start_date: "2017-01-01"
+  end_date: "2025-08-18"
+  
+  raw_data_path: "data/01_raw/"
+  features_data_path: "data/03_features/"
+
+features:
+  indicators:
+    ema_short: 21
+    ema_long: 50
+    macd_fast: 12
+    macd_slow: 26
+    macd_signal: 9
+    rsi_length: 14
+    bbands_length: 20
+    bbands_std: 2.0
+    adx_length: 14
+  
+  wavelet:
+    family: 'db8'
+    level: 1
