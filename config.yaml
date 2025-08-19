@@ -29,3 +29,19 @@ features:
   wavelet:
     family: 'db8'
     level: 1
+
+model_training:
+  validation_start_date: "2022-01-01"
+  test_start_date: "2023-01-01"
+
+  target_column: "target"
+
+  xgboost_params:
+    objective: "binary:logistic"
+    eval_metric: "logloss"
+    n_estimators: 1000
+    learning_rate: 0.05
+    max_depth: 5
+    early_stopping_rounds: 50
+
+  model_output_path: "models/01_xgboost/xgboost_model.json"

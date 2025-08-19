@@ -108,6 +108,8 @@ def main():
     
     config_path = Path(__file__).resolve().parents[2] / "config.yaml"
     
+    new_header = ['Date', 'Close', 'High', 'Low', 'Open', 'Volume']
+
     with open(config_path, "r") as f:
         config = yaml.safe_load(f)
     
@@ -118,21 +120,16 @@ def main():
     for ticker in data_config["tickers"]:
         print(f"Criando features para {ticker}...")
         
-        data = pd.read_csv(f'{data_config["raw_data_path"]}/{ticker}.csv')
+        data = pd.read_csv(f'{data_config["raw_data_path"]}/{ticker}.csv', skiprows=3, names=new_header, index_col=0)
+        
+        data = clean_and_convert_data(data)
         
         data = create_technical_indicators(data, indicators_config)
         
         data = create_wavelet_features(data, wavelet_config)
-        data.to_csv(f'{data_config["features_data_path"]}/{ticker}.csv', index=False)
+        
+        # Salvar o CSV com o índice (datas) incluído
+        data.to_csv(f'{data_config["features_data_path"]}/{ticker}.csv')
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
