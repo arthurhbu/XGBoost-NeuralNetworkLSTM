@@ -45,3 +45,9 @@ model_training:
     early_stopping_rounds: 50
 
   model_output_path: "models/01_xgboost/xgboost_model.json"
+
+backtesting:
+  initial_capital: 100000.0
+  transaction_cost_pct: 0.001
+
+  results_path: "reports/backtest_results.csv"
