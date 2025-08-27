@@ -13,17 +13,19 @@ def create_target_variable(df, target_column):
 
     return df
 
-def split_data(df, validation_start_date, test_start_date, target_column_name):
+def split_data(df, validation_start_date, test_start_date, train_final_date, target_column_name):
 
     if isinstance(validation_start_date, str):
         validation_start_date = pd.to_datetime(validation_start_date)
     if isinstance(test_start_date, str):
         test_start_date = pd.to_datetime(test_start_date)
+    if isinstance(train_final_date, str):
+        train_final_date = pd.to_datetime(train_final_date)
     
     if not isinstance(df.index, pd.DatetimeIndex):
         df.index = pd.to_datetime(df.index)
 
-    train_data = df[df.index < validation_start_date]
+    train_data = df[df.index <= train_final_date]
     val_data = df[(df.index >= validation_start_date) & (df.index < test_start_date)]
     test_data = df[(df.index >= test_start_date)]
 
@@ -78,6 +80,7 @@ def main():
                 df, 
                 model_training_config['validation_start_date'], 
                 model_training_config['test_start_date'],
+                model_training_config['train_final_date'],
                 model_training_config['target_column']
                 )
 

@@ -209,21 +209,22 @@ def main():
             df,
             config['model_training']['validation_start_date'],
             config['model_training']['test_start_date'],
+            config['model_training']['train_final_date'],
             config['model_training']['target_column']
         )
 
-        test_df = df[df.index >= config['model_training']['test_start_date']]
+        simulation_df = df[backtest_config['initial_simulation_date']:backtest_config['final_simulation_date']]
 
         predictions = model.predict(x_test)
         
         model_portfolio = run_backtest(
-            test_df,
+            simulation_df,
             predictions,
             backtest_config['initial_capital'],
             backtest_config['transaction_cost_pct']
         )
 
-        buy_and_hold_portfolio = run_buy_and_hold(test_df, backtest_config['initial_capital'])
+        buy_and_hold_portfolio = run_buy_and_hold(simulation_df, backtest_config['initial_capital'])
 
         model_metrics = calculate_metrics(model_portfolio, "Modelo de Predição", ticker)
         buy_and_hold_metrics = calculate_metrics(buy_and_hold_portfolio, "Buy and Hold", ticker)

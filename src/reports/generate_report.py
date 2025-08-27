@@ -80,6 +80,7 @@ def process_ticker_model(ticker, config, features_path, model_path):
         df_target,
         config['model_training']['validation_start_date'],
         config['model_training']['test_start_date'],
+        config['model_training']['train_final_date'],
         config['model_training']['target_column']
     )
     
