@@ -67,3 +67,42 @@ Descrição: Criar uma interface web simples para visualizar os resultados ou at
 Por Que Fazer? Torna o projeto muito mais acessível e visualmente atraente para apresentação.
 
 Como Implementar: Utilizar bibliotecas como Streamlit ou Flask. O Streamlit é especialmente fácil e rápido para criar dashboards de dados interativos.
+
+PROMPT para normalização de código: 
+
+Aqui está um prompt reutilizável que reproduz exatamente o que fiz agora, pronto para você colar no futuro.
+
+Prompt (cole exatamente este texto):
+Quero padronizar meu código em Python com foco em qualidade e consistência, sem alterar a lógica de negócio. Siga exatamente estas instruções:
+
+1) Escopo desta etapa:
+- Escolha UMA função representativa no arquivo indicado (ou em src/ se não for indicado).
+- Faça as melhorias apenas nessa função, e pare para pedir meu feedback antes de seguir para outras.
+
+2) Tipagem e validações:
+- Adicione type hints completos a parâmetros e retorno.
+- Adote nomes de variáveis claros e consistentes, preservando compatibilidade externa.
+- Valide entradas essenciais:
+  - Se o parâmetro deveria ser um pandas DataFrame, lance TypeError se não for.
+  - Se houver colunas obrigatórias (ex.: OHLCV: Close, High, Low, Open, Volume), valide e lance ValueError listando as faltantes.
+  - Converta colunas numéricas com pd.to_numeric(errors='coerce') e remova linhas inválidas quando fizer sentido, mantendo a mesma lógica de saída.
+
+3) Docstrings (em português, estilo Google):
+- Escreva em PT-BR, com seções: Resumo em uma linha, descrições, Args, Returns, Raises.
+- Use nomes dos parâmetros exatamente como na função.
+- Seja específico e objetivo, evitando redundância.
+
+4) Restrições:
+- Não altere o comportamento funcional nem a assinatura externa além de adicionar tipos.
+- Não introduza novas dependências.
+- Preserve o estilo de indentação e formatação existente.
+- Evite comentários triviais; foque em docstrings e validações significativas.
+
+5) Pós-edição:
+- Rode/verifique linter e ajuste apenas problemas triviais.
+- Me retorne:
+  - Caminho e nome da função alterada.
+  - O trecho de código atualizado da função.
+  - Uma frase confirmando que a lógica não foi alterada.
+
+Se estiver claro, comece escolhendo a melhor função para este padrão e aplique as edições apenas nela.

@@ -1,0 +1,48 @@
+2025-09-10 15:50:08,111 - INFO - THRESHOLDS FINANCEIROS: buy=0.55 sell=0.25 hold_min_days=3
+2025-09-10 15:50:08,113 - INFO - PROBABILIDADE MÉDIA: 0.283
+2025-09-10 15:50:08,114 - INFO - ============================================================
+2025-09-10 15:50:08,114 - INFO - INICIANDO BACKTESTING
+2025-09-10 15:50:08,116 - INFO - ============================================================
+2025-09-10 15:50:08,116 - INFO - Tamanho test_df: 251
+2025-09-10 15:50:08,116 - INFO - Tamanho predictions: 251
+2025-09-10 15:50:08,118 - INFO - Capital inicial: R$ 100,000.00
+2025-09-10 15:50:08,123 - INFO - Custo de transação: 0.100%
+2025-09-10 15:50:08,123 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-10 15:50:08,123 - INFO -   - Total: 251
+2025-09-10 15:50:08,125 - INFO -   - Predições de alta (1): 40
+2025-09-10 15:50:08,125 - INFO -   - Predições de baixa (0): 211
+2025-09-10 15:50:08,127 - INFO -   - Percentual de alta: 15.9%
+2025-09-10 15:50:08,127 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-10 15:50:08,127 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-10 15:50:08,152 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-10 15:50:08,163 - WARNING - COMPRA REJEITADA: Cash insuficiente (R$ 100000.00 < R$ 100000.00)
+2025-09-10 15:50:08,163 - INFO - COMPRA: 2024-04-19 | Preço: R$ 10.89 | Ações: 9173 | Custo: R$ 100000.00
+2025-09-10 15:50:08,167 - INFO - VENDA: 2024-05-03 | Preço: R$ 11.05 | Ações: 9173 | Valor líquido: R$ 101225.90
+2025-09-10 15:50:08,174 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 101,225.90 | Ações: 0
+2025-09-10 15:50:08,183 - WARNING - COMPRA REJEITADA: Cash insuficiente (R$ 101225.90 < R$ 101225.90)
+2025-09-10 15:50:08,183 - INFO - COMPRA: 2024-07-02 | Preço: R$ 10.38 | Ações: 9741 | Custo: R$ 101225.90
+2025-09-10 15:50:08,187 - INFO - VENDA: 2024-07-09 | Preço: R$ 10.49 | Ações: 9741 | Valor líquido: R$ 102073.00
+2025-09-10 15:50:08,189 - INFO - COMPRA: 2024-07-18 | Preço: R$ 11.00 | Ações: 9271 | Custo: R$ 102073.00
+2025-09-10 15:50:08,193 - INFO - VENDA: 2024-07-24 | Preço: R$ 10.75 | Ações: 9271 | Valor líquido: R$ 99599.26
+2025-09-10 15:50:08,195 - INFO - COMPRA: 2024-08-01 | Preço: R$ 10.69 | Ações: 9311 | Custo: R$ 99599.26
+2025-09-10 15:50:08,197 - INFO - COMPRA: 2024-08-02 | Preço: R$ 10.26 | Ações: 0 | Custo: R$ 0.00
+2025-09-10 15:50:08,197 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 1 | Cash: R$ 0.00 | Ações: 9311
+2025-09-10 15:50:08,200 - INFO - VENDA: 2024-08-08 | Preço: R$ 11.48 | Ações: 9311 | Valor líquido: R$ 106786.89
+2025-09-10 15:50:08,208 - INFO - COMPRA: 2024-09-25 | Preço: R$ 10.74 | Ações: 9935 | Custo: R$ 106786.89
+2025-09-10 15:50:08,209 - INFO - VENDA: 2024-10-03 | Preço: R$ 10.58 | Ações: 9935 | Valor líquido: R$ 105003.39
+2025-09-10 15:50:08,209 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 0 | Cash: R$ 105,003.39 | Ações: 0
+2025-09-10 15:50:08,209 - INFO - COMPRA: 2024-11-28 | Preço: R$ 9.10 | Ações: 11532 | Custo: R$ 105003.39
+2025-09-10 15:50:08,209 - INFO - COMPRA: 2024-11-29 | Preço: R$ 9.10 | Ações: 0 | Custo: R$ 0.00
+2025-09-10 15:50:08,209 - INFO - VENDA: 2024-12-04 | Preço: R$ 9.60 | Ações: 11532 | Valor líquido: R$ 110602.82
+2025-09-10 15:50:08,209 - WARNING - COMPRA REJEITADA: Cash insuficiente (R$ 110602.82 < R$ 110602.82)
+2025-09-10 15:50:08,209 - INFO - COMPRA: 2024-12-13 | Preço: R$ 10.17 | Ações: 10860 | Custo: R$ 110602.82
+2025-09-10 15:50:08,209 - INFO - VENDA: 2024-12-19 | Preço: R$ 9.87 | Ações: 10860 | Valor líquido: R$ 107056.43
+2025-09-10 15:50:08,209 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-10 15:50:08,209 - INFO -   Total de trades: 16
+2025-09-10 15:50:08,209 - INFO -   Compras realizadas: 9
+2025-09-10 15:50:08,209 - INFO -   Vendas realizadas: 7
+2025-09-10 15:50:08,209 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-10 15:50:08,209 - INFO -   Capital final: R$ 107,056.43
+2025-09-10 15:50:08,209 - INFO -   Cash final: R$ 107,056.43
+2025-09-10 15:50:08,209 - INFO -   Ações finais: 0
+2025-09-10 15:50:08,209 - INFO -   Retorno total: +7.06%

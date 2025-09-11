@@ -1,6 +1,7 @@
 name: projeto-analise-financeira
 
 channels:
+  - defaults
   - conda-forge
 
 dependencies:
@@ -15,4 +16,7 @@ dependencies:
   - xgboost
   - yfinance
   - pywavelets
-  - python-bcb
+  - optuna
+
+  # - pip:
+  #   - python-bcb

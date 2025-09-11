@@ -7,21 +7,36 @@ import json
 from pathlib import Path
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from ..models.train_models import create_target_variable, split_data
+from datetime import datetime, timezone
 
 def calculate_ml_metrics(y_true, y_pred):
     """Calcula e formata um dicionário com as métricas de ML."""
     
-    report_dict = classification_report(y_true, y_pred, target_names=['Baixa/Estável', 'Alta'], output_dict=True)
+    report_dict = classification_report(
+        y_true, y_pred, 
+        target_names=['Baixa/Estável', 'Alta'], 
+        output_dict=True,
+        zero_division=0
+    )
+    
+    if 'Alta' in report_dict:
+        alta_metrics = report_dict['Alta']
+    else:
+        # Se não há predições de alta, usar valores padrão
+        alta_metrics = {'precision': 0.0, 'recall': 0.0, 'f1-score': 0.0}
     
     metrics = {
         "Acurácia": f"{report_dict['accuracy']:.2%}",
-        "Precisão (Classe Alta)": f"{report_dict['Alta']['precision']:.2%}",
-        "Recall (Classe Alta)": f"{report_dict['Alta']['recall']:.2%}",
-        "F1-Score (Classe Alta)": f"{report_dict['Alta']['f1-score']:.2f}"
+        "Precisão (Classe Alta)": f"{alta_metrics['precision']:.2%}",
+        "Recall (Classe Alta)": f"{alta_metrics['recall']:.2%}",
+        "F1-Score (Classe Alta)": f"{alta_metrics['f1-score']:.2f}"
     }
     
     cm = confusion_matrix(y_true, y_pred)
     metrics["Matriz de Confusão"] = cm.tolist()
+    
+    pred_counts = pd.Series(y_pred).value_counts()
+    metrics["Distribuição Predições"] = f"Alta: {pred_counts.get(1, 0)}, Baixa: {pred_counts.get(0, 0)}"
     
     return metrics
 
@@ -78,14 +93,19 @@ def process_ticker_model(ticker, config, features_path, model_path):
     df_target = create_target_variable(df_features, config['model_training']['target_column'])
     _, _, _, _, X_test, y_test = split_data(
         df_target,
-        config['model_training']['validation_start_date'],
-        config['model_training']['test_start_date'],
         config['model_training']['train_final_date'],
+        config['model_training']['validation_start_date'],
+        config['model_training']['validation_end_date'],
+        config['model_training']['test_start_date'],
+        config['model_training']['test_end_date'],
         config['model_training']['target_column']
     )
     
-    # Faz predições
-    predictions = model.predict(X_test)
+    # Obter probabilidades
+    probabilities = model.predict_proba(X_test)[:, 1]
+    
+    optimal_threshold = 0.5  # Pode ser ajustado conforme necessário
+    predictions = (probabilities >= optimal_threshold).astype(int)
     
     # Calcula métricas
     ml_metrics = calculate_ml_metrics(y_test, predictions)
@@ -141,11 +161,21 @@ def save_report_files(ticker_results, model_results, bnh_results, results_df, co
     reports_dir = Path(__file__).resolve().parents[2] / 'reports'
     reports_dir.mkdir(exist_ok=True)
     
-    timestamp = pd.Timestamp.now().strftime("%Y%m%d_%H%M%S")
+    # Timestamps mais claros e com fuso horário
+    now_local = datetime.now().astimezone()
+    now_utc = now_local.astimezone(timezone.utc)
+    # Seguro para nome de arquivo (sem dois-pontos), inclui offset do fuso (ex.: -0300)
+    timestamp = now_local.strftime("%Y-%m-%d_%H-%M-%S_%z")
+    # Legível para humanos (ex.: 2025-09-01 23:46:47 BRT-0300)
+    human_timestamp = now_local.strftime("%Y-%m-%d %H:%M:%S %Z%z")
+    # ISO UTC para interoperabilidade
+    iso_utc = now_utc.isoformat()
     
     # Prepara dados para o relatório
     report_data = {
         "timestamp": timestamp,
+        "generated_at_local": human_timestamp,
+        "generated_at_utc": iso_utc,
         "ticker_results": ticker_results,
         "financial_summary": {
             "total_tickers": len(results_df['ticker'].unique()),
@@ -166,6 +196,7 @@ def save_report_files(ticker_results, model_results, bnh_results, results_df, co
     with open(txt_path, 'w', encoding='utf-8') as f:
         f.write("RELATÓRIO COMPREENSIVO DE PERFORMANCE - TODOS OS TICKERS\n")
         f.write("=" * 70 + "\n\n")
+        f.write(f"Gerado em: {human_timestamp} (UTC: {iso_utc})\n\n")
         
         f.write("1. MÉTRICAS DE MACHINE LEARNING POR TICKER\n")
         f.write("-" * 50 + "\n")

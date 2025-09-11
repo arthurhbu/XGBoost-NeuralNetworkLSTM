@@ -1,0 +1,88 @@
+RELATÓRIO COMPREENSIVO DE PERFORMANCE - TODOS OS TICKERS
+======================================================================
+
+1. MÉTRICAS DE MACHINE LEARNING POR TICKER
+--------------------------------------------------
+
+PETR4.SA:
+  Acurácia: 73.31%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Tamanho do teste: 251
+
+VALE3.SA:
+  Acurácia: 73.71%
+  Precisão (Classe Alta): 100.00%
+  Recall (Classe Alta): 1.49%
+  F1-Score (Classe Alta): 0.03
+  Tamanho do teste: 251
+
+BBDC4.SA:
+  Acurácia: 83.27%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Tamanho do teste: 251
+
+ITUB4.SA:
+  Acurácia: 76.89%
+  Precisão (Classe Alta): 23.81%
+  Recall (Classe Alta): 27.78%
+  F1-Score (Classe Alta): 0.26
+  Tamanho do teste: 251
+
+BBAS3.SA:
+  Acurácia: 87.65%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Tamanho do teste: 251
+
+B3SA3.SA:
+  Acurácia: 77.69%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Tamanho do teste: 251
+
+ABEV3.SA:
+  Acurácia: 88.84%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Tamanho do teste: 251
+
+VIVT3.SA:
+  Acurácia: 86.45%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Tamanho do teste: 251
+
+2. RESUMO FINANCEIRO CONSOLIDADO
+----------------------------------------
+Total de tickers: 8
+Retorno total (Modelo): 1.42%
+Retorno total (Buy&Hold): -9.84%
+Capital final (Modelo): R$ 811,324.90
+Capital final (Buy&Hold): R$ 721,272.69
+
+3. RESULTADOS INDIVIDUAIS POR TICKER
+--------------------------------------------------
+ABEV3.SA - Modelo de Predição: R$ 100,000.00 → R$ 100,000.00 (0.00%)
+ABEV3.SA - Buy and Hold: R$ 100,000.00 → R$ 90,350.65 (-964.94%)
+B3SA3.SA - Modelo de Predição: R$ 100,000.00 → R$ 100,000.00 (0.00%)
+B3SA3.SA - Buy and Hold: R$ 100,000.00 → R$ 74,775.61 (-2522.44%)
+BBAS3.SA - Modelo de Predição: R$ 100,000.00 → R$ 101,436.44 (143.64%)
+BBAS3.SA - Buy and Hold: R$ 100,000.00 → R$ 95,679.14 (-432.09%)
+BBDC4.SA - Modelo de Predição: R$ 100,000.00 → R$ 100,000.00 (0.00%)
+BBDC4.SA - Buy and Hold: R$ 100,000.00 → R$ 73,345.80 (-2665.42%)
+ITUB4.SA - Modelo de Predição: R$ 100,000.00 → R$ 108,786.23 (878.62%)
+ITUB4.SA - Buy and Hold: R$ 100,000.00 → R$ 98,317.21 (-168.28%)
+PETR4.SA - Modelo de Predição: R$ 100,000.00 → R$ 99,501.38 (-49.86%)
+PETR4.SA - Buy and Hold: R$ 100,000.00 → R$ 117,383.79 (1738.38%)
+VALE3.SA - Modelo de Predição: R$ 100,000.00 → R$ 100,185.53 (18.55%)
+VALE3.SA - Buy and Hold: R$ 100,000.00 → R$ 77,351.39 (-2264.86%)
+VIVT3.SA - Modelo de Predição: R$ 100,000.00 → R$ 101,415.31 (141.53%)
+VIVT3.SA - Buy and Hold: R$ 100,000.00 → R$ 94,069.11 (-593.09%)

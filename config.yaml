@@ -25,16 +25,20 @@ features:
     bbands_length: 20
     bbands_std: 2.0
     adx_length: 14
-  
+    atr_length: 14
+    mfi_length: 14
+    stoch_length: 14
+
   wavelet:
     family: 'db8'
     level: 1
 
 model_training:
-  train_final_date: "2023-12-31"
-  validation_start_date: "2022-01-01"
-  test_start_date: "2023-01-01"
-
+  train_final_date: "2022-12-31"
+  validation_start_date: "2023-01-01"
+  validation_end_date: "2023-12-31"
+  test_start_date: "2024-01-01"
+  test_end_date: "2025-01-01"
   target_column: "target"
 
   xgboost_params:
@@ -55,3 +59,16 @@ backtesting:
   final_simulation_date: "2025-01-01"
 
   results_path: "reports"
+  
+  threshold_optimization:
+    enabled: true  # Ativar otimização de threshold
+    metric: "sharpe"  # Métrica principal para otimização financeira
+    min_threshold: 0.5  # Threshold mínimo (legado)
+    max_threshold: 0.6  # Threshold máximo (legado)
+    hold_min_days: 3    # Histerese: mínimo de dias entre trocas de estado
+
+  position_sizing:
+    enabled: true
+    min_fraction: 0.2   # fração mínima do capital quando comprado
+    max_fraction: 1.0   # fração máxima do capital quando comprado
+    method: "prob_linear"  # mapeia probabilidade -> fração de posição

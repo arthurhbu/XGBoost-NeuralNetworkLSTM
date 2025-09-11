@@ -1,0 +1,46 @@
+2025-09-09 10:55:20,115 - INFO - THRESHOLDS FINANCEIROS: buy=0.80 sell=0.25 hold_min_days=3
+2025-09-09 10:55:20,115 - INFO - PROBABILIDADE MÉDIA: 0.509
+2025-09-09 10:55:20,115 - INFO - ============================================================
+2025-09-09 10:55:20,116 - INFO - INICIANDO BACKTESTING
+2025-09-09 10:55:20,116 - INFO - ============================================================
+2025-09-09 10:55:20,116 - INFO - Tamanho test_df: 251
+2025-09-09 10:55:20,116 - INFO - Tamanho predictions: 251
+2025-09-09 10:55:20,116 - INFO - Capital inicial: R$ 100,000.00
+2025-09-09 10:55:20,119 - INFO - Custo de transação: 0.100%
+2025-09-09 10:55:20,120 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-09 10:55:20,120 - INFO -   - Total: 251
+2025-09-09 10:55:20,120 - INFO -   - Predições de alta (1): 121
+2025-09-09 10:55:20,120 - INFO -   - Predições de baixa (0): 130
+2025-09-09 10:55:20,120 - INFO -   - Percentual de alta: 48.2%
+2025-09-09 10:55:20,120 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-09 10:55:20,121 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-09 10:55:20,128 - INFO - COMPRA: 2024-03-04 | Preço: R$ 31.00 | Ações: 3223 | Custo: R$ 100000.00
+2025-09-09 10:55:20,129 - INFO - COMPRA: 2024-03-05 | Preço: R$ 31.08 | Ações: 0 | Custo: R$ 0.00
+2025-09-09 10:55:20,129 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 1 | Cash: R$ 0.00 | Ações: 3223
+2025-09-09 10:55:20,132 - INFO - VENDA: 2024-04-04 | Preço: R$ 29.30 | Ações: 3223 | Valor líquido: R$ 94324.89
+2025-09-09 10:55:20,137 - INFO - COMPRA: 2024-05-22 | Preço: R$ 31.06 | Ações: 3034 | Custo: R$ 94324.89
+2025-09-09 10:55:20,138 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 1 | Cash: R$ 0.00 | Ações: 3034
+2025-09-09 10:55:20,139 - INFO - VENDA: 2024-05-28 | Preço: R$ 31.29 | Ações: 3034 | Valor líquido: R$ 94815.30
+2025-09-09 10:55:20,139 - WARNING - COMPRA REJEITADA: Cash insuficiente (R$ 94815.30 < R$ 94815.30)
+2025-09-09 10:55:20,140 - INFO - COMPRA: 2024-06-07 | Preço: R$ 30.85 | Ações: 3070 | Custo: R$ 94815.30
+2025-09-09 10:55:20,142 - INFO - VENDA: 2024-07-01 | Preço: R$ 33.13 | Ações: 3070 | Valor líquido: R$ 101613.52
+2025-09-09 10:55:20,145 - INFO - COMPRA: 2024-07-18 | Preço: R$ 32.85 | Ações: 3090 | Custo: R$ 101613.52
+2025-09-09 10:55:20,147 - INFO - VENDA: 2024-08-05 | Preço: R$ 30.38 | Ações: 3090 | Valor líquido: R$ 93771.79
+2025-09-09 10:55:20,148 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 93,771.79 | Ações: 0
+2025-09-09 10:55:20,149 - WARNING - COMPRA REJEITADA: Cash insuficiente (R$ 93771.79 < R$ 93771.79)
+2025-09-09 10:55:20,150 - INFO - COMPRA: 2024-08-16 | Preço: R$ 32.94 | Ações: 2844 | Custo: R$ 93771.79
+2025-09-09 10:55:20,151 - INFO - VENDA: 2024-08-26 | Preço: R$ 34.44 | Ações: 2844 | Valor líquido: R$ 97868.57
+2025-09-09 10:55:20,153 - INFO - COMPRA: 2024-09-17 | Preço: R$ 32.39 | Ações: 3018 | Custo: R$ 97868.57
+2025-09-09 10:55:20,157 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 1 | Cash: R$ 0.00 | Ações: 3018
+2025-09-09 10:55:20,160 - INFO - VENDA: 2024-11-21 | Preço: R$ 33.97 | Ações: 3018 | Valor líquido: R$ 102436.28
+2025-09-09 10:55:20,161 - INFO - COMPRA: 2024-11-28 | Preço: R$ 33.79 | Ações: 3029 | Custo: R$ 102436.28
+2025-09-09 10:55:20,164 - INFO - VENDA: 2024-12-18 | Preço: R$ 34.36 | Ações: 3029 | Valor líquido: R$ 103976.09
+2025-09-09 10:55:20,165 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-09 10:55:20,165 - INFO -   Total de trades: 15
+2025-09-09 10:55:20,165 - INFO -   Compras realizadas: 8
+2025-09-09 10:55:20,165 - INFO -   Vendas realizadas: 7
+2025-09-09 10:55:20,166 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-09 10:55:20,166 - INFO -   Capital final: R$ 103,976.09
+2025-09-09 10:55:20,166 - INFO -   Cash final: R$ 103,976.09
+2025-09-09 10:55:20,166 - INFO -   Ações finais: 0
+2025-09-09 10:55:20,166 - INFO -   Retorno total: +3.98%

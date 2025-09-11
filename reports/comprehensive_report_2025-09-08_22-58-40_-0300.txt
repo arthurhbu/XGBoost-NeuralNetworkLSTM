@@ -1,0 +1,98 @@
+RELATÓRIO COMPREENSIVO DE PERFORMANCE - TODOS OS TICKERS
+======================================================================
+
+Gerado em: 2025-09-08 22:58:40 Hora oficial do Brasil-0300 (UTC: 2025-09-09T01:58:40.926147+00:00)
+
+1. MÉTRICAS DE MACHINE LEARNING POR TICKER
+--------------------------------------------------
+
+PETR4.SA:
+  Acurácia: 87.65%
+  Precisão (Classe Alta): 30.00%
+  Recall (Classe Alta): 11.11%
+  F1-Score (Classe Alta): 0.16
+  Distribuição Predições: Alta: 10, Baixa: 241
+  Tamanho do teste: 251
+
+VALE3.SA:
+  Acurácia: 60.56%
+  Precisão (Classe Alta): 18.82%
+  Recall (Classe Alta): 34.78%
+  F1-Score (Classe Alta): 0.24
+  Distribuição Predições: Alta: 85, Baixa: 166
+  Tamanho do teste: 251
+
+BBDC4.SA:
+  Acurácia: 88.45%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Distribuição Predições: Alta: 13, Baixa: 238
+  Tamanho do teste: 251
+
+ITUB4.SA:
+  Acurácia: 93.63%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Distribuição Predições: Alta: 0, Baixa: 251
+  Tamanho do teste: 251
+
+BBAS3.SA:
+  Acurácia: 96.81%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Distribuição Predições: Alta: 1, Baixa: 250
+  Tamanho do teste: 251
+
+B3SA3.SA:
+  Acurácia: 56.97%
+  Precisão (Classe Alta): 13.00%
+  Recall (Classe Alta): 38.24%
+  F1-Score (Classe Alta): 0.19
+  Distribuição Predições: Alta: 100, Baixa: 151
+  Tamanho do teste: 251
+
+ABEV3.SA:
+  Acurácia: 85.26%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Distribuição Predições: Alta: 25, Baixa: 226
+  Tamanho do teste: 251
+
+VIVT3.SA:
+  Acurácia: 93.23%
+  Precisão (Classe Alta): 0.00%
+  Recall (Classe Alta): 0.00%
+  F1-Score (Classe Alta): 0.00
+  Distribuição Predições: Alta: 1, Baixa: 250
+  Tamanho do teste: 251
+
+2. RESUMO FINANCEIRO CONSOLIDADO
+----------------------------------------
+Total de tickers: 8
+Retorno total (Modelo): -3.40%
+Retorno total (Buy&Hold): -9.84%
+Capital final (Modelo): R$ 772,701.60
+Capital final (Buy&Hold): R$ 721,272.69
+
+3. RESULTADOS INDIVIDUAIS POR TICKER
+--------------------------------------------------
+ABEV3.SA - Modelo de Predição: R$ 100,000.00 → R$ 98,515.43 (-148.46%)
+ABEV3.SA - Buy and Hold: R$ 100,000.00 → R$ 90,350.65 (-964.94%)
+B3SA3.SA - Modelo de Predição: R$ 100,000.00 → R$ 89,107.57 (-1089.24%)
+B3SA3.SA - Buy and Hold: R$ 100,000.00 → R$ 74,775.61 (-2522.44%)
+BBAS3.SA - Modelo de Predição: R$ 100,000.00 → R$ 99,438.60 (-56.14%)
+BBAS3.SA - Buy and Hold: R$ 100,000.00 → R$ 95,679.14 (-432.09%)
+BBDC4.SA - Modelo de Predição: R$ 99,900.10 → R$ 92,380.50 (-752.71%)
+BBDC4.SA - Buy and Hold: R$ 100,000.00 → R$ 73,345.80 (-2665.42%)
+ITUB4.SA - Modelo de Predição: R$ 100,000.00 → R$ 100,000.00 (0.00%)
+ITUB4.SA - Buy and Hold: R$ 100,000.00 → R$ 98,317.21 (-168.28%)
+PETR4.SA - Modelo de Predição: R$ 100,000.00 → R$ 99,441.96 (-55.80%)
+PETR4.SA - Buy and Hold: R$ 100,000.00 → R$ 117,383.79 (1738.38%)
+VALE3.SA - Modelo de Predição: R$ 100,000.00 → R$ 93,229.06 (-677.09%)
+VALE3.SA - Buy and Hold: R$ 100,000.00 → R$ 77,351.39 (-2264.86%)
+VIVT3.SA - Modelo de Predição: R$ 100,000.00 → R$ 100,588.49 (58.85%)
+VIVT3.SA - Buy and Hold: R$ 100,000.00 → R$ 94,069.11 (-593.09%)

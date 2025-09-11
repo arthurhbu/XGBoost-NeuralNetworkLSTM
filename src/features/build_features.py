@@ -5,31 +5,45 @@ import talib
 import numpy as np
 import pywt
 
-def clean_and_convert_data(dataframe):
-    """
-    Limpa e converte os dados provenientes do CSV para float64 para ser possível manipular e utilizar as funções do talib e também remove as linhas com valores não numéricos.
-    
+def clean_and_convert_data(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """Limpa e padroniza dados OHLCV para engenharia de features.
+
+    Converte as colunas numéricas (``Close``, ``High``, ``Low``, ``Open``, ``Volume``)
+    para valores numéricos, remove linhas inválidas e garante o dtype ``float64``.
+
     Args:
-        dataframe: DataFrame com os dados provenientes do CSV
-        
+        dataframe: DataFrame de entrada contendo ao menos as colunas OHLCV.
+
     Returns:
-        DataFrame com os dados convertidos para float64 e sem valores não numéricos
+        Um novo ``DataFrame`` com colunas numéricas convertidas para ``float64``
+        e sem linhas com valores inválidos.
+
+    Raises:
+        TypeError: Se ``dataframe`` não for um ``pd.DataFrame``.
+        ValueError: Se faltarem colunas obrigatórias do conjunto OHLCV.
     """
-    dataframe = dataframe.copy()
-    
-    numeric_columns = ['Close', 'High', 'Low', 'Open', 'Volume']
-    
-    for col in numeric_columns:
-        if col in dataframe.columns:
-            dataframe[col] = pd.to_numeric(dataframe[col], errors='coerce')
-    
-    dataframe = dataframe.dropna()
-    
-    for col in numeric_columns:
-        if col in dataframe.columns:
-            dataframe[col] = dataframe[col].astype('float64')
-            
-    return dataframe
+    if not isinstance(dataframe, pd.DataFrame):
+        raise TypeError("dataframe must be a pandas DataFrame")
+
+    required_columns = {'Close', 'High', 'Low', 'Open', 'Volume'}
+    missing_columns = required_columns.difference(set(dataframe.columns))
+    if missing_columns:
+        raise ValueError(f"Missing required columns: {sorted(missing_columns)}")
+
+    df = dataframe.copy()
+
+    # Coerção numérica com NaN para valores inválidos
+    for column_name in required_columns:
+        df[column_name] = pd.to_numeric(df[column_name], errors='coerce')
+
+    # Remoção de linhas com NaN após coerção
+    df = df.dropna(subset=list(required_columns))
+
+    # Padronização do dtype
+    for column_name in required_columns:
+        df[column_name] = df[column_name].astype('float64')
+
+    return df
 
 
 def create_technical_indicators(dataframe, indicators_config):
@@ -50,7 +64,8 @@ def create_technical_indicators(dataframe, indicators_config):
     high_prices = dataframe['High'].values
     low_prices = dataframe['Low'].values
     open_prices = dataframe['Open'].values
-    
+    volume = dataframe['Volume'].values
+
     dataframe.loc[:, 'RSI'] = talib.RSI(close_prices, timeperiod=indicators_config['rsi_length'])
     
     ema_short = talib.EMA(close_prices, timeperiod=indicators_config['ema_short'])
@@ -72,6 +87,12 @@ def create_technical_indicators(dataframe, indicators_config):
     dataframe.loc[:, 'BB_lower'] = lower
     
     dataframe.loc[:, 'ADX'] = talib.ADX(high_prices, low_prices, close_prices, timeperiod=indicators_config['adx_length'])
+    
+    # dataframe.loc[:, 'ATR'] = talib.ATR(high_prices, low_prices, close_prices, timeperiod=indicators_config['atr_length'])
+
+    # dataframe.loc[:, 'OBV'] = talib.OBV(close_prices, volume)
+
+    # dataframe.loc[:, 'MFI'] = talib.MFI(high_prices, low_prices, close_prices, volume, timeperiod=indicators_config['mfi_length'])
     
     dataframe = dataframe.dropna()
     return dataframe

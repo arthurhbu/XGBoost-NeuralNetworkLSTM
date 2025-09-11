@@ -1,0 +1,34 @@
+2025-09-09 10:40:58,801 - INFO - THRESHOLD OTIMIZADO: 0.500
+2025-09-09 10:40:58,802 - INFO - F1-SCORE VALIDAÇÃO: 1.000
+2025-09-09 10:40:58,804 - INFO - PROBABILIDADES MÉDIAS: Alta=0.071, Baixa=0.929
+2025-09-09 10:40:58,804 - INFO - ============================================================
+2025-09-09 10:40:58,804 - INFO - INICIANDO BACKTESTING
+2025-09-09 10:40:58,804 - INFO - ============================================================
+2025-09-09 10:40:58,804 - INFO - Tamanho test_df: 251
+2025-09-09 10:40:58,804 - INFO - Tamanho predictions: 251
+2025-09-09 10:40:58,804 - INFO - Capital inicial: R$ 100,000.00
+2025-09-09 10:40:58,807 - INFO - Custo de transação: 0.100%
+2025-09-09 10:40:58,809 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-09 10:40:58,809 - INFO -   - Total: 251
+2025-09-09 10:40:58,809 - INFO -   - Predições de alta (1): 0
+2025-09-09 10:40:58,809 - INFO -   - Predições de baixa (0): 251
+2025-09-09 10:40:58,809 - INFO -   - Percentual de alta: 0.0%
+2025-09-09 10:40:58,809 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-09 10:40:58,809 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-09 10:40:58,815 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-09 10:40:58,820 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-09 10:40:58,826 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-09 10:40:58,830 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-09 10:40:58,835 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-09 10:40:58,837 - INFO -   Total de trades: 0
+2025-09-09 10:40:58,837 - INFO -   Compras realizadas: 0
+2025-09-09 10:40:58,837 - INFO -   Vendas realizadas: 0
+2025-09-09 10:40:58,837 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-09 10:40:58,837 - INFO -   Capital final: R$ 100,000.00
+2025-09-09 10:40:58,837 - INFO -   Cash final: R$ 100,000.00
+2025-09-09 10:40:58,837 - INFO -   Ações finais: 0
+2025-09-09 10:40:58,837 - INFO -   Retorno total: +0.00%
+2025-09-09 10:40:58,837 - WARNING - AVISO: Nenhum trade foi executado!
+2025-09-09 10:40:58,837 - WARNING -   - Verificar se há predições de alta (1) nas predições
+2025-09-09 10:40:58,837 - WARNING -   - Verificar se há predições de baixa (0) quando há ações
+2025-09-09 10:40:58,837 - WARNING -   - Verificar se os dados têm variação suficiente

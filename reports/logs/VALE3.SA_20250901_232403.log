@@ -1,0 +1,32 @@
+2025-09-01 23:24:03,342 - INFO - THRESHOLD OTIMIZADO: 0.500
+2025-09-01 23:24:03,342 - INFO - F1-SCORE VALIDAÇÃO: 0.539
+2025-09-01 23:24:03,342 - INFO - PROBABILIDADES MÉDIAS: Alta=0.365, Baixa=0.635
+2025-09-01 23:24:03,342 - INFO - ============================================================
+2025-09-01 23:24:03,343 - INFO - INICIANDO BACKTESTING
+2025-09-01 23:24:03,343 - INFO - ============================================================
+2025-09-01 23:24:03,343 - INFO - Tamanho test_df: 251
+2025-09-01 23:24:03,343 - INFO - Tamanho predictions: 251
+2025-09-01 23:24:03,343 - INFO - Capital inicial: R$ 100,000.00
+2025-09-01 23:24:03,346 - INFO - Custo de transação: 0.100%
+2025-09-01 23:24:03,347 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-01 23:24:03,348 - INFO -   - Total: 251
+2025-09-01 23:24:03,348 - INFO -   - Predições de alta (1): 1
+2025-09-01 23:24:03,350 - INFO -   - Predições de baixa (0): 250
+2025-09-01 23:24:03,351 - INFO -   - Percentual de alta: 0.4%
+2025-09-01 23:24:03,351 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-01 23:24:03,353 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-01 23:24:03,368 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-01 23:24:03,373 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-01 23:24:03,377 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-01 23:24:03,379 - INFO - COMPRA: 2024-08-19 | Preço: R$ 52.51 | Ações: 1902 | Custo: R$ 100000.00
+2025-09-01 23:24:03,379 - INFO - VENDA: 2024-08-20 | Preço: R$ 52.71 | Ações: 1902 | Valor líquido: R$ 100185.53
+2025-09-01 23:24:03,380 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 0 | Cash: R$ 100,185.53 | Ações: 0
+2025-09-01 23:24:03,384 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-01 23:24:03,384 - INFO -   Total de trades: 2
+2025-09-01 23:24:03,384 - INFO -   Compras realizadas: 1
+2025-09-01 23:24:03,384 - INFO -   Vendas realizadas: 1
+2025-09-01 23:24:03,384 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-01 23:24:03,384 - INFO -   Capital final: R$ 100,185.53
+2025-09-01 23:24:03,384 - INFO -   Cash final: R$ 100,185.53
+2025-09-01 23:24:03,384 - INFO -   Ações finais: 0
+2025-09-01 23:24:03,384 - INFO -   Retorno total: +0.19%
