@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "simulation_date": "2025-09-17T16:20:31.177268",
+    "initial_capital": 100000.0,
+    "transaction_cost_pct": 0.001,
+    "total_tickers": 8,
+    "total_simulations": 32
+  },
+  "results_by_ticker": {
+    "ABEV3.SA": {
+      "model_prediction": {
+        "ticker": "ABEV3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 103672.73352208738,
+        "retorno_total": 3.627407930132809
+      },
+      "model_simple": {
+        "ticker": "ABEV3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 98993.29846448723,
+        "retorno_total": -1.0067015355127662
+      },
+      "buy_and_hold": {
+        "ticker": "ABEV3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 90350.64598780114,
+        "retorno_total": -9.649354012198863
+      }
+    },
+    "B3SA3.SA": {
+      "model_prediction": {
+        "ticker": "B3SA3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 81368.23969518121,
+        "retorno_total": -18.66733439942584
+      },
+      "model_simple": {
+        "ticker": "B3SA3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 79513.31716910811,
+        "retorno_total": -20.48668283089189
+      },
+      "buy_and_hold": {
+        "ticker": "B3SA3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 74775.60944246201,
+        "retorno_total": -25.22439055753799
+      }
+    },
+    "BBAS3.SA": {
+      "model_prediction": {
+        "ticker": "BBAS3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 110009.8627373093,
+        "retorno_total": 9.96176656023351
+      },
+      "model_simple": {
+        "ticker": "BBAS3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 100659.89972051726,
+        "retorno_total": 0.6598997205172541
+      },
+      "buy_and_hold": {
+        "ticker": "BBAS3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 95679.13605531957,
+        "retorno_total": -4.320863944680431
+      }
+    },
+    "BBDC4.SA": {
+      "model_prediction": {
+        "ticker": "BBDC4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 95256.0167940831,
+        "retorno_total": -4.785629019640014
+      },
+      "model_simple": {
+        "ticker": "BBDC4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 90439.53587586689,
+        "retorno_total": -9.560464124133116
+      },
+      "buy_and_hold": {
+        "ticker": "BBDC4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 73345.80009197087,
+        "retorno_total": -26.65419990802913
+      }
+    },
+    "ITUB4.SA": {
+      "model_prediction": {
+        "ticker": "ITUB4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 104292.81457550985,
+        "retorno_total": 4.247217884879162
+      },
+      "model_simple": {
+        "ticker": "ITUB4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 97034.17136911821,
+        "retorno_total": -2.965828630881795
+      },
+      "buy_and_hold": {
+        "ticker": "ITUB4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 98317.21066214197,
+        "retorno_total": -1.6827893378580372
+      }
+    },
+    "PETR4.SA": {
+      "model_prediction": {
+        "ticker": "PETR4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 112032.60132964105,
+        "retorno_total": 11.98362081373332
+      },
+      "model_simple": {
+        "ticker": "PETR4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 112078.67674398857,
+        "retorno_total": 12.07867674398857
+      },
+      "buy_and_hold": {
+        "ticker": "PETR4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 117383.78592864318,
+        "retorno_total": 17.38378592864318
+      }
+    },
+    "VALE3.SA": {
+      "model_prediction": {
+        "ticker": "VALE3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100311.11402286668,
+        "capital_final": 82962.60992896793,
+        "retorno_total": -17.294697863632567
+      },
+      "model_simple": {
+        "ticker": "VALE3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 76004.70534014732,
+        "retorno_total": -23.99529465985267
+      },
+      "buy_and_hold": {
+        "ticker": "VALE3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 77351.39470303607,
+        "retorno_total": -22.64860529696393
+      }
+    },
+    "VIVT3.SA": {
+      "model_prediction": {
+        "ticker": "VIVT3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 105554.62175999852,
+        "retorno_total": 5.508473408814218
+      },
+      "model_simple": {
+        "ticker": "VIVT3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 100619.63567029816,
+        "retorno_total": 0.6196356702981465
+      },
+      "buy_and_hold": {
+        "ticker": "VIVT3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 94069.11177018369,
+        "retorno_total": -5.930888229816311
+      }
+    }
+  },
+  "summary": {
+    "model_performance": {
+      "average_return": -0.6773968356131754,
+      "best_performer": {
+        "ticker": "PETR4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 112032.60132964105,
+        "retorno_total": 11.98362081373332
+      },
+      "worst_performer": {
+        "ticker": "B3SA3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 81368.23969518121,
+        "retorno_total": -18.66733439942584
+      },
+      "total_return": -5.419174684905403
+    },
+    "buyhold_performance": {
+      "average_return": -9.84091316980519,
+      "best_performer": {
+        "ticker": "PETR4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 117383.78592864318,
+        "retorno_total": 17.38378592864318
+      },
+      "worst_performer": {
+        "ticker": "BBDC4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 73345.80009197087,
+        "retorno_total": -26.65419990802913
+      },
+      "total_return": -78.72730535844153
+    },
+    "simple_model_performance": {
+      "average_return": -5.582094955808534,
+      "best_performer": {
+        "ticker": "PETR4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 112078.67674398857,
+        "retorno_total": 12.07867674398857
+      },
+      "worst_performer": {
+        "ticker": "VALE3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 76004.70534014732,
+        "retorno_total": -23.99529465985267
+      },
+      "total_return": -44.656759646468274
+    }
+  }
+}

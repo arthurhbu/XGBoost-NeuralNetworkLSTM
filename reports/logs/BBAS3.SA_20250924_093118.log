@@ -1,0 +1,38 @@
+2025-09-24 09:31:18,774 - INFO - THRESHOLDS FINANCEIROS: buy=0.53 sell=0.22 hold_min_days=3
+2025-09-24 09:31:18,774 - INFO - SCORE MÉDIO: -0.203
+2025-09-24 09:31:18,774 - INFO - ============================================================
+2025-09-24 09:31:18,774 - INFO - INICIANDO BACKTESTING REALISTA
+2025-09-24 09:31:18,774 - INFO - ============================================================
+2025-09-24 09:31:18,776 - INFO - Tamanho test_df: 251
+2025-09-24 09:31:18,776 - INFO - Tamanho predictions: 251
+2025-09-24 09:31:18,776 - INFO - Tamanho probabilities: 251
+2025-09-24 09:31:18,779 - INFO - Capital inicial: R$ 100,000.00
+2025-09-24 09:31:18,779 - INFO - Custo de transação: 0.100%
+2025-09-24 09:31:18,790 - INFO - CDI real carregado: 253 dias disponíveis
+2025-09-24 09:31:18,790 - INFO - Slippage Dinâmico: 0.2-2.0 bps | Lote: 100 | CDI: Real
+2025-09-24 09:31:18,792 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-24 09:31:18,794 - INFO -   - Total: 251
+2025-09-24 09:31:18,794 - INFO -   - Predições de alta (1): 5
+2025-09-24 09:31:18,794 - INFO -   - Predições de baixa (0): 246
+2025-09-24 09:31:18,794 - INFO -   - Percentual de alta: 2.0%
+2025-09-24 09:31:18,794 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-24 09:31:18,796 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-24 09:31:18,798 - INFO - COMPRA: 2024-01-15 | Preço base: R$ 25.12 | Preço exec c/ slippage: R$ 25.12 | Ações: 2900 | Custo: R$ 72931.27 | Prob: 0.679 | Fração: 75.1%
+2025-09-24 09:31:18,800 - INFO - COMPRA: 2024-01-16 | Preço base: R$ 25.05 | Preço exec c/ slippage: R$ 25.06 | Ações: 200 | Custo: R$ 5016.21 | Prob: 0.350 | Fração: 26.1%
+2025-09-24 09:31:18,800 - INFO - COMPRA: 2024-01-17 | Preço base: R$ 25.16 | Preço exec c/ slippage: R$ 25.16 | Ações: 100 | Custo: R$ 2518.89 | Prob: 0.131 | Fração: 20.7%
+2025-09-24 09:31:18,802 - INFO - COMPRA: 2024-01-18 | Preço base: R$ 24.93 | Preço exec c/ slippage: R$ 24.93 | Ações: 100 | Custo: R$ 2495.52 | Prob: 0.150 | Fração: 20.9%
+2025-09-24 09:31:18,802 - INFO - COMPRA: 2024-01-19 | Preço base: R$ 25.17 | Preço exec c/ slippage: R$ 25.17 | Ações: 300 | Custo: R$ 7559.37 | Prob: 0.559 | Fração: 51.9%
+2025-09-24 09:31:18,802 - INFO - VENDA: 2024-01-22 | Preço base: R$ 25.05 | Preço exec c/ slippage: R$ 25.05 | Ações: 3600 | Valor líquido: R$ 90099.19 | Slippage: 0.7 bps
+2025-09-24 09:31:18,807 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 99,577.94 | Ações: 0
+2025-09-24 09:31:18,812 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 99,577.94 | Ações: 0
+2025-09-24 09:31:18,818 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 99,577.94 | Ações: 0
+2025-09-24 09:31:18,822 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 0 | Cash: R$ 99,577.94 | Ações: 0
+2025-09-24 09:31:18,828 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-24 09:31:18,828 - INFO -   Total de trades: 6
+2025-09-24 09:31:18,830 - INFO -   Compras realizadas: 5
+2025-09-24 09:31:18,830 - INFO -   Vendas realizadas: 1
+2025-09-24 09:31:18,830 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-24 09:31:18,830 - INFO -   Capital final: R$ 99,577.94
+2025-09-24 09:31:18,830 - INFO -   Cash final: R$ 99,577.94
+2025-09-24 09:31:18,830 - INFO -   Ações finais: 0
+2025-09-24 09:31:18,830 - INFO -   Retorno total: -0.42%

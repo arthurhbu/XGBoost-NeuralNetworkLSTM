@@ -1,0 +1,221 @@
+2025-09-22 22:13:28,386 - INFO - THRESHOLDS FINANCEIROS: buy=0.50 sell=0.05 hold_min_days=3
+2025-09-22 22:13:28,387 - INFO - SCORE MÉDIO: 0.640
+2025-09-22 22:13:28,387 - INFO - ============================================================
+2025-09-22 22:13:28,387 - INFO - INICIANDO BACKTESTING REALISTA
+2025-09-22 22:13:28,387 - INFO - ============================================================
+2025-09-22 22:13:28,387 - INFO - Tamanho test_df: 251
+2025-09-22 22:13:28,387 - INFO - Tamanho predictions: 251
+2025-09-22 22:13:28,388 - INFO - Tamanho probabilities: 251
+2025-09-22 22:13:28,388 - INFO - Capital inicial: R$ 100,000.00
+2025-09-22 22:13:28,389 - INFO - Custo de transação: 0.100%
+2025-09-22 22:13:28,396 - INFO - CDI real carregado: 253 dias disponíveis
+2025-09-22 22:13:28,396 - INFO - Slippage Dinâmico: 0.2-2.0 bps | Lote: 100 | CDI: Real
+2025-09-22 22:13:28,398 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-22 22:13:28,399 - INFO -   - Total: 251
+2025-09-22 22:13:28,399 - INFO -   - Predições de alta (1): 172
+2025-09-22 22:13:28,399 - INFO -   - Predições de baixa (0): 79
+2025-09-22 22:13:28,399 - INFO -   - Percentual de alta: 68.5%
+2025-09-22 22:13:28,400 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-22 22:13:28,400 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 1 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-22 22:13:28,400 - INFO - COMPRA: 2024-01-02 | Preço base: R$ 29.22 | Preço exec c/ slippage: R$ 29.22 | Ações: 3300 | Custo: R$ 96535.40 | Prob: 0.999 | Fração: 98.5%
+2025-09-22 22:13:28,401 - INFO - COMPRA: 2024-01-03 | Preço base: R$ 30.24 | Preço exec c/ slippage: R$ 30.24 | Ações: 100 | Custo: R$ 3027.43 | Prob: 1.000 | Fração: 98.6%
+2025-09-22 22:13:28,401 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.986, fração: 98.4%)
+2025-09-22 22:13:28,401 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.994, fração: 98.5%)
+2025-09-22 22:13:28,402 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.819, fração: 92.0%)
+2025-09-22 22:13:28,402 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.158, fração: 21.0%)
+2025-09-22 22:13:28,403 - INFO - VENDA: 2024-01-10 | Preço base: R$ 29.36 | Preço exec c/ slippage: R$ 29.36 | Ações: 3400 | Valor líquido: R$ 99720.22 | Slippage: 0.7 bps
+2025-09-22 22:13:28,403 - INFO - COMPRA: 2024-01-18 | Preço base: R$ 29.23 | Preço exec c/ slippage: R$ 29.23 | Ações: 3300 | Custo: R$ 96560.95 | Prob: 0.989 | Fração: 98.4%
+2025-09-22 22:13:28,404 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: -0.410, fração: 20.0%)
+2025-09-22 22:13:28,404 - INFO - COMPRA: 2024-01-22 | Preço base: R$ 29.25 | Preço exec c/ slippage: R$ 29.25 | Ações: 100 | Custo: R$ 2928.38 | Prob: 0.985 | Fração: 98.3%
+2025-09-22 22:13:28,405 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.993, fração: 98.5%)
+2025-09-22 22:13:28,405 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.991, fração: 98.4%)
+2025-09-22 22:13:28,405 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,406 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.998, fração: 98.5%)
+2025-09-22 22:13:28,406 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,406 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.959, fração: 97.9%)
+2025-09-22 22:13:28,407 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,407 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,407 - INFO - VENDA: 2024-02-02 | Preço base: R$ 31.70 | Preço exec c/ slippage: R$ 31.70 | Ações: 3400 | Valor líquido: R$ 107675.82 | Slippage: 0.7 bps
+2025-09-22 22:13:28,407 - INFO - COMPRA: 2024-02-08 | Preço base: R$ 32.58 | Preço exec c/ slippage: R$ 32.58 | Ações: 3100 | Custo: R$ 101096.73 | Prob: 0.863 | Fração: 94.6%
+2025-09-22 22:13:28,407 - INFO - COMPRA: 2024-02-09 | Preço base: R$ 31.77 | Preço exec c/ slippage: R$ 31.77 | Ações: 200 | Custo: R$ 6361.33 | Prob: 0.791 | Fração: 89.7%
+2025-09-22 22:13:28,408 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.882, fração: 95.5%)
+2025-09-22 22:13:28,408 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.984, fração: 98.3%)
+2025-09-22 22:13:28,409 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.6%)
+2025-09-22 22:13:28,409 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.6%)
+2025-09-22 22:13:28,409 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.349, fração: 26.0%)
+2025-09-22 22:13:28,409 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.5%)
+2025-09-22 22:13:28,409 - INFO - VENDA: 2024-02-22 | Preço base: R$ 32.58 | Preço exec c/ slippage: R$ 32.57 | Ações: 3300 | Valor líquido: R$ 107388.52 | Slippage: 0.7 bps
+2025-09-22 22:13:28,410 - INFO - COMPRA: 2024-03-04 | Preço base: R$ 31.00 | Preço exec c/ slippage: R$ 31.00 | Ações: 3300 | Custo: R$ 102409.24 | Prob: 0.867 | Fração: 94.8%
+2025-09-22 22:13:28,410 - INFO - COMPRA: 2024-03-05 | Preço base: R$ 31.08 | Preço exec c/ slippage: R$ 31.08 | Ações: 100 | Custo: R$ 3111.01 | Prob: 0.797 | Fração: 90.2%
+2025-09-22 22:13:28,410 - INFO - COMPRA: 2024-03-06 | Preço base: R$ 31.42 | Preço exec c/ slippage: R$ 31.42 | Ações: 100 | Custo: R$ 3145.06 | Prob: 0.857 | Fração: 94.3%
+2025-09-22 22:13:28,410 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.920, fração: 96.9%)
+2025-09-22 22:13:28,411 - INFO - VENDA: 2024-03-08 | Preço base: R$ 27.58 | Preço exec c/ slippage: R$ 27.57 | Ações: 3500 | Valor líquido: R$ 96409.68 | Slippage: 0.7 bps
+2025-09-22 22:13:28,411 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 1 | Cash: R$ 96,967.91 | Ações: 0
+2025-09-22 22:13:28,411 - INFO - COMPRA: 2024-03-14 | Preço base: R$ 28.06 | Preço exec c/ slippage: R$ 28.06 | Ações: 1500 | Custo: R$ 42138.33 | Prob: 0.518 | Fração: 44.4%
+2025-09-22 22:13:28,411 - INFO - COMPRA: 2024-03-15 | Preço base: R$ 28.15 | Preço exec c/ slippage: R$ 28.15 | Ações: 1500 | Custo: R$ 42266.03 | Prob: 0.712 | Fração: 80.3%
+2025-09-22 22:13:28,412 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: -0.281, fração: 20.0%)
+2025-09-22 22:13:28,412 - INFO - COMPRA: 2024-03-19 | Preço base: R$ 28.01 | Preço exec c/ slippage: R$ 28.01 | Ações: 400 | Custo: R$ 11215.15 | Prob: 0.859 | Fração: 94.4%
+2025-09-22 22:13:28,412 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.881, fração: 95.4%)
+2025-09-22 22:13:28,413 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.893, fração: 96.0%)
+2025-09-22 22:13:28,413 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.896, fração: 96.1%)
+2025-09-22 22:13:28,413 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.994, fração: 98.5%)
+2025-09-22 22:13:28,413 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.969, fração: 98.1%)
+2025-09-22 22:13:28,413 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.992, fração: 98.4%)
+2025-09-22 22:13:28,413 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.909, fração: 96.5%)
+2025-09-22 22:13:28,414 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.998, fração: 98.5%)
+2025-09-22 22:13:28,414 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.837, fração: 93.2%)
+2025-09-22 22:13:28,414 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.425, fração: 31.9%)
+2025-09-22 22:13:28,414 - INFO - VENDA: 2024-04-04 | Preço base: R$ 29.30 | Preço exec c/ slippage: R$ 29.30 | Ações: 3400 | Valor líquido: R$ 99510.22 | Slippage: 0.7 bps
+2025-09-22 22:13:28,415 - INFO - COMPRA: 2024-04-10 | Preço base: R$ 30.61 | Preço exec c/ slippage: R$ 30.62 | Ações: 2900 | Custo: R$ 88873.83 | Prob: 0.804 | Fração: 90.8%
+2025-09-22 22:13:28,415 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.244, fração: 22.2%)
+2025-09-22 22:13:28,416 - INFO - COMPRA: 2024-04-12 | Preço base: R$ 30.10 | Preço exec c/ slippage: R$ 30.10 | Ações: 300 | Custo: R$ 9040.52 | Prob: 0.729 | Fração: 82.7%
+2025-09-22 22:13:28,416 - INFO - COMPRA: 2024-04-15 | Preço base: R$ 30.16 | Preço exec c/ slippage: R$ 30.16 | Ações: 100 | Custo: R$ 3018.92 | Prob: 0.996 | Fração: 98.5%
+2025-09-22 22:13:28,416 - INFO - VENDA: 2024-04-16 | Preço base: R$ 30.53 | Preço exec c/ slippage: R$ 30.53 | Ações: 3300 | Valor líquido: R$ 100635.36 | Slippage: 0.7 bps
+2025-09-22 22:13:28,416 - INFO - COMPRA: 2024-04-22 | Preço base: R$ 32.00 | Preço exec c/ slippage: R$ 32.01 | Ações: 3000 | Custo: R$ 96117.48 | Prob: 0.987 | Fração: 98.4%
+2025-09-22 22:13:28,416 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.206, fração: 21.5%)
+2025-09-22 22:13:28,416 - INFO - COMPRA: 2024-04-24 | Preço base: R$ 32.00 | Preço exec c/ slippage: R$ 32.01 | Ações: 100 | Custo: R$ 3203.88 | Prob: 0.812 | Fração: 91.5%
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.5%)
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.961, fração: 97.9%)
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.967, fração: 98.0%)
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.5%)
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.527, fração: 46.0%)
+2025-09-22 22:13:28,417 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,418 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.998, fração: 98.5%)
+2025-09-22 22:13:28,418 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,418 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.991, fração: 98.4%)
+2025-09-22 22:13:28,418 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.827, fração: 92.5%)
+2025-09-22 22:13:28,419 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.995, fração: 98.5%)
+2025-09-22 22:13:28,419 - INFO - VENDA: 2024-05-14 | Preço base: R$ 31.19 | Preço exec c/ slippage: R$ 31.19 | Ações: 3100 | Valor líquido: R$ 96599.56 | Slippage: 0.7 bps
+2025-09-22 22:13:28,419 - INFO - COMPRA: 2024-05-21 | Preço base: R$ 30.28 | Preço exec c/ slippage: R$ 30.28 | Ações: 3100 | Custo: R$ 93974.84 | Prob: 0.900 | Fração: 96.2%
+2025-09-22 22:13:28,419 - INFO - COMPRA: 2024-05-22 | Preço base: R$ 31.06 | Preço exec c/ slippage: R$ 31.06 | Ações: 100 | Custo: R$ 3109.48 | Prob: 0.988 | Fração: 98.4%
+2025-09-22 22:13:28,420 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.067, fração: 20.4%)
+2025-09-22 22:13:28,420 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.872, fração: 95.0%)
+2025-09-22 22:13:28,420 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 1 | Cash: R$ 1,338.30 | Ações: 3200
+2025-09-22 22:13:28,420 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.956, fração: 97.8%)
+2025-09-22 22:13:28,421 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.983, fração: 98.3%)
+2025-09-22 22:13:28,421 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.993, fração: 98.5%)
+2025-09-22 22:13:28,421 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.998, fração: 98.5%)
+2025-09-22 22:13:28,421 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.738, fração: 83.9%)
+2025-09-22 22:13:28,421 - INFO - VENDA: 2024-06-04 | Preço base: R$ 31.74 | Preço exec c/ slippage: R$ 31.74 | Ações: 3200 | Valor líquido: R$ 101466.01 | Slippage: 0.7 bps
+2025-09-22 22:13:28,422 - INFO - COMPRA: 2024-06-10 | Preço base: R$ 31.37 | Preço exec c/ slippage: R$ 31.37 | Ações: 3100 | Custo: R$ 97347.65 | Prob: 0.901 | Fração: 96.3%
+2025-09-22 22:13:28,422 - INFO - COMPRA: 2024-06-11 | Preço base: R$ 31.53 | Preço exec c/ slippage: R$ 31.53 | Ações: 100 | Custo: R$ 3156.22 | Prob: 0.603 | Fração: 60.7%
+2025-09-22 22:13:28,422 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: -0.378, fração: 20.0%)
+2025-09-22 22:13:28,422 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.182, fração: 21.2%)
+2025-09-22 22:13:28,422 - INFO - VENDA: 2024-06-14 | Preço base: R$ 29.36 | Preço exec c/ slippage: R$ 29.36 | Ações: 3200 | Valor líquido: R$ 93855.72 | Slippage: 0.7 bps
+2025-09-22 22:13:28,423 - INFO - COMPRA: 2024-06-20 | Preço base: R$ 31.19 | Preço exec c/ slippage: R$ 31.19 | Ações: 3000 | Custo: R$ 93662.57 | Prob: 0.949 | Fração: 97.6%
+2025-09-22 22:13:28,423 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.903, fração: 96.3%)
+2025-09-22 22:13:28,424 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.6%)
+2025-09-22 22:13:28,424 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.922, fração: 96.9%)
+2025-09-22 22:13:28,424 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.985, fração: 98.3%)
+2025-09-22 22:13:28,424 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.946, fração: 97.6%)
+2025-09-22 22:13:28,424 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,425 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,425 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.586, fração: 57.3%)
+2025-09-22 22:13:28,425 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.664, fração: 72.4%)
+2025-09-22 22:13:28,425 - INFO - VENDA: 2024-07-04 | Preço base: R$ 31.96 | Preço exec c/ slippage: R$ 31.95 | Ações: 3000 | Valor líquido: R$ 95763.32 | Slippage: 0.7 bps
+2025-09-22 22:13:28,426 - INFO - COMPRA: 2024-07-11 | Preço base: R$ 32.79 | Preço exec c/ slippage: R$ 32.79 | Ações: 2900 | Custo: R$ 95197.60 | Prob: 0.966 | Fração: 98.0%
+2025-09-22 22:13:28,426 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.647, fração: 69.1%)
+2025-09-22 22:13:28,426 - INFO - COMPRA: 2024-07-15 | Preço base: R$ 32.72 | Preço exec c/ slippage: R$ 32.73 | Ações: 100 | Custo: R$ 3275.80 | Prob: 0.996 | Fração: 98.5%
+2025-09-22 22:13:28,427 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.992, fração: 98.4%)
+2025-09-22 22:13:28,427 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.5%)
+2025-09-22 22:13:28,427 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.983, fração: 98.3%)
+2025-09-22 22:13:28,428 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.966, fração: 98.0%)
+2025-09-22 22:13:28,428 - INFO - VENDA: 2024-07-22 | Preço base: R$ 32.36 | Preço exec c/ slippage: R$ 32.35 | Ações: 3000 | Valor líquido: R$ 96965.14 | Slippage: 0.7 bps
+2025-09-22 22:13:28,428 - INFO - COMPRA: 2024-07-26 | Preço base: R$ 32.01 | Preço exec c/ slippage: R$ 32.01 | Ações: 1500 | Custo: R$ 48061.19 | Prob: 0.561 | Fração: 52.4%
+2025-09-22 22:13:28,429 - INFO - COMPRA: 2024-07-29 | Preço base: R$ 31.15 | Preço exec c/ slippage: R$ 31.16 | Ações: 1500 | Custo: R$ 46779.90 | Prob: 0.998 | Fração: 98.5%
+2025-09-22 22:13:28,429 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.858, fração: 94.4%)
+2025-09-22 22:13:28,429 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,429 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.733, fração: 83.3%)
+2025-09-22 22:13:28,429 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.973, fração: 98.1%)
+2025-09-22 22:13:28,429 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.924, fração: 97.0%)
+2025-09-22 22:13:28,430 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 1 | Cash: R$ 2,614.96 | Ações: 3000
+2025-09-22 22:13:28,430 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.906, fração: 96.4%)
+2025-09-22 22:13:28,431 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.991, fração: 98.4%)
+2025-09-22 22:13:28,431 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.975, fração: 98.2%)
+2025-09-22 22:13:28,431 - INFO - VENDA: 2024-08-09 | Preço base: R$ 31.40 | Preço exec c/ slippage: R$ 31.40 | Ações: 3000 | Valor líquido: R$ 94101.21 | Slippage: 0.7 bps
+2025-09-22 22:13:28,431 - INFO - COMPRA: 2024-08-15 | Preço base: R$ 32.57 | Preço exec c/ slippage: R$ 32.57 | Ações: 2900 | Custo: R$ 94553.51 | Prob: 0.997 | Fração: 98.5%
+2025-09-22 22:13:28,431 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.953, fração: 97.7%)
+2025-09-22 22:13:28,431 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.960, fração: 97.9%)
+2025-09-22 22:13:28,432 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.981, fração: 98.3%)
+2025-09-22 22:13:28,432 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.496, fração: 40.9%)
+2025-09-22 22:13:28,432 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.985, fração: 98.3%)
+2025-09-22 22:13:28,432 - INFO - VENDA: 2024-08-23 | Preço base: R$ 33.22 | Preço exec c/ slippage: R$ 33.22 | Ações: 2900 | Valor líquido: R$ 96248.05 | Slippage: 0.7 bps
+2025-09-22 22:13:28,432 - INFO - COMPRA: 2024-08-29 | Preço base: R$ 34.42 | Preço exec c/ slippage: R$ 34.42 | Ações: 2600 | Custo: R$ 89583.02 | Prob: 0.815 | Fração: 91.7%
+2025-09-22 22:13:28,432 - INFO - COMPRA: 2024-08-30 | Preço base: R$ 34.51 | Preço exec c/ slippage: R$ 34.52 | Ações: 200 | Custo: R$ 6910.25 | Prob: 0.760 | Fração: 86.6%
+2025-09-22 22:13:28,432 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.746, fração: 84.9%)
+2025-09-22 22:13:28,433 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: -0.521, fração: 20.0%)
+2025-09-22 22:13:28,433 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.832, fração: 92.9%)
+2025-09-22 22:13:28,433 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.903, fração: 96.3%)
+2025-09-22 22:13:28,433 - INFO - VENDA: 2024-09-06 | Preço base: R$ 33.21 | Preço exec c/ slippage: R$ 33.20 | Ações: 2800 | Valor líquido: R$ 92880.07 | Slippage: 0.7 bps
+2025-09-22 22:13:28,434 - INFO - COMPRA: 2024-09-12 | Preço base: R$ 32.57 | Preço exec c/ slippage: R$ 32.57 | Ações: 2700 | Custo: R$ 88023.67 | Prob: 0.887 | Fração: 95.7%
+2025-09-22 22:13:28,434 - INFO - COMPRA: 2024-09-13 | Preço base: R$ 32.68 | Preço exec c/ slippage: R$ 32.68 | Ações: 100 | Custo: R$ 3271.52 | Prob: 0.738 | Fração: 83.9%
+2025-09-22 22:13:28,434 - INFO - COMPRA: 2024-09-16 | Preço base: R$ 32.62 | Preço exec c/ slippage: R$ 32.62 | Ações: 100 | Custo: R$ 3265.37 | Prob: 0.998 | Fração: 98.5%
+2025-09-22 22:13:28,434 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.988, fração: 98.4%)
+2025-09-22 22:13:28,434 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.937, fração: 97.3%)
+2025-09-22 22:13:28,434 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.991, fração: 98.4%)
+2025-09-22 22:13:28,434 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.886, fração: 95.7%)
+2025-09-22 22:13:28,434 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.806, fração: 91.0%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.986, fração: 98.3%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.960, fração: 97.9%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.110, fração: 20.6%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.289, fração: 23.4%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.961, fração: 97.9%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.843, fração: 93.5%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.861, fração: 94.5%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.983, fração: 98.3%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.994, fração: 98.5%)
+2025-09-22 22:13:28,435 - INFO - VENDA: 2024-10-08 | Preço base: R$ 32.79 | Preço exec c/ slippage: R$ 32.79 | Ações: 2900 | Valor líquido: R$ 95002.38 | Slippage: 0.7 bps
+2025-09-22 22:13:28,435 - INFO - COMPRA: 2024-10-14 | Preço base: R$ 32.65 | Preço exec c/ slippage: R$ 32.66 | Ações: 2800 | Custo: R$ 91529.80 | Prob: 1.000 | Fração: 98.6%
+2025-09-22 22:13:28,435 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 1 | Cash: R$ 4,347.13 | Ações: 2800
+2025-09-22 22:13:28,435 - INFO - COMPRA: 2024-10-15 | Preço base: R$ 32.95 | Preço exec c/ slippage: R$ 32.95 | Ações: 100 | Custo: R$ 3298.75 | Prob: 0.923 | Fração: 97.0%
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.930, fração: 97.2%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.986, fração: 98.4%)
+2025-09-22 22:13:28,435 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.653, fração: 70.3%)
+2025-09-22 22:13:28,437 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,437 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.945, fração: 97.5%)
+2025-09-22 22:13:28,437 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.984, fração: 98.3%)
+2025-09-22 22:13:28,437 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,437 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.920, fração: 96.9%)
+2025-09-22 22:13:28,437 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.972, fração: 98.1%)
+2025-09-22 22:13:28,438 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.975, fração: 98.2%)
+2025-09-22 22:13:28,438 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.955, fração: 97.8%)
+2025-09-22 22:13:28,438 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.987, fração: 98.4%)
+2025-09-22 22:13:28,438 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.795, fração: 90.0%)
+2025-09-22 22:13:28,438 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.963, fração: 97.9%)
+2025-09-22 22:13:28,438 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.959, fração: 97.8%)
+2025-09-22 22:13:28,439 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.793, fração: 89.8%)
+2025-09-22 22:13:28,439 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.918, fração: 96.8%)
+2025-09-22 22:13:28,439 - INFO - VENDA: 2024-11-08 | Preço base: R$ 31.58 | Preço exec c/ slippage: R$ 31.58 | Ações: 2900 | Valor líquido: R$ 91494.14 | Slippage: 0.7 bps
+2025-09-22 22:13:28,440 - INFO - COMPRA: 2024-11-14 | Preço base: R$ 32.65 | Preço exec c/ slippage: R$ 32.65 | Ações: 2700 | Custo: R$ 88237.15 | Prob: 0.989 | Fração: 98.4%
+2025-09-22 22:13:28,440 - INFO - COMPRA: 2024-11-18 | Preço base: R$ 33.44 | Preço exec c/ slippage: R$ 33.44 | Ações: 100 | Custo: R$ 3347.07 | Prob: 1.000 | Fração: 98.6%
+2025-09-22 22:13:28,440 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,440 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.5%)
+2025-09-22 22:13:28,440 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,441 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.837, fração: 93.2%)
+2025-09-22 22:13:28,441 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.734, fração: 83.4%)
+2025-09-22 22:13:28,441 - INFO - VENDA: 2024-11-27 | Preço base: R$ 34.06 | Preço exec c/ slippage: R$ 34.06 | Ações: 2800 | Valor líquido: R$ 95260.97 | Slippage: 0.7 bps
+2025-09-22 22:13:28,441 - INFO - COMPRA: 2024-12-03 | Preço base: R$ 34.66 | Preço exec c/ slippage: R$ 34.67 | Ações: 2700 | Custo: R$ 93692.68 | Prob: 1.000 | Fração: 98.6%
+2025-09-22 22:13:28,441 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.894, fração: 96.0%)
+2025-09-22 22:13:28,442 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 1.000, fração: 98.6%)
+2025-09-22 22:13:28,442 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: -0.115, fração: 20.1%)
+2025-09-22 22:13:28,442 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.999, fração: 98.6%)
+2025-09-22 22:13:28,442 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.997, fração: 98.5%)
+2025-09-22 22:13:28,443 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.998, fração: 98.5%)
+2025-09-22 22:13:28,443 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.583, fração: 56.7%)
+2025-09-22 22:13:28,443 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.646, fração: 69.0%)
+2025-09-22 22:13:28,443 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.958, fração: 97.8%)
+2025-09-22 22:13:28,443 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.974, fração: 98.1%)
+2025-09-22 22:13:28,444 - INFO - VENDA: 2024-12-18 | Preço base: R$ 34.36 | Preço exec c/ slippage: R$ 34.36 | Ações: 2700 | Valor líquido: R$ 92680.02 | Slippage: 0.7 bps
+2025-09-22 22:13:28,444 - INFO - COMPRA: 2024-12-26 | Preço base: R$ 34.10 | Preço exec c/ slippage: R$ 34.11 | Ações: 2700 | Custo: R$ 92178.29 | Prob: 0.981 | Fração: 98.3%
+2025-09-22 22:13:28,444 - INFO - COMPRA: 2024-12-27 | Preço base: R$ 33.90 | Preço exec c/ slippage: R$ 33.90 | Ações: 100 | Custo: R$ 3393.11 | Prob: 0.986 | Fração: 98.3%
+2025-09-22 22:13:28,444 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-22 22:13:28,444 - INFO -   Total de trades: 57
+2025-09-22 22:13:28,444 - INFO -   Compras realizadas: 39
+2025-09-22 22:13:28,444 - INFO -   Vendas realizadas: 18
+2025-09-22 22:13:28,444 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-22 22:13:28,444 - INFO -   Capital final: R$ 96,148.06
+2025-09-22 22:13:28,444 - INFO -   Cash final: R$ 154.21
+2025-09-22 22:13:28,444 - INFO -   Ações finais: 2800
+2025-09-22 22:13:28,444 - INFO -   Retorno total: -3.85%

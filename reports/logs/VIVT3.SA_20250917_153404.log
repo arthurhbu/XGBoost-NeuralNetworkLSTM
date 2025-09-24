@@ -1,0 +1,36 @@
+2025-09-17 15:34:04,081 - INFO - THRESHOLDS FINANCEIROS: buy=0.50 sell=0.50 hold_min_days=3
+2025-09-17 15:34:04,082 - INFO - PROBABILIDADE MÉDIA: 0.242
+2025-09-17 15:34:04,082 - INFO - ============================================================
+2025-09-17 15:34:04,083 - INFO - INICIANDO BACKTESTING REALISTA
+2025-09-17 15:34:04,083 - INFO - ============================================================
+2025-09-17 15:34:04,083 - INFO - Tamanho test_df: 251
+2025-09-17 15:34:04,083 - INFO - Tamanho predictions: 251
+2025-09-17 15:34:04,084 - INFO - Tamanho probabilities: 251
+2025-09-17 15:34:04,086 - INFO - Capital inicial: R$ 100,000.00
+2025-09-17 15:34:04,087 - INFO - Custo de transação: 0.100%
+2025-09-17 15:34:04,100 - INFO - CDI real carregado: 253 dias disponíveis
+2025-09-17 15:34:04,101 - INFO - Slippage Dinâmico: 0.2-2.0 bps | Lote: 100 | CDI: Real
+2025-09-17 15:34:04,106 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-17 15:34:04,106 - INFO -   - Total: 251
+2025-09-17 15:34:04,107 - INFO -   - Predições de alta (1): 0
+2025-09-17 15:34:04,107 - INFO -   - Predições de baixa (0): 251
+2025-09-17 15:34:04,107 - INFO -   - Percentual de alta: 0.0%
+2025-09-17 15:34:04,108 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-17 15:34:04,108 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-17 15:34:04,120 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 102,159.59 | Ações: 0
+2025-09-17 15:34:04,132 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 104,229.77 | Ações: 0
+2025-09-17 15:34:04,144 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 106,296.14 | Ações: 0
+2025-09-17 15:34:04,156 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 0 | Cash: R$ 108,420.99 | Ações: 0
+2025-09-17 15:34:04,168 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-17 15:34:04,170 - INFO -   Total de trades: 0
+2025-09-17 15:34:04,170 - INFO -   Compras realizadas: 0
+2025-09-17 15:34:04,170 - INFO -   Vendas realizadas: 0
+2025-09-17 15:34:04,170 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-17 15:34:04,170 - INFO -   Capital final: R$ 110,724.73
+2025-09-17 15:34:04,170 - INFO -   Cash final: R$ 110,724.73
+2025-09-17 15:34:04,170 - INFO -   Ações finais: 0
+2025-09-17 15:34:04,171 - INFO -   Retorno total: +10.72%
+2025-09-17 15:34:04,171 - WARNING - AVISO: Nenhum trade foi executado!
+2025-09-17 15:34:04,171 - WARNING -   - Verificar se há predições de alta (1) nas predições
+2025-09-17 15:34:04,171 - WARNING -   - Verificar se há predições de baixa (0) quando há ações
+2025-09-17 15:34:04,171 - WARNING -   - Verificar se os dados têm variação suficiente

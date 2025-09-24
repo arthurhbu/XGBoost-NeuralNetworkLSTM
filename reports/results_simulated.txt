@@ -2,25 +2,25 @@
 RELATÓRIO DE BACKTESTING - MODELO XGBOOST vs BUY AND HOLD
 ================================================================================
 
-Data da simulação: 11/09/2025 15:06:35
+Data da simulação: 17/09/2025 10:19:33
 Capital inicial: R$ 100,000.00
 Custo de transação: 0.100%
 
 --------------------------------------------------------------------------------
-RESULTADOS POR BOLSA
+RESULTADOS POR TICKER
 --------------------------------------------------------------------------------
 
-BOLSA: ABEV3.SA
+TICKER: ABEV3.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 95,490.32
-  Retorno Total: -4.51%
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 100,404.71
+  Retorno Total: +0.36%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 93,422.81
-  Retorno Total: -6.58%
+  Capital Final: R$ 100,020.03
+  Retorno Total: +0.02%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -28,17 +28,17 @@ Estratégia: Buy and Hold
   Retorno Total: -9.65%
 
 
-BOLSA: B3SA3.SA
+TICKER: B3SA3.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 114,826.82
-  Retorno Total: +14.83%
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 116,931.66
+  Retorno Total: +16.88%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 120,295.51
-  Retorno Total: +20.30%
+  Capital Final: R$ 105,322.41
+  Retorno Total: +5.32%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -46,17 +46,17 @@ Estratégia: Buy and Hold
   Retorno Total: -25.22%
 
 
-BOLSA: BBAS3.SA
+TICKER: BBAS3.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,046.27
-  Capital Final: R$ 110,812.85
-  Retorno Total: +10.76%
+  Capital Inicial: R$ 100,041.41
+  Capital Final: R$ 108,280.98
+  Retorno Total: +8.24%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 109,292.32
-  Retorno Total: +9.29%
+  Capital Final: R$ 103,520.43
+  Retorno Total: +3.52%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -64,17 +64,17 @@ Estratégia: Buy and Hold
   Retorno Total: -4.32%
 
 
-BOLSA: BBDC4.SA
+TICKER: BBDC4.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 100,000.00
-  Retorno Total: +0.00%
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 82,834.35
+  Retorno Total: -17.20%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 100,000.00
-  Retorno Total: +0.00%
+  Capital Final: R$ 79,628.18
+  Retorno Total: -20.37%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -82,17 +82,17 @@ Estratégia: Buy and Hold
   Retorno Total: -26.65%
 
 
-BOLSA: ITUB4.SA
+TICKER: ITUB4.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 99,929.90
-  Capital Final: R$ 99,686.68
-  Retorno Total: -0.24%
+  Capital Inicial: R$ 99,924.91
+  Capital Final: R$ 109,014.84
+  Retorno Total: +9.10%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 101,664.46
-  Retorno Total: +1.66%
+  Capital Final: R$ 108,707.73
+  Retorno Total: +8.71%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -100,17 +100,17 @@ Estratégia: Buy and Hold
   Retorno Total: -1.68%
 
 
-BOLSA: PETR4.SA
+TICKER: PETR4.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 137,299.73
-  Retorno Total: +37.30%
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 117,372.05
+  Retorno Total: +17.32%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 132,721.55
-  Retorno Total: +32.72%
+  Capital Final: R$ 114,745.60
+  Retorno Total: +14.75%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -118,17 +118,17 @@ Estratégia: Buy and Hold
   Retorno Total: +17.38%
 
 
-BOLSA: VALE3.SA
+TICKER: VALE3.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 107,338.87
-  Retorno Total: +7.34%
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 104,241.86
+  Retorno Total: +4.20%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 103,027.33
-  Retorno Total: +3.03%
+  Capital Final: R$ 100,378.49
+  Retorno Total: +0.38%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -136,17 +136,17 @@ Estratégia: Buy and Hold
   Retorno Total: -22.65%
 
 
-BOLSA: VIVT3.SA
+TICKER: VIVT3.SA
 ----------------------------------------
 Estratégia: Modelo de Predição
-  Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 111,600.50
-  Retorno Total: +11.60%
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 118,238.85
+  Retorno Total: +18.19%
 
-Estratégia: Modelo Simples
+Estratégia: Simulação Simples
   Capital Inicial: R$ 100,000.00
-  Capital Final: R$ 111,121.64
-  Retorno Total: +11.12%
+  Capital Final: R$ 110,040.76
+  Retorno Total: +10.04%
 
 Estratégia: Buy and Hold
   Capital Inicial: R$ 100,000.00
@@ -158,8 +158,8 @@ Estratégia: Buy and Hold
 RESUMO GERAL
 ================================================================================
 
-Retorno médio do modelo XGBoost: +9.63%
-Retorno médio do modelo simples: +8.94%
+Retorno médio do modelo XGBoost: +7.13%
+Retorno médio do modelo simples: +2.80%
 Retorno médio Buy and Hold: -9.84%
-Total de bolsas analisadas: 8
+Total de tickers analisados: 8
 Total de simulações realizadas: 24

@@ -1,0 +1,97 @@
+2025-09-17 19:01:02,683 - INFO - THRESHOLDS FINANCEIROS: buy=0.72 sell=0.05 hold_min_days=3
+2025-09-17 19:01:02,684 - INFO - PROBABILIDADE MÉDIA: 0.201
+2025-09-17 19:01:02,684 - INFO - ============================================================
+2025-09-17 19:01:02,684 - INFO - INICIANDO BACKTESTING REALISTA
+2025-09-17 19:01:02,684 - INFO - ============================================================
+2025-09-17 19:01:02,685 - INFO - Tamanho test_df: 251
+2025-09-17 19:01:02,685 - INFO - Tamanho predictions: 251
+2025-09-17 19:01:02,685 - INFO - Tamanho probabilities: 251
+2025-09-17 19:01:02,687 - INFO - Capital inicial: R$ 100,000.00
+2025-09-17 19:01:02,688 - INFO - Custo de transação: 0.100%
+2025-09-17 19:01:02,697 - INFO - CDI real carregado: 253 dias disponíveis
+2025-09-17 19:01:02,697 - INFO - Slippage Dinâmico: 0.2-2.0 bps | Lote: 100 | CDI: Real
+2025-09-17 19:01:02,703 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-17 19:01:02,704 - INFO -   - Total: 251
+2025-09-17 19:01:02,704 - INFO -   - Predições de alta (1): 66
+2025-09-17 19:01:02,705 - INFO -   - Predições de baixa (0): 185
+2025-09-17 19:01:02,705 - INFO -   - Percentual de alta: 26.3%
+2025-09-17 19:01:02,705 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-17 19:01:02,706 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-17 19:01:02,720 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 102,159.59 | Ações: 0
+2025-09-17 19:01:02,736 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 104,229.77 | Ações: 0
+2025-09-17 19:01:02,749 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 106,296.14 | Ações: 0
+2025-09-17 19:01:02,760 - INFO - COMPRA: 2024-09-24 | Preço base: R$ 55.96 | Preço exec c/ slippage: R$ 55.96 | Ações: 1700 | Custo: R$ 95231.43 | Prob: 0.824 | Fração: 92.3%
+2025-09-17 19:01:02,761 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.195, fração: 21.4%)
+2025-09-17 19:01:02,762 - INFO - COMPRA: 2024-09-26 | Preço base: R$ 59.63 | Preço exec c/ slippage: R$ 59.63 | Ações: 100 | Custo: R$ 5968.97 | Prob: 0.788 | Fração: 89.4%
+2025-09-17 19:01:02,763 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.451, fração: 34.7%)
+2025-09-17 19:01:02,764 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.147, fração: 20.8%)
+2025-09-17 19:01:02,765 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.404, fração: 29.9%)
+2025-09-17 19:01:02,766 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.377, fração: 27.8%)
+2025-09-17 19:01:02,767 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.222, fração: 21.8%)
+2025-09-17 19:01:02,769 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.083, fração: 20.5%)
+2025-09-17 19:01:02,770 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.212, fração: 21.6%)
+2025-09-17 19:01:02,771 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.082, fração: 20.4%)
+2025-09-17 19:01:02,773 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.239, fração: 22.1%)
+2025-09-17 19:01:02,774 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.170, fração: 21.1%)
+2025-09-17 19:01:02,775 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.158, fração: 21.0%)
+2025-09-17 19:01:02,777 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.238, fração: 22.1%)
+2025-09-17 19:01:02,777 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 1 | Cash: R$ 6,613.94 | Ações: 1800
+2025-09-17 19:01:02,778 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.153, fração: 20.9%)
+2025-09-17 19:01:02,779 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.372, fração: 27.4%)
+2025-09-17 19:01:02,780 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.148, fração: 20.9%)
+2025-09-17 19:01:02,781 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.148, fração: 20.9%)
+2025-09-17 19:01:02,782 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.167, fração: 21.0%)
+2025-09-17 19:01:02,783 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.190, fração: 21.3%)
+2025-09-17 19:01:02,783 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.147, fração: 20.8%)
+2025-09-17 19:01:02,783 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.306, fração: 24.0%)
+2025-09-17 19:01:02,783 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.207, fração: 21.5%)
+2025-09-17 19:01:02,784 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.353, fração: 26.2%)
+2025-09-17 19:01:02,784 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.152, fração: 20.9%)
+2025-09-17 19:01:02,784 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.152, fração: 20.9%)
+2025-09-17 19:01:02,784 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.177, fração: 21.1%)
+2025-09-17 19:01:02,784 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.165, fração: 21.0%)
+2025-09-17 19:01:02,785 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.159, fração: 21.0%)
+2025-09-17 19:01:02,785 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.092, fração: 20.5%)
+2025-09-17 19:01:02,785 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.159, fração: 21.0%)
+2025-09-17 19:01:02,785 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.653, fração: 70.3%)
+2025-09-17 19:01:02,786 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.261, fração: 22.6%)
+2025-09-17 19:01:02,786 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.077, fração: 20.4%)
+2025-09-17 19:01:02,787 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.158, fração: 20.9%)
+2025-09-17 19:01:02,787 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.185, fração: 21.2%)
+2025-09-17 19:01:02,787 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.191, fração: 21.3%)
+2025-09-17 19:01:02,787 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.390, fração: 28.7%)
+2025-09-17 19:01:02,788 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.195, fração: 21.4%)
+2025-09-17 19:01:02,788 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.185, fração: 21.2%)
+2025-09-17 19:01:02,788 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.195, fração: 21.4%)
+2025-09-17 19:01:02,788 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.185, fração: 21.2%)
+2025-09-17 19:01:02,789 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.174, fração: 21.1%)
+2025-09-17 19:01:02,789 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.321, fração: 24.6%)
+2025-09-17 19:01:02,789 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.154, fração: 20.9%)
+2025-09-17 19:01:02,789 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.424, fração: 31.8%)
+2025-09-17 19:01:02,790 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.154, fração: 20.9%)
+2025-09-17 19:01:02,790 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.085, fração: 20.5%)
+2025-09-17 19:01:02,790 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.183, fração: 21.2%)
+2025-09-17 19:01:02,790 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.243, fração: 22.2%)
+2025-09-17 19:01:02,791 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.211, fração: 21.6%)
+2025-09-17 19:01:02,791 - INFO - COMPRA: 2024-12-09 | Preço base: R$ 55.06 | Preço exec c/ slippage: R$ 55.06 | Ações: 100 | Custo: R$ 5511.38 | Prob: 0.779 | Fração: 88.5%
+2025-09-17 19:01:02,791 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.179, fração: 21.2%)
+2025-09-17 19:01:02,791 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.082, fração: 20.4%)
+2025-09-17 19:01:02,792 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.210, fração: 21.6%)
+2025-09-17 19:01:02,792 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.093, fração: 20.5%)
+2025-09-17 19:01:02,792 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.198, fração: 21.4%)
+2025-09-17 19:01:02,792 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.239, fração: 22.1%)
+2025-09-17 19:01:02,793 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.183, fração: 21.2%)
+2025-09-17 19:01:02,793 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.087, fração: 20.5%)
+2025-09-17 19:01:02,793 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.305, fração: 24.0%)
+2025-09-17 19:01:02,793 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.193, fração: 21.3%)
+2025-09-17 19:01:02,794 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.162, fração: 21.0%)
+2025-09-17 19:01:02,794 - WARNING - COMPRA REJEITADA: Quantidade calculada = 0 (prob: 0.194, fração: 21.4%)
+2025-09-17 19:01:02,794 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-17 19:01:02,794 - INFO -   Total de trades: 3
+2025-09-17 19:01:02,794 - INFO -   Compras realizadas: 3
+2025-09-17 19:01:02,794 - INFO -   Vendas realizadas: 0
+2025-09-17 19:01:02,794 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-17 19:01:02,794 - INFO -   Capital final: R$ 97,581.10
+2025-09-17 19:01:02,794 - INFO -   Cash final: R$ 1,210.98
+2025-09-17 19:01:02,794 - INFO -   Ações finais: 1900
+2025-09-17 19:01:02,794 - INFO -   Retorno total: -2.42%

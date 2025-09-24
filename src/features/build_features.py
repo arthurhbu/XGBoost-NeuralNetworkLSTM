@@ -88,11 +88,11 @@ def create_technical_indicators(dataframe, indicators_config):
     
     dataframe.loc[:, 'ADX'] = talib.ADX(high_prices, low_prices, close_prices, timeperiod=indicators_config['adx_length'])
     
-    # dataframe.loc[:, 'ATR'] = talib.ATR(high_prices, low_prices, close_prices, timeperiod=indicators_config['atr_length'])
+    dataframe.loc[:, 'ATR'] = talib.ATR(high_prices, low_prices, close_prices, timeperiod=indicators_config['atr_length'])
 
-    # dataframe.loc[:, 'OBV'] = talib.OBV(close_prices, volume)
+    dataframe.loc[:, 'OBV'] = talib.OBV(close_prices, volume)
 
-    # dataframe.loc[:, 'MFI'] = talib.MFI(high_prices, low_prices, close_prices, volume, timeperiod=indicators_config['mfi_length'])
+    dataframe.loc[:, 'MFI'] = talib.MFI(high_prices, low_prices, close_prices, volume, timeperiod=indicators_config['mfi_length'])
     
     dataframe = dataframe.dropna()
     return dataframe
@@ -108,22 +108,41 @@ def create_wavelet_features(dataframe, wavelet_config):
     Returns:
         DataFrame com as features wavelet criadas
     """
+    close_prices = dataframe['Close'].values
+
+    cA_list = []
+    cD_list = []
+    min_length = 2 ** (wavelet_config['level'] + 2)
+    min_length = max(min_length, 30)
     
-    coeffs = pywt.wavedec(dataframe['Close'].values, wavelet=wavelet_config['family'], level=wavelet_config['level'], mode='symmetric')
-    cA, cD = coeffs
-    
-    cA_series = pd.Series(np.nan, index=dataframe.index)
-    cD_series = pd.Series(np.nan, index=dataframe.index)
-    cA_series.iloc[-len(cA):] = cA
-    cD_series.iloc[-len(cD):] = cD
-    cA_series.bfill(inplace=True)
-    cD_series.bfill(inplace=True)
-    
+    for i in range(len(close_prices)):
+        if i < min_length:
+            cA_list.append(np.nan)
+            cD_list.append(np.nan)
+        else: 
+            window_data = close_prices[:i+1]
+            try:
+                coeffs = pywt.wavedec(
+                    window_data,
+                    wavelet=wavelet_config['family'],
+                    level=wavelet_config['level'],
+                    mode='constant'
+                )
+                cA, cD = coeffs
+                cA_list.append(cA[-1])
+                cD_list.append(cD[-1])
+            except Exception as e:
+                print(e)
+                cA_list.append(np.nan)
+                cD_list.append(np.nan)
+
+    cA_series = pd.Series(cA_list, index=dataframe.index)
+    cD_series = pd.Series(cD_list, index=dataframe.index)
+
     dataframe.loc[:, 'wavelet_cA'] = cA_series
     dataframe.loc[:, 'wavelet_cD'] = cD_series
-    
-    dataframe = dataframe.dropna()
-    return dataframe
+
+    return dataframe.dropna()
 
 def main():
     
@@ -148,7 +167,7 @@ def main():
         data = create_technical_indicators(data, indicators_config)
         
         data = create_wavelet_features(data, wavelet_config)
-        
+
         # Salvar o CSV com o índice (datas) incluído
         data.to_csv(f'{data_config["features_data_path"]}/{ticker}.csv')
 

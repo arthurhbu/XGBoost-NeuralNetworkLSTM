@@ -70,7 +70,6 @@ DADOS PARA EXAMINAR:
 - Avalie dados processados (data/)
 - Considere métricas de ML vs financeiras
 
-META: Identifique o gap entre "modelo com 70% accuracy" e "modelo perdendo dinheiro" através de análise técnica rigorosa do pipeline completo.
 ```
 
 ---

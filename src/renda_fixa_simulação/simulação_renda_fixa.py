@@ -157,8 +157,8 @@ def simulação_renda_fixa(
 
 def main():
 	initial_capital = 100000
-	start_date = '2024-01-01'
-	end_date = '2025-01-01'
+	start_date = '2024-08-01'
+	end_date = '2025-08-01'
 	result = simulação_renda_fixa(initial_capital, start_date, end_date)
 	# Exporta todas as séries
 	result.to_csv('src/renda_fixa_simulação/simulação_renda_fixa.csv')

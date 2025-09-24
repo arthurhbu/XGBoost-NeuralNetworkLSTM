@@ -1,0 +1,36 @@
+2025-09-24 10:01:20,913 - INFO - THRESHOLDS FINANCEIROS: buy=0.70 sell=0.22 hold_min_days=3
+2025-09-24 10:01:20,913 - INFO - SCORE MÉDIO: -0.986
+2025-09-24 10:01:20,913 - INFO - ============================================================
+2025-09-24 10:01:20,913 - INFO - INICIANDO BACKTESTING REALISTA
+2025-09-24 10:01:20,913 - INFO - ============================================================
+2025-09-24 10:01:20,915 - INFO - Tamanho test_df: 251
+2025-09-24 10:01:20,915 - INFO - Tamanho predictions: 251
+2025-09-24 10:01:20,915 - INFO - Tamanho probabilities: 251
+2025-09-24 10:01:20,918 - INFO - Capital inicial: R$ 100,000.00
+2025-09-24 10:01:20,918 - INFO - Custo de transação: 0.100%
+2025-09-24 10:01:20,927 - INFO - CDI real carregado: 253 dias disponíveis
+2025-09-24 10:01:20,927 - INFO - Slippage Dinâmico: 0.2-2.0 bps | Lote: 100 | CDI: Real
+2025-09-24 10:01:20,931 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-24 10:01:20,931 - INFO -   - Total: 251
+2025-09-24 10:01:20,931 - INFO -   - Predições de alta (1): 0
+2025-09-24 10:01:20,931 - INFO -   - Predições de baixa (0): 251
+2025-09-24 10:01:20,931 - INFO -   - Percentual de alta: 0.0%
+2025-09-24 10:01:20,933 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-24 10:01:20,933 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-24 10:01:20,939 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-24 10:01:20,945 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-24 10:01:20,950 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-24 10:01:20,955 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-24 10:01:20,961 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-24 10:01:20,961 - INFO -   Total de trades: 0
+2025-09-24 10:01:20,961 - INFO -   Compras realizadas: 0
+2025-09-24 10:01:20,961 - INFO -   Vendas realizadas: 0
+2025-09-24 10:01:20,961 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-24 10:01:20,961 - INFO -   Capital final: R$ 100,000.00
+2025-09-24 10:01:20,961 - INFO -   Cash final: R$ 100,000.00
+2025-09-24 10:01:20,961 - INFO -   Ações finais: 0
+2025-09-24 10:01:20,961 - INFO -   Retorno total: +0.00%
+2025-09-24 10:01:20,963 - WARNING - AVISO: Nenhum trade foi executado!
+2025-09-24 10:01:20,963 - WARNING -   - Verificar se há predições de alta (1) nas predições
+2025-09-24 10:01:20,963 - WARNING -   - Verificar se há predições de baixa (0) quando há ações
+2025-09-24 10:01:20,963 - WARNING -   - Verificar se os dados têm variação suficiente

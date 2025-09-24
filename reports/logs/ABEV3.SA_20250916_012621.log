@@ -1,0 +1,170 @@
+2025-09-16 01:26:21,162 - INFO - THRESHOLDS FINANCEIROS: buy=0.55 sell=0.15 hold_min_days=3
+2025-09-16 01:26:21,163 - INFO - PROBABILIDADE MÉDIA: 0.422
+2025-09-16 01:26:21,163 - INFO - ============================================================
+2025-09-16 01:26:21,163 - INFO - INICIANDO BACKTESTING REALISTA
+2025-09-16 01:26:21,163 - INFO - ============================================================
+2025-09-16 01:26:21,163 - INFO - Tamanho test_df: 251
+2025-09-16 01:26:21,163 - INFO - Tamanho predictions: 251
+2025-09-16 01:26:21,163 - INFO - Capital inicial: R$ 100,000.00
+2025-09-16 01:26:21,165 - INFO - Custo de transação: 0.100%
+2025-09-16 01:26:21,173 - INFO - CDI real carregado: 253 dias disponíveis
+2025-09-16 01:26:21,174 - INFO - Slippage: 10.0 bps (0.100%) | Lote: 100 | CDI: Real
+2025-09-16 01:26:21,174 - INFO - DISTRIBUIÇÃO DAS PREDIÇÕES:
+2025-09-16 01:26:21,174 - INFO -   - Total: 251
+2025-09-16 01:26:21,174 - INFO -   - Predições de alta (1): 129
+2025-09-16 01:26:21,174 - INFO -   - Predições de baixa (0): 122
+2025-09-16 01:26:21,174 - INFO -   - Percentual de alta: 51.4%
+2025-09-16 01:26:21,174 - INFO - EXECUÇÃO DOS TRADES:
+2025-09-16 01:26:21,174 - INFO - PROGRESSO: Data 2024-01-02 | Pred: 0 | Cash: R$ 100,000.00 | Ações: 0
+2025-09-16 01:26:21,176 - INFO - COMPRA: 2024-01-15 | Preço base: R$ 12.51 | Preço exec c/ slippage: R$ 12.52 | Ações: 8000 | Custo: R$ 100253.59
+2025-09-16 01:26:21,176 - INFO - COMPRA: 2024-01-16 | Preço base: R$ 12.40 | Preço exec c/ slippage: R$ 12.42 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,176 - INFO - COMPRA: 2024-01-17 | Preço base: R$ 12.49 | Preço exec c/ slippage: R$ 12.50 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,176 - INFO - COMPRA: 2024-01-18 | Preço base: R$ 12.48 | Preço exec c/ slippage: R$ 12.49 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,177 - INFO - COMPRA: 2024-01-19 | Preço base: R$ 12.45 | Preço exec c/ slippage: R$ 12.46 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,177 - INFO - COMPRA: 2024-01-22 | Preço base: R$ 12.46 | Preço exec c/ slippage: R$ 12.47 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,177 - INFO - COMPRA: 2024-01-23 | Preço base: R$ 12.51 | Preço exec c/ slippage: R$ 12.52 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,177 - INFO - VENDA: 2024-01-24 | Preço base: R$ 12.30 | Preço exec c/ slippage: R$ 12.29 | Ações: 8000 | Valor líquido: R$ 98218.88
+2025-09-16 01:26:21,179 - INFO - COMPRA: 2024-02-14 | Preço base: R$ 12.03 | Preço exec c/ slippage: R$ 12.04 | Ações: 8200 | Custo: R$ 98860.56
+2025-09-16 01:26:21,179 - INFO - COMPRA: 2024-02-15 | Preço base: R$ 12.00 | Preço exec c/ slippage: R$ 12.02 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,179 - INFO - COMPRA: 2024-02-16 | Preço base: R$ 11.88 | Preço exec c/ slippage: R$ 11.90 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,179 - INFO - COMPRA: 2024-02-19 | Preço base: R$ 11.92 | Preço exec c/ slippage: R$ 11.93 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,180 - INFO - VENDA: 2024-02-20 | Preço base: R$ 11.95 | Preço exec c/ slippage: R$ 11.94 | Ações: 8200 | Valor líquido: R$ 97780.54
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-02-29 | Preço base: R$ 11.59 | Preço exec c/ slippage: R$ 11.61 | Ações: 8400 | Custo: R$ 97590.61
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-03-01 | Preço base: R$ 11.59 | Preço exec c/ slippage: R$ 11.60 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-03-04 | Preço base: R$ 11.66 | Preço exec c/ slippage: R$ 11.67 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-03-05 | Preço base: R$ 11.91 | Preço exec c/ slippage: R$ 11.92 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-03-06 | Preço base: R$ 11.75 | Preço exec c/ slippage: R$ 11.76 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-03-07 | Preço base: R$ 11.68 | Preço exec c/ slippage: R$ 11.69 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,180 - INFO - COMPRA: 2024-03-08 | Preço base: R$ 11.88 | Preço exec c/ slippage: R$ 11.90 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,182 - INFO - COMPRA: 2024-03-11 | Preço base: R$ 11.94 | Preço exec c/ slippage: R$ 11.95 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,182 - INFO - COMPRA: 2024-03-12 | Preço base: R$ 11.93 | Preço exec c/ slippage: R$ 11.94 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,182 - INFO - VENDA: 2024-03-13 | Preço base: R$ 11.86 | Preço exec c/ slippage: R$ 11.84 | Ações: 8400 | Valor líquido: R$ 99385.31
+2025-09-16 01:26:21,182 - INFO - PROGRESSO: Data 2024-03-14 | Pred: 0 | Cash: R$ 99,954.82 | Ações: 0
+2025-09-16 01:26:21,182 - INFO - COMPRA: 2024-03-19 | Preço base: R$ 11.66 | Preço exec c/ slippage: R$ 11.67 | Ações: 8500 | Custo: R$ 99307.18
+2025-09-16 01:26:21,182 - INFO - COMPRA: 2024-03-20 | Preço base: R$ 11.65 | Preço exec c/ slippage: R$ 11.66 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,182 - INFO - COMPRA: 2024-03-21 | Preço base: R$ 11.69 | Preço exec c/ slippage: R$ 11.70 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,182 - INFO - COMPRA: 2024-03-22 | Preço base: R$ 11.54 | Preço exec c/ slippage: R$ 11.55 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,182 - INFO - VENDA: 2024-03-25 | Preço base: R$ 11.35 | Preço exec c/ slippage: R$ 11.34 | Ações: 8500 | Valor líquido: R$ 96305.76
+2025-09-16 01:26:21,184 - INFO - COMPRA: 2024-04-05 | Preço base: R$ 11.37 | Preço exec c/ slippage: R$ 11.38 | Ações: 8500 | Custo: R$ 96850.27
+2025-09-16 01:26:21,184 - INFO - COMPRA: 2024-04-08 | Preço base: R$ 11.36 | Preço exec c/ slippage: R$ 11.37 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,185 - INFO - COMPRA: 2024-04-09 | Preço base: R$ 11.42 | Preço exec c/ slippage: R$ 11.43 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,185 - INFO - COMPRA: 2024-04-10 | Preço base: R$ 11.26 | Preço exec c/ slippage: R$ 11.27 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,185 - INFO - VENDA: 2024-04-11 | Preço base: R$ 11.32 | Preço exec c/ slippage: R$ 11.30 | Ações: 8500 | Valor líquido: R$ 95990.01
+2025-09-16 01:26:21,186 - INFO - COMPRA: 2024-04-29 | Preço base: R$ 11.24 | Preço exec c/ slippage: R$ 11.25 | Ações: 8600 | Custo: R$ 96867.06
+2025-09-16 01:26:21,186 - INFO - COMPRA: 2024-04-30 | Preço base: R$ 11.40 | Preço exec c/ slippage: R$ 11.41 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,187 - INFO - COMPRA: 2024-05-02 | Preço base: R$ 11.60 | Preço exec c/ slippage: R$ 11.62 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,187 - INFO - COMPRA: 2024-05-03 | Preço base: R$ 11.53 | Preço exec c/ slippage: R$ 11.54 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,187 - INFO - COMPRA: 2024-05-06 | Preço base: R$ 11.60 | Preço exec c/ slippage: R$ 11.62 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-07 | Preço base: R$ 11.53 | Preço exec c/ slippage: R$ 11.54 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-08 | Preço base: R$ 11.15 | Preço exec c/ slippage: R$ 11.16 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-09 | Preço base: R$ 11.21 | Preço exec c/ slippage: R$ 11.22 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-10 | Preço base: R$ 11.23 | Preço exec c/ slippage: R$ 11.24 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-13 | Preço base: R$ 11.24 | Preço exec c/ slippage: R$ 11.25 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-14 | Preço base: R$ 11.34 | Preço exec c/ slippage: R$ 11.35 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-15 | Preço base: R$ 11.59 | Preço exec c/ slippage: R$ 11.60 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-16 | Preço base: R$ 11.54 | Preço exec c/ slippage: R$ 11.55 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-17 | Preço base: R$ 11.47 | Preço exec c/ slippage: R$ 11.49 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,188 - INFO - COMPRA: 2024-05-20 | Preço base: R$ 11.26 | Preço exec c/ slippage: R$ 11.27 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-21 | Preço base: R$ 11.15 | Preço exec c/ slippage: R$ 11.16 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-22 | Preço base: R$ 11.09 | Preço exec c/ slippage: R$ 11.10 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-23 | Preço base: R$ 11.13 | Preço exec c/ slippage: R$ 11.14 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-24 | Preço base: R$ 11.10 | Preço exec c/ slippage: R$ 11.11 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - PROGRESSO: Data 2024-05-27 | Pred: 1 | Cash: R$ 133.83 | Ações: 8600
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-27 | Preço base: R$ 11.06 | Preço exec c/ slippage: R$ 11.08 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-28 | Preço base: R$ 10.73 | Preço exec c/ slippage: R$ 10.74 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-29 | Preço base: R$ 10.66 | Preço exec c/ slippage: R$ 10.67 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-05-31 | Preço base: R$ 10.77 | Preço exec c/ slippage: R$ 10.78 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - COMPRA: 2024-06-03 | Preço base: R$ 10.77 | Preço exec c/ slippage: R$ 10.78 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,190 - INFO - VENDA: 2024-06-04 | Preço base: R$ 10.88 | Preço exec c/ slippage: R$ 10.87 | Ações: 8600 | Valor líquido: R$ 93365.51
+2025-09-16 01:26:21,194 - INFO - COMPRA: 2024-07-16 | Preço base: R$ 10.90 | Preço exec c/ slippage: R$ 10.91 | Ações: 8600 | Custo: R$ 93900.10
+2025-09-16 01:26:21,194 - INFO - COMPRA: 2024-07-17 | Preço base: R$ 10.94 | Preço exec c/ slippage: R$ 10.95 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,194 - INFO - COMPRA: 2024-07-18 | Preço base: R$ 10.84 | Preço exec c/ slippage: R$ 10.85 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,194 - INFO - COMPRA: 2024-07-19 | Preço base: R$ 10.86 | Preço exec c/ slippage: R$ 10.87 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,195 - INFO - COMPRA: 2024-07-22 | Preço base: R$ 10.99 | Preço exec c/ slippage: R$ 11.00 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,195 - INFO - COMPRA: 2024-07-23 | Preço base: R$ 10.93 | Preço exec c/ slippage: R$ 10.94 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,195 - INFO - COMPRA: 2024-07-24 | Preço base: R$ 10.97 | Preço exec c/ slippage: R$ 10.98 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,195 - INFO - COMPRA: 2024-07-25 | Preço base: R$ 11.00 | Preço exec c/ slippage: R$ 11.01 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,196 - INFO - COMPRA: 2024-07-26 | Preço base: R$ 11.05 | Preço exec c/ slippage: R$ 11.06 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,196 - INFO - VENDA: 2024-07-29 | Preço base: R$ 10.97 | Preço exec c/ slippage: R$ 10.96 | Ações: 8600 | Valor líquido: R$ 94164.19
+2025-09-16 01:26:21,196 - INFO - PROGRESSO: Data 2024-08-06 | Pred: 0 | Cash: R$ 95,097.78 | Ações: 0
+2025-09-16 01:26:21,198 - INFO - COMPRA: 2024-08-28 | Preço base: R$ 12.03 | Preço exec c/ slippage: R$ 12.04 | Ações: 7900 | Custo: R$ 95243.71
+2025-09-16 01:26:21,198 - INFO - COMPRA: 2024-08-29 | Preço base: R$ 11.88 | Preço exec c/ slippage: R$ 11.90 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,198 - INFO - COMPRA: 2024-08-30 | Preço base: R$ 11.92 | Preço exec c/ slippage: R$ 11.93 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,198 - INFO - COMPRA: 2024-09-02 | Preço base: R$ 12.01 | Preço exec c/ slippage: R$ 12.03 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,198 - INFO - COMPRA: 2024-09-03 | Preço base: R$ 11.95 | Preço exec c/ slippage: R$ 11.96 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,199 - INFO - COMPRA: 2024-09-04 | Preço base: R$ 12.04 | Preço exec c/ slippage: R$ 12.05 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,199 - INFO - COMPRA: 2024-09-05 | Preço base: R$ 12.02 | Preço exec c/ slippage: R$ 12.03 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,199 - INFO - COMPRA: 2024-09-06 | Preço base: R$ 12.09 | Preço exec c/ slippage: R$ 12.10 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,199 - INFO - COMPRA: 2024-09-09 | Preço base: R$ 12.11 | Preço exec c/ slippage: R$ 12.12 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,199 - INFO - COMPRA: 2024-09-10 | Preço base: R$ 12.38 | Preço exec c/ slippage: R$ 12.39 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,200 - INFO - COMPRA: 2024-09-11 | Preço base: R$ 12.06 | Preço exec c/ slippage: R$ 12.07 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,200 - INFO - COMPRA: 2024-09-12 | Preço base: R$ 12.05 | Preço exec c/ slippage: R$ 12.06 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,200 - INFO - COMPRA: 2024-09-13 | Preço base: R$ 11.87 | Preço exec c/ slippage: R$ 11.89 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,200 - INFO - COMPRA: 2024-09-16 | Preço base: R$ 11.90 | Preço exec c/ slippage: R$ 11.91 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,200 - INFO - COMPRA: 2024-09-17 | Preço base: R$ 11.97 | Preço exec c/ slippage: R$ 11.98 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,200 - INFO - COMPRA: 2024-09-18 | Preço base: R$ 12.10 | Preço exec c/ slippage: R$ 12.11 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,201 - INFO - COMPRA: 2024-09-19 | Preço base: R$ 12.06 | Preço exec c/ slippage: R$ 12.07 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,201 - INFO - COMPRA: 2024-09-20 | Preço base: R$ 11.82 | Preço exec c/ slippage: R$ 11.83 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,201 - INFO - COMPRA: 2024-09-23 | Preço base: R$ 11.90 | Preço exec c/ slippage: R$ 11.91 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,202 - INFO - COMPRA: 2024-09-24 | Preço base: R$ 11.89 | Preço exec c/ slippage: R$ 11.90 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,202 - INFO - COMPRA: 2024-09-25 | Preço base: R$ 11.87 | Preço exec c/ slippage: R$ 11.89 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,202 - INFO - COMPRA: 2024-09-26 | Preço base: R$ 11.91 | Preço exec c/ slippage: R$ 11.92 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,202 - INFO - COMPRA: 2024-09-27 | Preço base: R$ 12.04 | Preço exec c/ slippage: R$ 12.05 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,202 - INFO - VENDA: 2024-09-30 | Preço base: R$ 12.28 | Preço exec c/ slippage: R$ 12.27 | Ações: 7900 | Valor líquido: R$ 96844.40
+2025-09-16 01:26:21,203 - INFO - COMPRA: 2024-10-07 | Preço base: R$ 12.13 | Preço exec c/ slippage: R$ 12.14 | Ações: 8000 | Custo: R$ 97195.26
+2025-09-16 01:26:21,203 - INFO - COMPRA: 2024-10-08 | Preço base: R$ 12.05 | Preço exec c/ slippage: R$ 12.06 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,203 - INFO - COMPRA: 2024-10-09 | Preço base: R$ 12.14 | Preço exec c/ slippage: R$ 12.16 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,203 - INFO - COMPRA: 2024-10-10 | Preço base: R$ 12.18 | Preço exec c/ slippage: R$ 12.19 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,204 - INFO - COMPRA: 2024-10-11 | Preço base: R$ 11.97 | Preço exec c/ slippage: R$ 11.98 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,204 - INFO - COMPRA: 2024-10-14 | Preço base: R$ 12.03 | Preço exec c/ slippage: R$ 12.04 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,204 - INFO - PROGRESSO: Data 2024-10-15 | Pred: 1 | Cash: R$ 302.94 | Ações: 8000
+2025-09-16 01:26:21,204 - INFO - COMPRA: 2024-10-15 | Preço base: R$ 11.99 | Preço exec c/ slippage: R$ 12.01 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,204 - INFO - VENDA: 2024-10-16 | Preço base: R$ 11.89 | Preço exec c/ slippage: R$ 11.88 | Ações: 8000 | Valor líquido: R$ 94949.86
+2025-09-16 01:26:21,205 - INFO - COMPRA: 2024-10-22 | Preço base: R$ 11.86 | Preço exec c/ slippage: R$ 11.87 | Ações: 8000 | Custo: R$ 95032.05
+2025-09-16 01:26:21,205 - INFO - COMPRA: 2024-10-23 | Preço base: R$ 11.84 | Preço exec c/ slippage: R$ 11.85 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,205 - INFO - COMPRA: 2024-10-24 | Preço base: R$ 11.93 | Preço exec c/ slippage: R$ 11.94 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,205 - INFO - COMPRA: 2024-10-25 | Preço base: R$ 11.92 | Preço exec c/ slippage: R$ 11.93 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,205 - INFO - COMPRA: 2024-10-28 | Preço base: R$ 12.00 | Preço exec c/ slippage: R$ 12.02 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,206 - INFO - COMPRA: 2024-10-29 | Preço base: R$ 12.14 | Preço exec c/ slippage: R$ 12.16 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,206 - INFO - COMPRA: 2024-10-30 | Preço base: R$ 11.73 | Preço exec c/ slippage: R$ 11.74 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,206 - INFO - COMPRA: 2024-10-31 | Preço base: R$ 11.64 | Preço exec c/ slippage: R$ 11.65 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,206 - INFO - COMPRA: 2024-11-01 | Preço base: R$ 11.72 | Preço exec c/ slippage: R$ 11.73 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,206 - INFO - COMPRA: 2024-11-04 | Preço base: R$ 11.73 | Preço exec c/ slippage: R$ 11.74 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,206 - INFO - COMPRA: 2024-11-05 | Preço base: R$ 11.65 | Preço exec c/ slippage: R$ 11.66 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,207 - INFO - COMPRA: 2024-11-06 | Preço base: R$ 11.53 | Preço exec c/ slippage: R$ 11.54 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,207 - INFO - COMPRA: 2024-11-07 | Preço base: R$ 11.54 | Preço exec c/ slippage: R$ 11.55 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,207 - INFO - COMPRA: 2024-11-08 | Preço base: R$ 11.46 | Preço exec c/ slippage: R$ 11.47 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,207 - INFO - COMPRA: 2024-11-11 | Preço base: R$ 11.57 | Preço exec c/ slippage: R$ 11.58 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,207 - INFO - COMPRA: 2024-11-12 | Preço base: R$ 11.65 | Preço exec c/ slippage: R$ 11.66 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,208 - INFO - COMPRA: 2024-11-13 | Preço base: R$ 11.81 | Preço exec c/ slippage: R$ 11.82 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,208 - INFO - VENDA: 2024-11-14 | Preço base: R$ 11.61 | Preço exec c/ slippage: R$ 11.60 | Ações: 8000 | Valor líquido: R$ 92720.99
+2025-09-16 01:26:21,208 - INFO - COMPRA: 2024-11-22 | Preço base: R$ 11.72 | Preço exec c/ slippage: R$ 11.73 | Ações: 7900 | Custo: R$ 92739.23
+2025-09-16 01:26:21,208 - INFO - COMPRA: 2024-11-25 | Preço base: R$ 11.72 | Preço exec c/ slippage: R$ 11.73 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,208 - INFO - COMPRA: 2024-11-26 | Preço base: R$ 11.75 | Preço exec c/ slippage: R$ 11.76 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,209 - INFO - COMPRA: 2024-11-27 | Preço base: R$ 11.68 | Preço exec c/ slippage: R$ 11.69 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,209 - INFO - COMPRA: 2024-11-28 | Preço base: R$ 11.47 | Preço exec c/ slippage: R$ 11.49 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,209 - INFO - COMPRA: 2024-11-29 | Preço base: R$ 11.78 | Preço exec c/ slippage: R$ 11.79 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,209 - INFO - COMPRA: 2024-12-02 | Preço base: R$ 12.33 | Preço exec c/ slippage: R$ 12.34 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,209 - INFO - COMPRA: 2024-12-03 | Preço base: R$ 12.93 | Preço exec c/ slippage: R$ 12.95 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-04 | Preço base: R$ 13.07 | Preço exec c/ slippage: R$ 13.09 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - VENDA: 2024-12-05 | Preço base: R$ 13.31 | Preço exec c/ slippage: R$ 13.29 | Ações: 7900 | Valor líquido: R$ 104914.77
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-11 | Preço base: R$ 12.56 | Preço exec c/ slippage: R$ 12.58 | Ações: 8300 | Custo: R$ 104477.45
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-12 | Preço base: R$ 12.19 | Preço exec c/ slippage: R$ 12.20 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-13 | Preço base: R$ 12.17 | Preço exec c/ slippage: R$ 12.18 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-16 | Preço base: R$ 12.10 | Preço exec c/ slippage: R$ 12.11 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-17 | Preço base: R$ 12.16 | Preço exec c/ slippage: R$ 12.17 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-18 | Preço base: R$ 11.87 | Preço exec c/ slippage: R$ 11.89 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-19 | Preço base: R$ 11.86 | Preço exec c/ slippage: R$ 11.87 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,210 - INFO - COMPRA: 2024-12-20 | Preço base: R$ 11.89 | Preço exec c/ slippage: R$ 11.90 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,212 - INFO - COMPRA: 2024-12-23 | Preço base: R$ 11.96 | Preço exec c/ slippage: R$ 11.97 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,212 - INFO - COMPRA: 2024-12-26 | Preço base: R$ 11.94 | Preço exec c/ slippage: R$ 11.95 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,212 - INFO - COMPRA: 2024-12-27 | Preço base: R$ 11.84 | Preço exec c/ slippage: R$ 11.85 | Ações: 0 | Custo: R$ 0.00
+2025-09-16 01:26:21,212 - INFO - RESUMO FINAL DO BACKTESTING:
+2025-09-16 01:26:21,212 - INFO -   Total de trades: 139
+2025-09-16 01:26:21,212 - INFO -   Compras realizadas: 128
+2025-09-16 01:26:21,212 - INFO -   Vendas realizadas: 11
+2025-09-16 01:26:21,212 - INFO -   Capital inicial: R$ 100,000.00
+2025-09-16 01:26:21,212 - INFO -   Capital final: R$ 96,809.65
+2025-09-16 01:26:21,212 - INFO -   Cash final: R$ 1,136.66
+2025-09-16 01:26:21,212 - INFO -   Ações finais: 8300
+2025-09-16 01:26:21,212 - INFO -   Retorno total: -3.19%

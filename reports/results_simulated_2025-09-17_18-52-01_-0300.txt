@@ -1,0 +1,229 @@
+================================================================================
+RELATÓRIO DE BACKTESTING - MODELO XGBOOST vs BUY AND HOLD
+================================================================================
+
+Data da simulação: 17/09/2025 18:52:01
+Capital inicial: R$ 100,000.00
+Custo de transação: 0.100%
+
+--------------------------------------------------------------------------------
+RESULTADOS MONETÁRIOS E DE MÉTRICAS POR TICKER
+--------------------------------------------------------------------------------
+
+TICKER: ABEV3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 107,003.44
+  Retorno Total: +6.96%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 97,122.31
+  Retorno Total: -2.88%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 90,350.65
+  Retorno Total: -9.65%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 50.60%
+Precisão (Classe Alta): 66.67%
+Recall (Classe Alta): 3.17%
+F1-Score (Classe Alta): 0.06
+Distribuição Predições: Alta: 6, Baixa: 245
+
+
+TICKER: B3SA3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 98,510.25
+  Retorno Total: -1.53%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 94,639.04
+  Retorno Total: -5.36%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 74,775.61
+  Retorno Total: -25.22%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 58.17%
+Precisão (Classe Alta): 56.69%
+Recall (Classe Alta): 59.02%
+F1-Score (Classe Alta): 0.58
+Distribuição Predições: Alta: 127, Baixa: 124
+
+
+TICKER: BBAS3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 101,196.15
+  Retorno Total: +1.15%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 95,125.92
+  Retorno Total: -4.87%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 95,679.14
+  Retorno Total: -4.32%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 58.17%
+Precisão (Classe Alta): 49.45%
+Recall (Classe Alta): 43.27%
+F1-Score (Classe Alta): 0.46
+Distribuição Predições: Alta: 91, Baixa: 160
+
+
+TICKER: BBDC4.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 84,063.55
+  Retorno Total: -15.97%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 81,420.49
+  Retorno Total: -18.58%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 73,345.80
+  Retorno Total: -26.65%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 58.96%
+Precisão (Classe Alta): 50.00%
+Recall (Classe Alta): 67.96%
+F1-Score (Classe Alta): 0.58
+Distribuição Predições: Alta: 140, Baixa: 111
+
+
+TICKER: ITUB4.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 102,028.50
+  Retorno Total: +1.98%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 98,282.08
+  Retorno Total: -1.72%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 98,317.21
+  Retorno Total: -1.68%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 56.97%
+Precisão (Classe Alta): 50.63%
+Recall (Classe Alta): 36.70%
+F1-Score (Classe Alta): 0.43
+Distribuição Predições: Alta: 79, Baixa: 172
+
+
+TICKER: PETR4.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 112,003.74
+  Retorno Total: +11.95%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 112,078.68
+  Retorno Total: +12.08%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 117,383.79
+  Retorno Total: +17.38%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 51.79%
+Precisão (Classe Alta): 52.00%
+Recall (Classe Alta): 99.24%
+F1-Score (Classe Alta): 0.68
+Distribuição Predições: Alta: 250, Baixa: 1
+
+
+TICKER: VALE3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 108,685.68
+  Retorno Total: +8.64%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 100,098.79
+  Retorno Total: +0.10%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 77,351.39
+  Retorno Total: -22.65%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 58.17%
+Precisão (Classe Alta): 41.67%
+Recall (Classe Alta): 15.15%
+F1-Score (Classe Alta): 0.22
+Distribuição Predições: Alta: 36, Baixa: 215
+
+
+TICKER: VIVT3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 100,043.74
+  Capital Final: R$ 104,933.88
+  Retorno Total: +4.89%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 105,802.96
+  Retorno Total: +5.80%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 100,000.00
+  Capital Final: R$ 94,069.11
+  Retorno Total: -5.93%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 59.76%
+Precisão (Classe Alta): 63.39%
+Recall (Classe Alta): 54.20%
+F1-Score (Classe Alta): 0.58
+Distribuição Predições: Alta: 112, Baixa: 139
+
+
+================================================================================
+RESUMO GERAL
+================================================================================
+
+Retorno médio do modelo XGBoost: +2.26%
+Retorno médio do modelo simples: -1.93%
+Retorno médio Buy and Hold: -9.84%
+Total de tickers analisados: 8
+Total de simulações realizadas: 32
