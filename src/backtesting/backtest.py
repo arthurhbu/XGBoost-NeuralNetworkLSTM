@@ -32,10 +32,15 @@ DEFAULT_SLIPPAGE_BPS = 0.2
 DEFAULT_LOT_SIZE = 100
 DEFAULT_CASH_DAILY_RATE = 0.0
 DEFAULT_HOLD_MIN_DAYS = 1
-DEFAULT_BUY_GRID = np.arange(0.55, 0.86, 0.05)
-DEFAULT_SELL_GRID = np.arange(0.15, 0.46, 0.05)
-EXPANDED_BUY_GRID = np.arange(0.50, 0.95, 0.02)
-EXPANDED_SELL_GRID = np.arange(0.05, 0.55, 0.02)
+# DEFAULT_BUY_GRID = np.arange(0.55, 0.86, 0.05)
+# DEFAULT_SELL_GRID = np.arange(0.15, 0.46, 0.05)
+# EXPANDED_BUY_GRID = np.arange(0.50, 0.95, 0.02)
+# EXPANDED_SELL_GRID = np.arange(0.05, 0.55, 0.02)
+# Grades mais conservadoras para melhor precisão
+DEFAULT_BUY_GRID = np.arange(0.65, 0.90, 0.05)  # Mais conservador: 0.65-0.85
+DEFAULT_SELL_GRID = np.arange(0.10, 0.40, 0.05)  # Mais conservador: 0.10-0.35
+EXPANDED_BUY_GRID = np.arange(0.60, 0.95, 0.02)  # Grade expandida mais conservadora
+EXPANDED_SELL_GRID = np.arange(0.05, 0.50, 0.02)  # Grade expandida mais conservadora
 
 # Configurações de slippage realista
 SLIPPAGE_CONFIG = {
@@ -76,6 +81,52 @@ def calculate_ml_metrics(y_true_multiclass, y_pred_actions):
     metrics["Distribuição Predições"] = f"Up: {pred_counts.get(1, 0)}, Not-Up: {pred_counts.get(0, 0)}"
 
     return metrics
+
+def analyze_class_distribution_and_adjust_thresholds(probabilities, current_buy_threshold, current_sell_threshold):
+    """
+    Analisa a distribuição de classes e sugere ajustes nos thresholds para melhorar precisão.
+    
+    Args:
+        probabilities: Array de probabilidades multiclasse
+        current_buy_threshold: Threshold atual de compra
+        current_sell_threshold: Threshold atual de venda
+    
+    Returns:
+        tuple: (suggested_buy_threshold, suggested_sell_threshold, analysis_info)
+    """
+    # Calcular score s = P(up) - P(down)
+    score = compute_up_down_score_from_proba(probabilities)
+    
+    # Análise da distribuição de scores
+    score_stats = {
+        'mean': np.mean(score),
+        'std': np.std(score),
+        'percentile_25': np.percentile(score, 25),
+        'percentile_75': np.percentile(score, 75),
+        'percentile_90': np.percentile(score, 90),
+        'percentile_95': np.percentile(score, 95)
+    }
+    
+    # Sugerir thresholds mais conservadores baseados na distribuição
+    # Usar percentis mais altos para compra e mais baixos para venda
+    suggested_buy = max(0.70, min(0.85, score_stats['percentile_75']))
+    suggested_sell = min(0.30, max(0.05, score_stats['percentile_25']))
+    
+    # Garantir que buy > sell
+    if suggested_buy <= suggested_sell:
+        suggested_buy = suggested_sell + 0.20
+        suggested_sell = max(0.05, suggested_buy - 0.40)
+    
+    analysis_info = {
+        'current_buy': current_buy_threshold,
+        'current_sell': current_sell_threshold,
+        'suggested_buy': suggested_buy,
+        'suggested_sell': suggested_sell,
+        'score_stats': score_stats,
+        'adjustment_reason': 'Ajuste baseado na distribuição de scores para melhorar precisão'
+    }
+    
+    return suggested_buy, suggested_sell, analysis_info
 
 def generate_actions_from_score(score_series, buy_threshold=0.25, sell_threshold=-0.05, minimum_hold_days=3):
     """
@@ -312,19 +363,138 @@ def calculate_sharpe_ratio(portfolio_value_series):
     
     return sharpe_ratio
 
+def calculate_max_drawdown(portfolio_value_series):
+    """
+    Calcula o Maximum Drawdown (MDD) de uma série de valores de portfólio.
+    
+    O MDD é a maior perda observada desde um pico até um vale subsequente.
+    Valores mais próximos de 0 indicam menor risco de perda máxima.
+    
+    Args:
+        portfolio_value_series: Série temporal com valores do portfólio
+    
+    Returns:
+        float: Maximum Drawdown como percentual (0 a 1)
+    """
+    # Calcular rolling maximum (pico histórico)
+    rolling_max = portfolio_value_series.expanding().max()
+    
+    # Calcular drawdown em cada ponto
+    drawdown = (portfolio_value_series - rolling_max) / rolling_max
+    
+    # Maximum drawdown é o menor valor (mais negativo)
+    max_drawdown = drawdown.min()
+    
+    return abs(max_drawdown)  # Retornar valor absoluto
+
+def calculate_win_rate(portfolio_value_series, trading_actions=None):
+    """
+    Calcula a taxa de vitórias baseada em trades ou retornos positivos.
+    
+    Args:
+        portfolio_value_series: Série temporal com valores do portfólio
+        trading_actions: Array de ações de trading (opcional)
+    
+    Returns:
+        float: Taxa de vitórias (0 a 1)
+    """
+    if trading_actions is not None:
+        # Calcular win rate baseado em trades
+        daily_returns = portfolio_value_series.pct_change().dropna()
+        
+        # Identificar períodos de posição (quando trading_actions == 1)
+        position_periods = trading_actions == 1
+        
+        if len(position_periods) != len(daily_returns):
+            # Ajustar tamanhos se necessário
+            min_len = min(len(position_periods), len(daily_returns))
+            position_periods = position_periods[:min_len]
+            daily_returns = daily_returns[:min_len]
+        
+        # Retornos apenas durante posições
+        position_returns = daily_returns[position_periods]
+        
+        if len(position_returns) == 0:
+            return 0.0
+        
+        # Win rate = proporção de retornos positivos
+        win_rate = (position_returns > 0).mean()
+        
+    else:
+        # Calcular win rate baseado em retornos diários
+        daily_returns = portfolio_value_series.pct_change().dropna()
+        
+        if len(daily_returns) == 0:
+            return 0.0
+        
+        win_rate = (daily_returns > 0).mean()
+    
+    return win_rate
+
+def calculate_advanced_metrics(portfolio_value_series, trading_actions=None):
+    """
+    Calcula um conjunto completo de métricas avançadas de performance.
+    
+    Args:
+        portfolio_value_series: Série temporal com valores do portfólio
+        trading_actions: Array de ações de trading (opcional)
+    
+    Returns:
+        dict: Dicionário com todas as métricas calculadas
+    """
+    # Métricas básicas
+    initial_value = portfolio_value_series.iloc[0]
+    final_value = portfolio_value_series.iloc[-1]
+    total_return = (final_value / initial_value - 1) * 100
+    
+    # Retornos diários
+    daily_returns = portfolio_value_series.pct_change().dropna()
+    
+    # Métricas avançadas
+    sharpe_ratio = calculate_sharpe_ratio(portfolio_value_series)
+    max_drawdown = calculate_max_drawdown(portfolio_value_series)
+    win_rate = calculate_win_rate(portfolio_value_series, trading_actions)
+    
+    # Métricas adicionais
+    volatility = daily_returns.std() * np.sqrt(252) if len(daily_returns) > 0 else 0
+    annual_return = ((final_value / initial_value) ** (252 / len(portfolio_value_series)) - 1) * 100 if len(portfolio_value_series) > 0 else 0
+    
+    # Calmar Ratio (Annual Return / Max Drawdown)
+    calmar_ratio = annual_return / (max_drawdown * 100) if max_drawdown > 0 else 0
+    
+    # Sortino Ratio (similar ao Sharpe, mas considera apenas downside deviation)
+    downside_returns = daily_returns[daily_returns < 0]
+    downside_std = downside_returns.std() if len(downside_returns) > 0 else 0
+    sortino_ratio = (daily_returns.mean() / downside_std) * np.sqrt(252) if downside_std > 0 else 0
+    
+    return {
+        'total_return_pct': total_return,
+        'annual_return_pct': annual_return,
+        'sharpe_ratio': sharpe_ratio,
+        'sortino_ratio': sortino_ratio,
+        'calmar_ratio': calmar_ratio,
+        'max_drawdown_pct': max_drawdown * 100,
+        'volatility_pct': volatility * 100,
+        'win_rate_pct': win_rate * 100,
+        'initial_value': initial_value,
+        'final_value': final_value
+    }
+
 def adaptive_threshold_optimization(model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, minimum_hold_days=3):
 
-    coarse_buy_grid = np.arange(0.50, 0.95, 0.10)
-    coarse_sell_grid = np.arange(0.05, 0.55, 0.10)
+    # Grades mais conservadoras para melhor precisão
+    coarse_buy_grid = np.arange(0.60, 0.90, 0.10)  # 0.60, 0.70, 0.80
+    coarse_sell_grid = np.arange(0.05, 0.35, 0.10)  # 0.05, 0.15, 0.25
 
     best_buy_coarse, best_sell_coarse, _ = optimize_trading_thresholds_financial(
         model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=coarse_buy_grid, sell_threshold_grid=coarse_sell_grid, minimum_hold_days=minimum_hold_days
     )
 
-    fine_buy_grid = np.arange(max(0.50, best_buy_coarse - 0.1), 
-                              min(0.95, best_buy_coarse + 0.1), 0.01)
-    fine_sell_grid = np.arange(max(0.05, best_sell_coarse - 0.1), 
-                               min(0.55, best_sell_coarse + 0.1), 0.01)
+    # Grade de refinamento mais conservadora
+    fine_buy_grid = np.arange(max(0.60, best_buy_coarse - 0.08), 
+                              min(0.90, best_buy_coarse + 0.08), 0.01)
+    fine_sell_grid = np.arange(max(0.05, best_sell_coarse - 0.08), 
+                               min(0.40, best_sell_coarse + 0.08), 0.01)
 
     return optimize_trading_thresholds_financial(
         model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=fine_buy_grid, sell_threshold_grid=fine_sell_grid, minimum_hold_days=minimum_hold_days
@@ -409,59 +579,13 @@ def optimize_trading_thresholds_financial(
 
     return best_threshold_pair[0], best_threshold_pair[1], best_sharpe_ratio
 
-def setup_structured_logging(ticker_symbol, backtest_configuration):
-    """
-    Configura sistema de logging estruturado para cada ticker.
-    
-    Cria um logger específico para cada ticker com arquivo de log único,
-    incluindo timestamp para evitar conflitos entre execuções.
-    
-    Args:
-        ticker_symbol: Símbolo do ticker (ex: 'PETR4.SA')
-        backtest_configuration: Configuração do backtest contendo 'results_path'
-    
-    Returns:
-        tuple: (logger, log_file_path)
-            - logger: Objeto logger configurado
-            - log_file_path: Caminho do arquivo de log criado
-    """
-    # Criar diretório de logs se não existir
-    logs_directory = Path(backtest_configuration['results_path']) / "logs"
-    logs_directory.mkdir(exist_ok=True)
-    
-    # Gerar nome único do arquivo de log com timestamp
-    current_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_filename = f"{ticker_symbol}_{current_timestamp}.log"
-    log_file_path = logs_directory / log_filename
-    
-    # Configurar logger específico para o ticker
-    logger_name = f"backtest_{ticker_symbol}"
-    logger = logging.getLogger(logger_name)
-    logger.setLevel(logging.INFO)
-    
-    # Evitar duplicação de handlers (limpar handlers existentes)
-    if logger.handlers:
-        logger.handlers.clear()
-    
-    # Configurar handler para arquivo
-    file_handler = logging.FileHandler(log_file_path, encoding='utf-8')
-    file_handler.setLevel(logging.INFO)
-    
-    # Definir formato das mensagens de log
-    log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    file_handler.setFormatter(log_formatter)
-    
-    logger.addHandler(file_handler)
-    
-    return logger, log_file_path
 
-def _load_cdi_data(backtest_configuration, logger):
+def _load_cdi_data(backtest_configuration):
     """
     Carrega dados de CDI real se habilitado na configuração.
     
     Args:
         backtest_configuration: Configuração do backtest
-        logger: Logger para mensagens
     
     Returns:
         pd.Series ou None: Dados de CDI ou None se não disponível
@@ -474,13 +598,11 @@ def _load_cdi_data(backtest_configuration, logger):
     if cdi_file_path.exists():
         cdi_dataframe = pd.read_csv(cdi_file_path, index_col='Date', parse_dates=True)
         cdi_series = cdi_dataframe['cdi'] / 100.0  # Converter de % para decimal
-        logger.info(f"CDI real carregado: {len(cdi_series)} dias disponíveis")
         return cdi_series
     else:
-        logger.warning(f"Arquivo CDI não encontrado: {cdi_file_path}")
         return None
 
-def _apply_daily_cash_return(cash_amount, current_date, cdi_data, fixed_daily_rate, logger):
+def _apply_daily_cash_return(cash_amount, current_date, cdi_data, fixed_daily_rate):
     """
     Aplica rendimento diário ao caixa disponível.
     
@@ -489,7 +611,6 @@ def _apply_daily_cash_return(cash_amount, current_date, cdi_data, fixed_daily_ra
         current_date: Data atual
         cdi_data: Dados de CDI real (se disponível)
         fixed_daily_rate: Taxa fixa diária (se CDI real não disponível)
-        logger: Logger para mensagens
     
     Returns:
         float: Nova quantia em caixa após aplicação do rendimento
@@ -517,7 +638,7 @@ def _apply_daily_cash_return(cash_amount, current_date, cdi_data, fixed_daily_ra
 
 def _execute_buy_order(cash, stocks_held, execution_price, transaction_cost_pct, 
                       lot_size, sizing_config, probability, volume, volatility, 
-                      slippage_config, logger, current_date):
+                      slippage_config, current_date):
     """
     Executa ordem de compra com todos os custos e restrições, incluindo position sizing dinâmico.
     
@@ -532,7 +653,6 @@ def _execute_buy_order(cash, stocks_held, execution_price, transaction_cost_pct,
         volume: Volume negociado no dia
         volatility: Volatilidade do dia
         slippage_config: Configuração do slippage
-        logger: Logger para mensagens
         current_date: Data atual
     
     Returns:
@@ -563,21 +683,18 @@ def _execute_buy_order(cash, stocks_held, execution_price, transaction_cost_pct,
     if cash >= total_transaction_cost and stocks_to_buy > 0:
         new_cash = cash - total_transaction_cost
         new_stocks_held = stocks_held + stocks_to_buy
-        logger.info(f"COMPRA: {current_date.date()} | Preço base: R$ {execution_price:.2f} | "
-                   f"Preço exec c/ slippage: R$ {buy_price:.2f} | Ações: {stocks_to_buy:.0f} | "
-                   f"Custo: R$ {total_transaction_cost:.2f} | Prob: {probability:.3f} | "
-                   f"Fração: {target_fraction:.1%}")
+        
         return new_cash, new_stocks_held, True, total_transaction_cost
     else:
         if stocks_to_buy == 0:
-            logger.warning(f"COMPRA REJEITADA: Quantidade calculada = 0 (prob: {probability:.3f}, "
-                          f"fração: {target_fraction:.1%})")
+            print("Não foi possível comprar ações")
         else:
-            logger.warning(f"COMPRA REJEITADA: Cash insuficiente (R$ {cash:.2f} < R$ {total_transaction_cost:.2f})")
+            print("kdsakdaskdsakdksa")
+
         return cash, stocks_held, False, 0
 
 def _execute_sell_order(cash, stocks_held, execution_price, transaction_cost_pct, 
-                       volume, volatility, slippage_config, logger, current_date):
+                       volume, volatility, slippage_config, current_date):
     """
     Executa ordem de venda com todos os custos e slippage dinâmico.
     
@@ -589,7 +706,6 @@ def _execute_sell_order(cash, stocks_held, execution_price, transaction_cost_pct
         volume: Volume negociado no dia
         volatility: Volatilidade do dia
         slippage_config: Configuração do slippage
-        logger: Logger para mensagens
         current_date: Data atual
     
     Returns:
@@ -610,14 +726,9 @@ def _execute_sell_order(cash, stocks_held, execution_price, transaction_cost_pct
     new_cash = cash + net_sale_value
     new_stocks_held = 0.0
     
-    logger.info(f"VENDA: {current_date.date()} | Preço base: R$ {execution_price:.2f} | "
-               f"Preço exec c/ slippage: R$ {sell_price:.2f} | Ações: {stocks_held:.0f} | "
-               f"Valor líquido: R$ {net_sale_value:.2f} | Slippage: {dynamic_slippage_bps:.1f} bps")
-    
     return new_cash, new_stocks_held, True, net_sale_value
 
-def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_capital, transaction_cost_percentage, 
-                          logger, backtest_configuration=None):
+def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_capital, transaction_cost_percentage, backtest_configuration=None):
     """
     Executa backtesting realista com logging estruturado e custos de transação.
     
@@ -633,25 +744,13 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
         predictions: Array de predições binárias (0 ou 1)
         probabilities: Array de probabilidades de predição (0 a 1)
         initial_capital: Capital inicial para simulação
-        transaction_cost_percentage: Custo de transação como percentual
-        logger: Logger configurado para o ticker
+        transaction_cost_percentage: Custo de transação como percentual (0 a 1)
         backtest_configuration: Configuração adicional do backtest
     
     Returns:
         pd.Series: Histórico do valor do portfólio indexado por data
     """
-    # Inicializar logging
-    logger.info("="*60)
-    logger.info("INICIANDO BACKTESTING REALISTA")
-    logger.info("="*60)
-    
-    # Log de parâmetros iniciais
-    logger.info(f"Tamanho test_df: {len(test_dataframe)}")
-    logger.info(f"Tamanho predictions: {len(predictions)}")
-    logger.info(f"Tamanho probabilities: {len(probabilities)}")
-    logger.info(f"Capital inicial: R$ {initial_capital:,.2f}")
-    logger.info(f"Custo de transação: {transaction_cost_percentage*100:.3f}%")
-    
+
     # Carregar configurações adicionais
     lot_size = DEFAULT_LOT_SIZE
     cash_daily_rate = DEFAULT_CASH_DAILY_RATE
@@ -663,14 +762,12 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
         lot_size = int(backtest_configuration.get('lot_size', DEFAULT_LOT_SIZE))
         cash_daily_rate = float(backtest_configuration.get('cash_daily_rate', DEFAULT_CASH_DAILY_RATE))
         sizing_config = backtest_configuration.get('position_sizing', {"enabled": False}) or {"enabled": False}
-        cdi_data = _load_cdi_data(backtest_configuration, logger)
+        cdi_data = _load_cdi_data(backtest_configuration)
         
         # Configuração de slippage personalizada se fornecida
         if 'slippage_config' in backtest_configuration:
             slippage_config.update(backtest_configuration['slippage_config'])
     
-    logger.info(f"Slippage Dinâmico: {slippage_config['base_bps']:.1f}-{slippage_config['max_bps']:.1f} bps | "
-               f"Lote: {lot_size} | CDI: {'Real' if cdi_data is not None else f'Fixo {cash_daily_rate*100:.3f}%'}")
     
     # Calcular volatilidade histórica (20 dias)
     test_dataframe['volatility'] = test_dataframe['Close'].pct_change().rolling(window=20).std() * np.sqrt(252)
@@ -678,18 +775,9 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
     # Verificar e corrigir alinhamento entre dados, predições e probabilidades
     min_size = min(len(test_dataframe), len(predictions), len(probabilities))
     if len(test_dataframe) != min_size or len(predictions) != min_size or len(probabilities) != min_size:
-        logger.warning(f"ALINHAMENTO: test_df ({len(test_dataframe)}) != predictions ({len(predictions)}) != probabilities ({len(probabilities)})")
         test_dataframe = test_dataframe.iloc[:min_size]
         predictions = predictions[:min_size]
         probabilities = probabilities[:min_size]
-        logger.info(f"ALINHAMENTO: Ajustado para {min_size} registros")
-    
-    # Log da distribuição das predições
-    logger.info("DISTRIBUIÇÃO DAS PREDIÇÕES:")
-    logger.info(f"  - Total: {len(predictions)}")
-    logger.info(f"  - Predições de alta (1): {np.sum(predictions == 1)}")
-    logger.info(f"  - Predições de baixa (0): {np.sum(predictions == 0)}")
-    logger.info(f"  - Percentual de alta: {np.sum(predictions == 1)/len(predictions)*100:.1f}%")
     
     # Inicializar variáveis do portfólio
     available_cash = initial_capital
@@ -699,17 +787,11 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
     buy_trades = 0
     sell_trades = 0
     
-    logger.info("EXECUÇÃO DOS TRADES:")
     
     # Simular execução dia a dia
     for day_index in range(len(test_dataframe) - 1):
         current_date = test_dataframe.index[day_index]
         current_prediction = predictions[day_index]
-        
-        # Log de progresso a cada 50 iterações
-        if day_index % 50 == 0:
-            logger.info(f"PROGRESSO: Data {current_date.date()} | Pred: {current_prediction} | "
-                       f"Cash: R$ {available_cash:,.2f} | Ações: {stocks_quantity:.0f}")
         
         if day_index >= len(predictions):
             break
@@ -726,7 +808,7 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
             available_cash, stocks_quantity, trade_executed, trade_cost = _execute_buy_order(
                 available_cash, stocks_quantity, next_day_open_price, transaction_cost_percentage,
                 lot_size, sizing_config, current_probability, current_volume, current_volatility,
-                slippage_config, logger, current_date
+                slippage_config, current_date
             )
             if trade_executed:
                 total_trades += 1
@@ -738,15 +820,15 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
             
             available_cash, stocks_quantity, trade_executed, trade_value = _execute_sell_order(
                 available_cash, stocks_quantity, next_day_open_price, transaction_cost_percentage,
-                current_volume, current_volatility, slippage_config, logger, current_date
+                current_volume, current_volatility, slippage_config, current_date
             )
             if trade_executed:
                 total_trades += 1
                 sell_trades += 1
         
-        # # Aplicar rendimento diário ao caixa
-        # available_cash = _apply_daily_cash_return(
-        #     available_cash, current_date, cdi_data, cash_daily_rate, logger
+        # Aplicar rendimento diário ao caixa
+        # # available_cash = _apply_daily_cash_return(
+        #     available_cash, current_date, cdi_data, cash_daily_rate
         # )
         
         # Marcar valor do portfólio no fechamento do dia
@@ -756,23 +838,12 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
     # Calcular valor final do portfólio
     final_portfolio_value = available_cash + stocks_quantity * test_dataframe['Close'].iloc[-1]
     
-    # Log do resumo final
-    logger.info("RESUMO FINAL DO BACKTESTING:")
-    logger.info(f"  Total de trades: {total_trades}")
-    logger.info(f"  Compras realizadas: {buy_trades}")
-    logger.info(f"  Vendas realizadas: {sell_trades}")
-    logger.info(f"  Capital inicial: R$ {initial_capital:,.2f}")
-    logger.info(f"  Capital final: R$ {final_portfolio_value:,.2f}")
-    logger.info(f"  Cash final: R$ {available_cash:,.2f}")
-    logger.info(f"  Ações finais: {stocks_quantity:.0f}")
-    logger.info(f"  Retorno total: {((final_portfolio_value/initial_capital)-1)*100:+.2f}%")
-    
     if total_trades == 0:
-        logger.warning("AVISO: Nenhum trade foi executado!")
-        logger.warning("  - Verificar se há predições de alta (1) nas predições")
-        logger.warning("  - Verificar se há predições de baixa (0) quando há ações")
-        logger.warning("  - Verificar se os dados têm variação suficiente")
-    
+        print("AVISO: Nenhum trade foi executado!")
+        print("  - Verificar se há predições de alta (1) nas predições")
+        print("  - Verificar se há predições de baixa (0) quando há ações")
+        print("  - Verificar se os dados têm variação suficiente")
+
     return pd.Series(portfolio_value_history, index=test_dataframe.index[:-1])
 
 def run_buy_and_hold_strategy(test_dataframe, initial_capital):
@@ -801,7 +872,7 @@ def run_buy_and_hold_strategy(test_dataframe, initial_capital):
     
     return portfolio_value_history
 
-def run_profit_techniques_backtest(test_dataframe, predictions, probabilities, initial_capital, logger, backtest_configuration=None):
+def run_profit_techniques_backtest(test_dataframe, predictions, probabilities, initial_capital, backtest_configuration=None):
 
     cash_daily_rate = DEFAULT_CASH_DAILY_RATE
     cdi_data = None
@@ -841,9 +912,9 @@ def run_profit_techniques_backtest(test_dataframe, predictions, probabilities, i
             sell_trades += 1
             
         
-        # # Aplicar rendimento diário ao caixa
+        # Aplicar rendimento diário ao caixa
         # avaliable_cash = _apply_daily_cash_return(
-        #     avaliable_cash, current_date, cdi_data, cash_daily_rate, logger
+        #     avaliable_cash, current_date, cdi_data, cash_daily_rate
         # )
 
         current_portfolio_value = avaliable_cash + stocks_quantity * test_dataframe['Close'].iloc[day_index]
@@ -902,29 +973,41 @@ def run_simple_backtest(test_dataframe, predictions, initial_capital):
 
     return pd.Series(portfolio_value_history, index=test_dataframe.index[:-1])
 
-def calculate_portfolio_metrics(portfolio_value_history, strategy_label, ticker_symbol):
+def calculate_portfolio_metrics(portfolio_value_history, strategy_label, ticker_symbol, trading_actions=None):
     """
-    Calcula métricas básicas de performance do portfólio.
+    Calcula métricas básicas e avançadas de performance do portfólio.
     
     Args:
         portfolio_value_history: Série temporal com valores do portfólio
         strategy_label: Nome da estratégia (ex: 'Modelo de Predição')
         ticker_symbol: Símbolo do ticker (ex: 'PETR4.SA')
+        trading_actions: Array de ações de trading (opcional)
     
     Returns:
         dict: Dicionário com métricas calculadas
     """
-    initial_capital = portfolio_value_history.iloc[0]
-    final_capital = portfolio_value_history.iloc[-1]
-    total_return_percentage = (final_capital / initial_capital - 1) * 100
+    # Calcular métricas avançadas
+    advanced_metrics = calculate_advanced_metrics(portfolio_value_history, trading_actions)
     
+    # Métricas básicas (mantidas para compatibilidade)
     metrics = {
         'ticker': ticker_symbol,
         'label': strategy_label,
-        'capital_inicial': initial_capital,
-        'capital_final': final_capital,
-        'retorno_total': total_return_percentage
+        'capital_inicial': advanced_metrics['initial_value'],
+        'capital_final': advanced_metrics['final_value'],
+        'retorno_total': advanced_metrics['total_return_pct']
     }
+    
+    # Adicionar métricas avançadas
+    metrics.update({
+        'retorno_anual_pct': advanced_metrics['annual_return_pct'],
+        'sharpe_ratio': advanced_metrics['sharpe_ratio'],
+        'sortino_ratio': advanced_metrics['sortino_ratio'],
+        'calmar_ratio': advanced_metrics['calmar_ratio'],
+        'max_drawdown_pct': advanced_metrics['max_drawdown_pct'],
+        'volatilidade_pct': advanced_metrics['volatility_pct'],
+        'win_rate_pct': advanced_metrics['win_rate_pct']
+    })
     
     return metrics
 
@@ -969,6 +1052,17 @@ def generate_text_report(results_data, backtest_configuration, output_path):
                     file.write(f"  Capital Inicial: R$ {result['capital_inicial']:,.2f}\n")
                     file.write(f"  Capital Final: R$ {result['capital_final']:,.2f}\n")
                     file.write(f"  Retorno Total: {result['retorno_total']:+.2f}%\n")
+                    
+                    # Adicionar métricas avançadas se disponíveis
+                    if 'sharpe_ratio' in result:
+                        file.write(f"  Retorno Anual: {result.get('retorno_anual_pct', 0):+.2f}%\n")
+                        file.write(f"  Sharpe Ratio: {result.get('sharpe_ratio', 0):.3f}\n")
+                        file.write(f"  Sortino Ratio: {result.get('sortino_ratio', 0):.3f}\n")
+                        file.write(f"  Calmar Ratio: {result.get('calmar_ratio', 0):.3f}\n")
+                        file.write(f"  Max Drawdown: {result.get('max_drawdown_pct', 0):.2f}%\n")
+                        file.write(f"  Volatilidade: {result.get('volatilidade_pct', 0):.2f}%\n")
+                        file.write(f"  Win Rate: {result.get('win_rate_pct', 0):.2f}%\n")
+                    
                     file.write("\n")
 
 
@@ -1215,7 +1309,26 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
         model, x_val, validation_dataframe, backtest_configuration['initial_capital'],
         backtest_configuration['transaction_cost_pct'], minimum_hold_days=hold_min_days
     )
-    print(f"  Thresholds: buy={buy_threshold:.2f} sell={sell_threshold:.2f} | Sharpe validação={best_sharpe:.2f}")
+    print(f"  Thresholds otimizados: buy={buy_threshold:.2f} sell={sell_threshold:.2f} | Sharpe validação={best_sharpe:.2f}")
+    
+    # Análise adicional da distribuição de classes para ajuste fino
+    probabilities_val = model.predict_proba(x_val)
+    suggested_buy, suggested_sell, analysis_info = analyze_class_distribution_and_adjust_thresholds(
+        probabilities_val, buy_threshold, sell_threshold
+    )
+    
+    print(f"  Análise de distribuição:")
+    print(f"    Score médio: {analysis_info['score_stats']['mean']:.3f}")
+    print(f"    P75: {analysis_info['score_stats']['percentile_75']:.3f}")
+    print(f"    P25: {analysis_info['score_stats']['percentile_25']:.3f}")
+    print(f"    Thresholds sugeridos: buy={suggested_buy:.2f} sell={suggested_sell:.2f}")
+    
+    # Usar thresholds sugeridos se forem mais conservadores
+    if suggested_buy > buy_threshold and suggested_sell < sell_threshold:
+        buy_threshold, sell_threshold = suggested_buy, suggested_sell
+        print(f"  Usando thresholds mais conservadores: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
+    else:
+        print(f"  Mantendo thresholds otimizados: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
 
     # Preparar dados de simulação
     simulation_dataframe = dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
@@ -1235,18 +1348,11 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     predictions = generate_actions_from_score(
         score_sim, buy_threshold=buy_threshold, sell_threshold=sell_threshold, minimum_hold_days=hold_min_days
     )
-
-    # Executar backtesting
-    logger, log_filepath = setup_structured_logging(ticker_symbol, backtest_configuration)
-    print(f"  Log salvo em: {log_filepath.name}")
-    
-    logger.info(f"THRESHOLDS FINANCEIROS: buy={buy_threshold:.2f} sell={sell_threshold:.2f} hold_min_days={hold_min_days}")
-    logger.info(f"SCORE MÉDIO: {np.mean(score_sim):.3f}")
     
     # Executar diferentes estratégias
     realistic_portfolio = run_realistic_backtest(
         simulation_dataframe, predictions, score_sim, backtest_configuration['initial_capital'],
-        backtest_configuration['transaction_cost_pct'], logger, backtest_configuration
+        backtest_configuration['transaction_cost_pct'], backtest_configuration
     )
 
     # simple_portfolio_with_profit_techniques = run_profit_techniques_backtest(
@@ -1254,7 +1360,7 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     # )
 
     simple_portfolio = run_profit_techniques_backtest(
-        simulation_dataframe, predictions, score_sim, backtest_configuration['initial_capital'], logger, backtest_configuration
+        simulation_dataframe, predictions, score_sim, backtest_configuration['initial_capital'], backtest_configuration
     )
 
     buy_and_hold_portfolio = run_buy_and_hold_strategy(
@@ -1262,8 +1368,8 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     )
     
     # Calcular métricas
-    model_metrics = calculate_portfolio_metrics(realistic_portfolio, "Modelo de Predição", ticker_symbol)
-    simple_metrics = calculate_portfolio_metrics(simple_portfolio, "Simulação Simples", ticker_symbol)
+    model_metrics = calculate_portfolio_metrics(realistic_portfolio, "Modelo de Predição", ticker_symbol, predictions)
+    simple_metrics = calculate_portfolio_metrics(simple_portfolio, "Simulação Simples", ticker_symbol, predictions)
     buy_and_hold_metrics = calculate_portfolio_metrics(buy_and_hold_portfolio, "Buy and Hold", ticker_symbol)
     ml_metrics = calculate_ml_metrics(y_test, predictions)
     ml_metrics_entry = {

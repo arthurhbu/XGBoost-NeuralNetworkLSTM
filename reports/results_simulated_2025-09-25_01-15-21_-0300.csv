@@ -1,0 +1,33 @@
+,ticker,label,capital_inicial,capital_final,retorno_total,ml_metrics
+0,ABEV3.SA,Modelo de Predição,100000.0,106819.37332420303,6.819373324203037,
+1,ABEV3.SA,Simulação Simples,100000.0,112954.1875232976,12.9541875232976,
+2,ABEV3.SA,Buy and Hold,100000.0,90350.64598780114,-9.649354012198863,
+3,ABEV3.SA,Métricas de ML,,,,"{'Acurácia': '78.49%', 'Precisão (Up)': '75.00%', 'Recall (Up)': '5.36%', 'F1-Score (Up)': '0.10', 'Distribuição Predições': 'Up: 4, Not-Up: 247'}"
+4,B3SA3.SA,Modelo de Predição,100000.0,101346.66524584564,1.3466652458456352,
+5,B3SA3.SA,Simulação Simples,100000.0,103294.84748570326,3.294847485703256,
+6,B3SA3.SA,Buy and Hold,100000.0,74775.60944246201,-25.22439055753799,
+7,B3SA3.SA,Métricas de ML,,,,"{'Acurácia': '85.66%', 'Precisão (Up)': '50.00%', 'Recall (Up)': '11.11%', 'F1-Score (Up)': '0.18', 'Distribuição Predições': 'Up: 8, Not-Up: 243'}"
+8,BBAS3.SA,Modelo de Predição,100000.0,98434.59309392484,-1.5654069060751619,
+9,BBAS3.SA,Simulação Simples,100000.0,97964.99625384981,-2.035003746150188,
+10,BBAS3.SA,Buy and Hold,100000.0,95679.13605531957,-4.320863944680431,
+11,BBAS3.SA,Métricas de ML,,,,"{'Acurácia': '75.30%', 'Precisão (Up)': '25.00%', 'Recall (Up)': '17.39%', 'F1-Score (Up)': '0.21', 'Distribuição Predições': 'Up: 32, Not-Up: 219'}"
+12,BBDC4.SA,Modelo de Predição,100000.0,97269.68518865864,-2.730314811341361,
+13,BBDC4.SA,Simulação Simples,100000.0,93950.67435853377,-6.04932564146623,
+14,BBDC4.SA,Buy and Hold,100000.0,73345.80009197087,-26.65419990802913,
+15,BBDC4.SA,Métricas de ML,,,,"{'Acurácia': '81.27%', 'Precisão (Up)': '60.00%', 'Recall (Up)': '12.24%', 'F1-Score (Up)': '0.20', 'Distribuição Predições': 'Up: 10, Not-Up: 241'}"
+16,ITUB4.SA,Modelo de Predição,100000.0,100000.0,0.0,
+17,ITUB4.SA,Simulação Simples,100000.0,100000.0,0.0,
+18,ITUB4.SA,Buy and Hold,100000.0,98317.21066214197,-1.6827893378580372,
+19,ITUB4.SA,Métricas de ML,,,,"{'Acurácia': '76.49%', 'Precisão (Up)': '0.00%', 'Recall (Up)': '0.00%', 'F1-Score (Up)': '0.00', 'Distribuição Predições': 'Up: 0, Not-Up: 251'}"
+20,PETR4.SA,Modelo de Predição,100000.0,110342.53735267509,10.342537352675096,
+21,PETR4.SA,Simulação Simples,100000.0,118655.12516535819,18.65512516535819,
+22,PETR4.SA,Buy and Hold,100000.0,117383.78592864318,17.38378592864318,
+23,PETR4.SA,Métricas de ML,,,,"{'Acurácia': '71.71%', 'Precisão (Up)': '76.00%', 'Recall (Up)': '22.62%', 'F1-Score (Up)': '0.35', 'Distribuição Predições': 'Up: 25, Not-Up: 226'}"
+24,VALE3.SA,Modelo de Predição,100000.0,95682.51093849435,-4.317489061505652,
+25,VALE3.SA,Simulação Simples,100000.0,93749.99736059786,-6.250002639402141,
+26,VALE3.SA,Buy and Hold,100000.0,77351.39470303607,-22.64860529696393,
+27,VALE3.SA,Métricas de ML,,,,"{'Acurácia': '68.53%', 'Precisão (Up)': '18.18%', 'Recall (Up)': '15.69%', 'F1-Score (Up)': '0.17', 'Distribuição Predições': 'Up: 44, Not-Up: 207'}"
+28,VIVT3.SA,Modelo de Predição,100000.0,98348.84957044173,-1.651150429558268,
+29,VIVT3.SA,Simulação Simples,100000.0,98534.09567449827,-1.4659043255017323,
+30,VIVT3.SA,Buy and Hold,100000.0,94069.11177018369,-5.930888229816311,
+31,VIVT3.SA,Métricas de ML,,,,"{'Acurácia': '72.51%', 'Precisão (Up)': '36.00%', 'Recall (Up)': '14.52%', 'F1-Score (Up)': '0.21', 'Distribuição Predições': 'Up: 25, Not-Up: 226'}"

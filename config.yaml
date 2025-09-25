@@ -47,6 +47,33 @@ model_training:
     profit_multiplier: 2.0
     loss_multiplier: 1.5     
 
+  triple_barrier_grid:
+    # Tese 1: Swing Trade Curto (3-5 dias), Risco:Retorno Moderado
+    - {holding_days: 3, profit_multiplier: 1.0, loss_multiplier: 0.8}  # Muito conservador
+    - {holding_days: 3, profit_multiplier: 1.5, loss_multiplier: 1.0}  # Conservador
+    - {holding_days: 5, profit_multiplier: 1.5, loss_multiplier: 1.0}  # Moderado
+    - {holding_days: 5, profit_multiplier: 2.0, loss_multiplier: 1.0}  # Moderado-agressivo
+
+    # Tese 2: Swing Trade Padrão (7-10 dias), Várias Relações R:R
+    - {holding_days: 7, profit_multiplier: 1.5, loss_multiplier: 1.0}  # Mais conservador
+    - {holding_days: 7, profit_multiplier: 2.0, loss_multiplier: 1.5}  # Equilibrado
+    - {holding_days: 7, profit_multiplier: 2.5, loss_multiplier: 1.5}  # Mais agressivo
+    - {holding_days: 7, profit_multiplier: 3.0, loss_multiplier: 2.0}  # Muito agressivo
+    - {holding_days: 10, profit_multiplier: 2.0, loss_multiplier: 1.0} # Médio prazo conservador
+    - {holding_days: 10, profit_multiplier: 2.5, loss_multiplier: 1.5} # Médio prazo equilibrado
+
+    # Tese 3: Swing Trade de Médio Prazo (10-15 dias), Buscando Grandes Movimentos
+    - {holding_days: 10, profit_multiplier: 3.0, loss_multiplier: 1.5} # Médio prazo agressivo
+    - {holding_days: 15, profit_multiplier: 2.0, loss_multiplier: 1.0} # Longo prazo conservador
+    - {holding_days: 15, profit_multiplier: 3.0, loss_multiplier: 1.5} # Longo prazo equilibrado
+    - {holding_days: 15, profit_multiplier: 4.0, loss_multiplier: 2.0} # Longo prazo agressivo
+
+    # Tese 4: Captura de Volatilidade (barreiras mais apertadas)
+    - {holding_days: 3, profit_multiplier: 1.0, loss_multiplier: 1.0}  # R:R de 1 para 1, curto
+    - {holding_days: 5, profit_multiplier: 1.0, loss_multiplier: 1.0}  # R:R de 1 para 1, médio
+    - {holding_days: 7, profit_multiplier: 1.2, loss_multiplier: 1.0}  # R:R ligeiramente favorável
+
+
   xgboost_params:
     objective: "multi:softprob"
     'num_class': 3
