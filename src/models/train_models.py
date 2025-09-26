@@ -50,6 +50,52 @@ def create_dynamic_triple_barrier_target(df, target_column, profit_multiplier, l
     return df.dropna(subset=[target_column])
 
 
+def create_FIXED_triple_barrier_target(
+    df: pd.DataFrame, 
+    target_column_name: str, 
+    holding_days: int, 
+    profit_threshold: float, # ex: 0.03 para 3%
+    loss_threshold: float    # ex: -0.015 para -1.5%
+) -> pd.DataFrame:
+    """
+    Cria um target ternário [-1, 0, 1] usando o método Triple Barrier com
+    barreiras de lucro e perda FIXAS (em porcentagem).
+    """
+    target = np.full(len(df), np.nan) 
+
+    for i in range(len(df) - holding_days):
+        entry_price = df['Open'].iloc[i]
+        
+        # Barreiras fixas
+        profit_barrier = entry_price * (1 + profit_threshold)
+        loss_barrier = entry_price * (1 + loss_threshold) # loss_threshold já é negativo
+        
+        outcome = np.nan
+
+        for j in range(1, holding_days + 1):
+            if i + j >= len(df): break
+
+            day_high = df['High'].iloc[i+j]
+            day_low = df['Low'].iloc[i+j]
+
+            if day_high >= profit_barrier:
+                outcome = 1; break
+            elif day_low <= loss_barrier:
+                outcome = -1; break
+        
+        if pd.isna(outcome):
+            outcome = 0
+            
+        target[i] = outcome
+
+    df[target_column_name] = target
+    
+    label_map = {-1: 0, 0: 1, 1: 2}
+    df[target_column_name] = df[target_column_name].map(label_map)
+    
+    return df.dropna(subset=[target_column_name])
+
+
 def split_data(df, train_final_date, validation_start_date, validation_end_date, 
                test_start_date, test_end_date, target_column_name):
     df.index = pd.to_datetime(df.index)
@@ -228,9 +274,28 @@ def calculate_class_weights(y_train):
     print(f"Pesos das classes calculados: {weight_dict}")
     return weight_dict
 
+def calculate_sample_weights(y_train, class_weights):
+    """
+    Calcula sample_weights para cada amostra baseado nos pesos das classes.
+    
+    Args:
+        y_train: Array com labels de treinamento
+        class_weights: Dicionário com pesos para cada classe
+    
+    Returns:
+        array: Array com pesos para cada amostra
+    """
+    sample_weights = np.array([class_weights[label] for label in y_train])
+    print(f"Sample weights calculados - Min: {sample_weights.min():.3f}, Max: {sample_weights.max():.3f}, Mean: {sample_weights.mean():.3f}")
+    return sample_weights
+
 def objective(trial, x_train, y_train, x_val, y_val):
     # Calcular pesos das classes
     class_weights = calculate_class_weights(y_train)
+    sample_weights = calculate_sample_weights(y_train, class_weights)
+    # Pesos também para validação, para que o early stopping respeite o desbalanceamento
+    val_class_weights = calculate_class_weights(y_val)
+    val_sample_weights = calculate_sample_weights(y_val, val_class_weights)
     
     params = {
         'objective': 'multi:softprob',
@@ -246,12 +311,12 @@ def objective(trial, x_train, y_train, x_val, y_val):
         'reg_alpha': trial.suggest_float('reg_alpha', 1e-8, 1.0, log=True),
         'seed': 42,
         'n_jobs': -1,
-        'tree_method': 'hist',
-        'scale_pos_weight': class_weights.get(2, 1.0)  # Peso para classe Up (2)
+        'tree_method': 'hist'
+        # Removido scale_pos_weight pois não funciona com multi:softprob
     }
     
-    dtrain = xgb.DMatrix(x_train, label=y_train)
-    dval = xgb.DMatrix(x_val, label=y_val)
+    dtrain = xgb.DMatrix(x_train, label=y_train, weight=sample_weights)
+    dval = xgb.DMatrix(x_val, label=y_val, weight=val_sample_weights)
 
     model = xgb.train(
         params,
@@ -295,15 +360,13 @@ def main():
             
             df_features = pd.read_csv(f'{feature_data_path}/{ticker_file}', index_col=0, parse_dates=True)
             
-            # best_target_params = find_optimal_target_params(df_features, config, base_params)
+            best_target_params = find_optimal_target_params(df_features, config, base_params)
             
             # Usar os parâmetros otimizados encontrados
             df_final_labels = create_dynamic_triple_barrier_target(
                 df_features, 
                 model_training_config["target_column"], 
-                profit_multiplier=2.0,
-                loss_multiplier=1.5,
-                holding_days=7
+                **best_target_params
             )
             
             x_train, y_train, x_val, y_val, x_test, y_test = split_data(
@@ -323,18 +386,23 @@ def main():
             
             # Calcular pesos das classes para o modelo final
             class_weights = calculate_class_weights(y_train)
+            sample_weights = calculate_sample_weights(y_train, class_weights)
             
             final_params = {
                 **best_model_params, 
                 'objective': 'multi:softprob', 
                 'num_class': 3, 
-                'eval_metric': 'mlogloss',
-                'scale_pos_weight': class_weights.get(2, 1.0)  # Peso para classe Up (2)
+                'eval_metric': 'mlogloss'
+                # Removido scale_pos_weight pois não funciona com multi:softprob
             }
             
             x_train_full, y_train_full = pd.concat([x_train, x_val]), pd.concat([y_train, y_val])
             
-            dtrain_full = xgb.DMatrix(x_train_full, label=y_train_full)
+            # Calcular sample_weights para o conjunto completo de treino
+            class_weights_full = calculate_class_weights(y_train_full)
+            sample_weights_full = calculate_sample_weights(y_train_full, class_weights_full)
+            
+            dtrain_full = xgb.DMatrix(x_train_full, label=y_train_full, weight=sample_weights_full)
             dval_final = xgb.DMatrix(x_val, label=y_val)
             
             booster = xgb.train(
