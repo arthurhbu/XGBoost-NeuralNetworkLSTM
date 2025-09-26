@@ -4,7 +4,8 @@ import yaml
 import pandas as pd
 import numpy as np
 import xgboost as xgb
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, roc_auc_score, precision_score, recall_score, accuracy_score
+from sklearn.utils.class_weight import compute_class_weight
 import optuna
 
 
@@ -187,7 +188,7 @@ def find_optimal_target_params(df_features, config, base_model_params):
     
     for i, params in enumerate(strategy_grid):
         try:
-            df_temp = create_dynamic_triple_barrier_target(
+            df_temp = create_FIXED_triple_barrier_target(
                 df_features.copy(), 
                 config['model_training']['target_column'], 
                 **params
@@ -209,8 +210,14 @@ def find_optimal_target_params(df_features, config, base_model_params):
             down_class_ratio = class_dist.get(0, 0.0)
             flat_class_ratio = class_dist.get(1, 0.0)
             
-            # Critério mais flexível - aceitar estratégias com pelo menos 5% de classe Up
-            if up_class_ratio < 0.05:
+            # Critério mais flexível - aceitar estratégias com pelo menos 2% de classe Up
+            # e verificar se há pelo menos 2 classes diferentes
+            unique_classes = y_train.unique()
+            if len(unique_classes) < 2:
+                print(f"  Parâmetros {i+1}: Rejeitado - Apenas {len(unique_classes)} classe(s) encontrada(s)")
+                continue
+                
+            if up_class_ratio < 0.02:
                 print(f"  Parâmetros {i+1}: Rejeitado - Classe Up muito baixa ({up_class_ratio:.3f})")
                 continue
                 
@@ -289,14 +296,131 @@ def calculate_sample_weights(y_train, class_weights):
     print(f"Sample weights calculados - Min: {sample_weights.min():.3f}, Max: {sample_weights.max():.3f}, Mean: {sample_weights.mean():.3f}")
     return sample_weights
 
-def objective(trial, x_train, y_train, x_val, y_val):
-    # Calcular pesos das classes
+def apply_aggressive_class_balancing(x_train, y_train):
+    """
+    Aplica balanceamento mais agressivo para classes desbalanceadas.
+    
+    Args:
+        x_train: Features de treinamento
+        y_train: Labels de treinamento
+    
+    Returns:
+        tuple: (x_train_balanced, y_train_balanced)
+    """
+    from sklearn.utils import resample
+    
+    # Verificar distribuição atual
+    class_counts = pd.Series(y_train).value_counts().sort_index()
+    print(f"Distribuição original: {dict(class_counts)}")
+    
+    # Encontrar a classe majoritária
+    majority_class = class_counts.idxmax()
+    majority_count = class_counts.max()
+    
+    # Balancear para ter pelo menos 10% de cada classe minoritária
+    target_minority_count = max(int(majority_count * 0.1), 10)
+    
+    x_train_balanced = [x_train]
+    y_train_balanced = [y_train]
+    
+    for class_label in class_counts.index:
+        if class_label == majority_class:
+            continue
+            
+        class_mask = y_train == class_label
+        x_class = x_train[class_mask]
+        y_class = y_train[class_mask]
+        
+        if len(y_class) < target_minority_count:
+            # Oversample da classe minoritária
+            n_samples = target_minority_count - len(y_class)
+            x_oversampled, y_oversampled = resample(
+                x_class, y_class, 
+                n_samples=n_samples, 
+                random_state=42, 
+                replace=True
+            )
+            x_train_balanced.append(x_oversampled)
+            y_train_balanced.append(y_oversampled)
+            print(f"Oversampled classe {class_label}: {len(y_class)} -> {len(y_class) + n_samples}")
+    
+    # Concatenar todos os dados
+    x_final = pd.concat(x_train_balanced, ignore_index=True)
+    y_final = pd.concat(y_train_balanced, ignore_index=True)
+    
+    # Verificar distribuição final
+    final_counts = pd.Series(y_final).value_counts().sort_index()
+    print(f"Distribuição após balanceamento: {dict(final_counts)}")
+    
+    return x_final, y_final
+
+def calculate_objective_score(y_true, y_pred, probabilities, objective_type='f1_macro'):
+    """
+    Calcula diferentes tipos de scores para otimização.
+    
+    Args:
+        y_true: Labels verdadeiros
+        y_pred: Predições do modelo
+        probabilities: Probabilidades do modelo
+        objective_type: Tipo de objetivo ('f1_macro', 'f1_weighted', 'auc_ovr', 'precision_up', 'recall_up', 'f1_up', 'balanced_accuracy')
+    
+    Returns:
+        float: Score calculado
+    """
+    try:
+        if objective_type == 'f1_macro':
+            return f1_score(y_true, y_pred, average='macro', zero_division=0)
+        
+        elif objective_type == 'f1_weighted':
+            return f1_score(y_true, y_pred, average='weighted', zero_division=0)
+        
+        elif objective_type == 'auc_ovr':
+            # AUC One-vs-Rest para classe Up (2)
+            y_binary = (y_true == 2).astype(int)
+            if len(np.unique(y_binary)) > 1:  # Verificar se há ambas as classes
+                return roc_auc_score(y_binary, probabilities[:, 2])
+            else:
+                return 0.0
+        
+        elif objective_type == 'precision_up':
+            return precision_score(y_true, y_pred, labels=[2], average='macro', zero_division=0)
+        
+        elif objective_type == 'recall_up':
+            return recall_score(y_true, y_pred, labels=[2], average='macro', zero_division=0)
+        
+        elif objective_type == 'f1_up':
+            return f1_score(y_true, y_pred, labels=[2], average='macro', zero_division=0)
+        
+        elif objective_type == 'balanced_accuracy':
+            from sklearn.metrics import balanced_accuracy_score
+            return balanced_accuracy_score(y_true, y_pred)
+        
+        elif objective_type == 'custom_score':
+            # Score customizado: combina F1 macro com penalização por desbalanceamento
+            f1_macro = f1_score(y_true, y_pred, average='macro', zero_division=0)
+            up_ratio = np.mean(y_pred == 2)
+            # Penalizar se não há predições Up ou se há muitas predições Up
+            balance_penalty = 1.0 if 0.05 <= up_ratio <= 0.3 else 0.5
+            return f1_macro * balance_penalty
+        
+        else:
+            return f1_score(y_true, y_pred, average='macro', zero_division=0)
+    
+    except Exception as e:
+        print(f"Erro ao calcular score {objective_type}: {e}")
+        return 0.0
+
+def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
+    # Verificar se há classes suficientes
+    unique_classes = np.unique(y_train)
+    if len(unique_classes) < 2:
+        return -np.inf
+    
+    # Calcular pesos das classes com verificação
     class_weights = calculate_class_weights(y_train)
     sample_weights = calculate_sample_weights(y_train, class_weights)
-    # Pesos também para validação, para que o early stopping respeite o desbalanceamento
-    val_class_weights = calculate_class_weights(y_val)
-    val_sample_weights = calculate_sample_weights(y_val, val_class_weights)
     
+    # Parâmetros do modelo
     params = {
         'objective': 'multi:softprob',
         'num_class': 3,
@@ -312,12 +436,12 @@ def objective(trial, x_train, y_train, x_val, y_val):
         'seed': 42,
         'n_jobs': -1,
         'tree_method': 'hist'
-        # Removido scale_pos_weight pois não funciona com multi:softprob
     }
     
     dtrain = xgb.DMatrix(x_train, label=y_train, weight=sample_weights)
-    dval = xgb.DMatrix(x_val, label=y_val, weight=val_sample_weights)
+    dval = xgb.DMatrix(x_val, label=y_val)
 
+    # Treinar modelo
     model = xgb.train(
         params,
         dtrain,
@@ -326,16 +450,99 @@ def objective(trial, x_train, y_train, x_val, y_val):
         early_stopping_rounds=50,
         verbose_eval=False
     )
+    
+    # Fazer predições
+    probabilities = model.predict(dval)
+    y_pred = np.argmax(probabilities, axis=1)
+    
+    # Calcular score baseado no tipo de objetivo
+    score = calculate_objective_score(y_val, y_pred, probabilities, objective_type)
+    
+    return score
 
-    try:
-        return float(model.best_score)
-    except Exception:
-        proba = model.predict(dval)
-        eps = 1e-12
-        y_true = y_val.astype(int)
-        log_probs = -np.log(np.clip(proba[np.arange(len(y_true)), y_true], eps, 1.0))
-        return float(np.mean(log_probs))
 
+def test_multiple_objectives(x_train, y_train, x_val, y_val, n_trials_per_objective=10):
+    """
+    Testa múltiplos objetivos de otimização e retorna o melhor.
+    
+    Args:
+        x_train, y_train: Dados de treinamento
+        x_val, y_val: Dados de validação
+        n_trials_per_objective: Número de trials por objetivo
+    
+    Returns:
+        tuple: (melhor_objectivo, melhor_score, melhor_params)
+    """
+    objectives_to_test = [
+        ('f1_macro', 'F1-Score Macro'),
+        ('f1_weighted', 'F1-Score Weighted'), 
+        ('auc_ovr', 'AUC One-vs-Rest (Up)'),
+        ('precision_up', 'Precision Classe Up'),
+        ('recall_up', 'Recall Classe Up'),
+        ('f1_up', 'F1-Score Classe Up'),
+        ('balanced_accuracy', 'Balanced Accuracy'),
+        ('custom_score', 'Score Customizado')
+    ]
+    
+    results = []
+    
+    print(f"\n{'='*60}")
+    print(f"TESTANDO MÚLTIPLOS OBJETIVOS DE OTIMIZAÇÃO")
+    print(f"{'='*60}")
+    
+    for obj_type, obj_name in objectives_to_test:
+        print(f"\n🎯 Testando: {obj_name} ({obj_type})")
+        
+        try:
+            study = optuna.create_study(
+                direction='maximize', 
+                sampler=optuna.samplers.TPESampler(seed=42)
+            )
+            study.optimize(
+                lambda trial: objective(trial, x_train, y_train, x_val, y_val, obj_type), 
+                n_trials=n_trials_per_objective
+            )
+            
+            score = study.best_value
+            params = study.best_params
+            
+            results.append({
+                'objective': obj_type,
+                'name': obj_name,
+                'score': score,
+                'params': params
+            })
+            
+            print(f"  ✅ Score: {score:.4f}")
+            
+        except Exception as e:
+            print(f"  ❌ Erro: {str(e)}")
+            results.append({
+                'objective': obj_type,
+                'name': obj_name,
+                'score': -np.inf,
+                'params': None
+            })
+    
+    # Encontrar o melhor resultado
+    best_result = max(results, key=lambda x: x['score'])
+    
+    print(f"\n{'='*60}")
+    print(f"RESULTADOS FINAIS")
+    print(f"{'='*60}")
+    
+    # Ordenar por score
+    results_sorted = sorted(results, key=lambda x: x['score'], reverse=True)
+    
+    for i, result in enumerate(results_sorted[:5]):  # Top 5
+        status = "🏆" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else "  "
+        print(f"{status} {result['name']}: {result['score']:.4f}")
+    
+    print(f"\n🏆 MELHOR OBJETIVO: {best_result['name']}")
+    print(f"   Score: {best_result['score']:.4f}")
+    print(f"   Parâmetros: {best_result['params']}")
+    
+    return best_result['objective'], best_result['score'], best_result['params']
 
 def main():
     config_path = Path(__file__).resolve().parents[2] / "config.yaml"
@@ -354,21 +561,25 @@ def main():
     }
 
     for ticker_file in os.listdir(feature_data_path):
+        if ticker_file != 'ITUB4.SA.csv':
+            continue
         if ticker_file.endswith('.csv'):
             ticker = ticker_file.replace('.csv', '')
             print(f"\n{'='*60}\nProcessando Ticker: {ticker}\n{'='*60}")
             
             df_features = pd.read_csv(f'{feature_data_path}/{ticker_file}', index_col=0, parse_dates=True)
             
-            best_target_params = find_optimal_target_params(df_features, config, base_params)
+            # best_target_params = find_optimal_target_params(df_features, config, base_params)
             
             # Usar os parâmetros otimizados encontrados
-            df_final_labels = create_dynamic_triple_barrier_target(
+            df_final_labels = create_FIXED_triple_barrier_target(
                 df_features, 
                 model_training_config["target_column"], 
-                **best_target_params
+                profit_threshold=0.05,
+                loss_threshold=-0.025,
+                holding_days=5
             )
-            
+            df_final_labels.to_csv(f'{feature_data_path}/final_labels_teste_para_descobrir_desbalanceamento.csv')
             x_train, y_train, x_val, y_val, x_test, y_test = split_data(
                 df_final_labels, 
                 config['model_training']['train_final_date'], 
@@ -379,36 +590,59 @@ def main():
                 target_column_name=model_training_config['target_column']
             )
             
-            study = optuna.create_study(direction='maximize', sampler=optuna.samplers.TPESampler(seed=42))
-            study.optimize(lambda trial: objective(trial, x_train, y_train, x_val, y_val), n_trials=50)
+            # Testar múltiplos objetivos de otimização
+            best_objective, best_score, best_model_params = test_multiple_objectives(
+                x_train, y_train, x_val, y_val, n_trials_per_objective=15
+            )
             
-            best_model_params = study.best_params
+            if best_model_params is None:
+                print("❌ Nenhum objetivo funcionou, usando parâmetros padrão")
+                best_model_params = {
+                    'max_depth': 5,
+                    'learning_rate': 0.1,
+                    'n_estimators': 500,
+                    'subsample': 0.8,
+                    'colsample_bytree': 0.8,
+                    'gamma': 0,
+                    'reg_lambda': 1.0,
+                    'reg_alpha': 0.0
+                }
+            
+            # Aplicar balanceamento agressivo se necessário
+            class_dist = y_train.value_counts(normalize=True)
+            up_ratio = class_dist.get(2, 0.0)
+            
+            # if up_ratio < 0.05:  # Se classe Up for muito rara
+            print(f"Aplicando balanceamento agressivo - Classe Up muito rara ({up_ratio:.3f})")
+            x_train_balanced, y_train_balanced = apply_aggressive_class_balancing(x_train, y_train)
+            # else:
+                # x_train_balanced, y_train_balanced = x_train, y_train
             
             # Calcular pesos das classes para o modelo final
-            class_weights = calculate_class_weights(y_train)
-            sample_weights = calculate_sample_weights(y_train, class_weights)
+            class_weights = calculate_class_weights(y_train_balanced)
+            sample_weights = calculate_sample_weights(y_train_balanced, class_weights)
             
             final_params = {
                 **best_model_params, 
                 'objective': 'multi:softprob', 
                 'num_class': 3, 
                 'eval_metric': 'mlogloss'
-                # Removido scale_pos_weight pois não funciona com multi:softprob
             }
             
-            x_train_full, y_train_full = pd.concat([x_train, x_val]), pd.concat([y_train, y_val])
+            x_train_full, y_train_full = pd.concat([x_train_balanced, x_val]), pd.concat([y_train_balanced, y_val])
             
             # Calcular sample_weights para o conjunto completo de treino
             class_weights_full = calculate_class_weights(y_train_full)
             sample_weights_full = calculate_sample_weights(y_train_full, class_weights_full)
             
-            dtrain_full = xgb.DMatrix(x_train_full, label=y_train_full, weight=sample_weights_full)
+            dtrain_full = xgb.DMatrix(x_train, label=y_train, weight=sample_weights)
             dval_final = xgb.DMatrix(x_val, label=y_val)
             
             booster = xgb.train(
                 final_params,
                 dtrain_full,
                 num_boost_round=final_params['n_estimators'],
+                sample_weight=sample_weights,
                 evals=[(dval_final, 'val')],
                 early_stopping_rounds=50,
                 verbose_eval=False

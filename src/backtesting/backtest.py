@@ -1402,7 +1402,8 @@ def _save_results_and_generate_reports(all_results, backtest_configuration):
     
     # Criar DataFrame com todos os resultados
     results_dataframe = pd.DataFrame(all_results)
-    final_results_path = f"{backtest_configuration['results_path']}/results_simulated_{timestamp}.csv"
+    # final_results_path = f"{backtest_configuration['results_path']}/results_simulated_{timestamp}.csv"
+    final_results_path = f"{backtest_configuration['results_path']}/ITUB4SA_Teste.csv"
     results_dataframe.to_csv(final_results_path)
     
     # Criar relatórios em TXT e JSON
@@ -1436,6 +1437,9 @@ def main():
     # Processar cada ticker
     for feature_data_file in os.listdir(features_path):
         ticker_symbol = feature_data_file.replace(".csv", "")
+
+        if ticker_symbol != 'ITUB4.SA':
+            continue
         
         results, simulation_dataframe = _process_single_ticker(
             ticker_symbol, features_path, model_path, config, backtest_configuration
@@ -1452,6 +1456,7 @@ def main():
     
     # Salvar resultados e gerar relatórios
     _save_results_and_generate_reports(all_results, backtest_configuration)
+
     
 
 

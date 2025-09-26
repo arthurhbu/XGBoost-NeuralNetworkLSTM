@@ -1,0 +1,5 @@
+,ticker,label,capital_inicial,capital_final,retorno_total,retorno_anual_pct,sharpe_ratio,sortino_ratio,calmar_ratio,max_drawdown_pct,volatilidade_pct,win_rate_pct,ml_metrics
+0,ITUB4.SA,Modelo de Predição,100000.0,100000.0,0.0,0.0,-inf,0.0,0.0,0.0,0.0,0.0,
+1,ITUB4.SA,Simulação Simples,100000.0,100000.0,0.0,0.0,-inf,0.0,0.0,0.0,0.0,0.0,
+2,ITUB4.SA,Buy and Hold,100000.0,98317.21066214197,-1.6827893378580372,-1.6894367240500197,-0.0015325068342512116,-0.002384137613784716,-0.1025314033304946,16.477261299198002,18.38064268833971,48.4,
+3,ITUB4.SA,Métricas de ML,,,,,,,,,,,"{'Acurácia': '76.49%', 'Precisão (Up)': '0.00%', 'Recall (Up)': '0.00%', 'F1-Score (Up)': '0.00', 'Distribuição Predições': 'Up: 0, Not-Up: 251'}"
