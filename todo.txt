@@ -1,1 +1,5 @@
-- TESTAR NOVO MODELO
+- Mexer Indicadores
+- Terminar implementação do thresholding do target
+- Teste unitário em cada modelo com diferentes parametros
+- Maximizar lucros no ticker do ITAU
+- Testar outras métricas para maximizar ou minimizar perda ou lucro
