@@ -7,8 +7,34 @@ import xgboost as xgb
 from optuna.integration import XGBoostPruningCallback
 from sklearn.metrics import f1_score, roc_auc_score, precision_score, recall_score, accuracy_score
 from sklearn.utils.class_weight import compute_class_weight
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.isotonic import IsotonicRegression
+from sklearn.linear_model import LogisticRegression
 import optuna
 import json
+
+# Criar wrapper para o modelo XGBoost
+class XGBoostWrapper:
+    def __init__(self, model):
+        self.model = model
+        self.is_fitted_ = True
+        self._estimator_type = 'classifier'
+        self.classes_ = None
+
+    
+    def fit(self, X, y):
+        # O modelo já foi treinado, apenas armazenar
+        return self
+    
+    def predict_proba(self, X):
+        dtest = xgb.DMatrix(X)
+        return self.model.predict(dtest)
+
+    def get_params(self, deep=True):
+        return {}
+
+    def set_params(self, **params):
+        return self
 
 
 def create_dynamic_triple_barrier_target(df, target_column, profit_multiplier, loss_multiplier, holding_days=7):
@@ -359,6 +385,86 @@ def apply_aggressive_class_balancing(x_train, y_train):
     return x_final, y_final
 
 
+def create_calibrated_model(base_model, x_train, y_train, x_val, y_val, calibration_method='isotonic'):
+    """
+    Cria um modelo calibrado usando Platt Scaling ou Isotonic Regression.
+    
+    Args:
+        base_model: Modelo XGBoost base
+        x_train: Features de treinamento
+        y_train: Labels de treinamento
+        x_val: Features de validação
+        y_val: Labels de validação
+        calibration_method: 'isotonic' ou 'sigmoid' (Platt)
+    
+    Returns:
+        CalibratedClassifierCV: Modelo calibrado
+    """
+    print(f"  Aplicando calibração {calibration_method}...")
+    
+    # Wrapper do modelo
+    wrapped_model = XGBoostWrapper(base_model)
+    wrapped_model.classes_ = np.unique(np.concatenate([y_train.values, y_val.values]))
+
+    # Criar calibrador
+    if calibration_method == 'isotonic':
+        calibrator = CalibratedClassifierCV(
+            wrapped_model, 
+            method='isotonic', 
+            cv='prefit'
+        )
+    else:  # sigmoid (Platt)
+        calibrator = CalibratedClassifierCV(
+            wrapped_model, 
+            method='sigmoid', 
+            cv='prefit'
+        )
+    
+    # Treinar calibrador na validação
+    calibrator.fit(x_val, y_val)
+    
+    print(f"  Calibração {calibration_method} concluída")
+    return calibrator
+
+
+def evaluate_calibration_quality(y_true, y_prob, ticker_name):
+    """
+    Avalia a qualidade da calibração usando Brier Score.
+    
+    Args:
+        y_true: Labels verdadeiros
+        y_prob: Probabilidades preditas
+        ticker_name: Nome do ticker para logging
+    
+    Returns:
+        dict: Métricas de calibração
+    """
+    from sklearn.metrics import brier_score_loss
+    
+    # Converter para problema binário (Up vs Not-Up)
+    y_true_binary = (y_true == 2).astype(int)  # 2 = Up class
+    y_prob_up = y_prob[:, 2]  # Probabilidade da classe Up
+    
+    # Calcular Brier Score
+    brier_score = brier_score_loss(y_true_binary, y_prob_up)
+    
+    # Calcular métricas adicionais
+    n_up = np.sum(y_true_binary)
+    n_total = len(y_true_binary)
+    up_ratio = n_up / n_total if n_total > 0 else 0
+    
+    metrics = {
+        'brier_score': brier_score,
+        'up_ratio': up_ratio,
+        'n_up': n_up,
+        'n_total': n_total
+    }
+    
+    print(f"  {ticker_name} - Brier Score: {brier_score:.4f}, Up Ratio: {up_ratio:.3f}")
+    
+    return metrics
+
+
 def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
     # Verificar se há classes suficientes
     unique_classes = np.unique(y_train)
@@ -507,6 +613,52 @@ def main():
             
             final_model = booster
 
+            # CALIBRAÇÃO DE PROBABILIDADES 
+            # Avaliar calibração antes da calibração
+            dval_test = xgb.DMatrix(x_val)
+            prob_before = final_model.predict(dval_test)
+            calib_before = evaluate_calibration_quality(y_val, prob_before, f"{ticker} (ANTES)")
+            
+            # Testar ambos os métodos de calibração
+            methods = ['isotonic', 'sigmoid']
+            best_calibrator = None
+            best_brier = float('inf')
+            best_method = None
+            
+            for method in methods:
+                try:
+                    calibrator = create_calibrated_model(
+                        final_model, x_train, y_train, x_val, y_val, method
+                    )
+                    
+                    # Avaliar calibração após calibração
+                    prob_after = calibrator.predict_proba(x_val)
+                    calib_after = evaluate_calibration_quality(y_val, prob_after, f"{ticker} ({method.upper()})")
+                    
+                    if calib_after['brier_score'] < best_brier:
+                        best_brier = calib_after['brier_score']
+                        best_calibrator = calibrator
+                        best_method = method
+                        
+                except Exception as e:
+                    print(f"  Erro na calibração {method}: {str(e)}")
+                    continue
+            
+            if best_calibrator is not None:
+                print(f"  ✅ Melhor método: {best_method.upper()} (Brier: {best_brier:.4f})")
+                
+                # Salvar modelo calibrado
+                calibrated_model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / f"{ticker.replace('.csv', '')}_calibrated.pkl"
+                import pickle
+                with open(calibrated_model_path, 'wb') as f:
+                    pickle.dump(best_calibrator, f)
+                
+                print(f"  Modelo calibrado salvo: {calibrated_model_path}")
+            else:
+                print(f"  ❌ Falha na calibração para {ticker}")
+                best_calibrator = None
+
+            # Salvar modelo original também
             model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / f"{ticker.replace('.csv', '')}.json"
             model_path.parent.mkdir(parents=True, exist_ok=True)
             booster.save_model(model_path)

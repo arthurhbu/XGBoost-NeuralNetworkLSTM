@@ -11,7 +11,7 @@ import xgboost as xgb
 import yaml
 from sklearn.metrics import precision_recall_curve, classification_report
 
-from ..models.train_models import split_data
+from ..models.train_models import split_data, find_optimal_target_params, create_FIXED_triple_barrier_target
 
 # Constantes de configuração
 DEFAULT_SLIPPAGE_BPS = 0.2
@@ -1280,10 +1280,21 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
         print(f"ERRO: Modelo não encontrado: {model_file_path}")
         return None, None
     
-    # Carregar modelo
-    booster = xgb.Booster()
-    booster.load_model(model_file_path)
-    model = booster
+    # Carregar modelo (tentar calibrado primeiro, depois original)
+    calibrated_model_path = model_path / f"{ticker_symbol}_calibrated.pkl"
+    
+    if calibrated_model_path.exists():
+        print(f"  Carregando modelo calibrado...")
+        import pickle
+        with open(calibrated_model_path, 'rb') as f:
+            model = pickle.load(f)
+        use_calibrated = True
+    else:
+        print(f"  Carregando modelo original...")
+        booster = xgb.Booster()
+        booster.load_model(model_file_path)
+        model = booster
+        use_calibrated = False
 
     # Split dos dados
     x_train, y_train, x_val, y_val, _, _ = split_data(
@@ -1343,8 +1354,14 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
     # Gerar predições multiclasse e converter para ações via score
     x_simulation = simulation_dataframe.drop(columns=[config['model_training']['target_column']])
     
-    dtest = xgb.DMatrix(x_simulation)
-    probabilities = model.predict(dtest)
+    if use_calibrated:
+        # Usar modelo calibrado
+        probabilities = model.predict_proba(x_simulation)
+    else:
+        # Usar modelo XGBoost original
+        dtest = xgb.DMatrix(x_simulation)
+        probabilities = model.predict(dtest)
+    
     p_up = probabilities[:, 2]
     score_sim = compute_up_down_score_from_proba(probabilities)
     predictions = generate_actions_from_score(
