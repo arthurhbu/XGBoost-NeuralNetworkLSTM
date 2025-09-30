@@ -1,0 +1,397 @@
+================================================================================
+RELATÓRIO DE BACKTESTING - MODELO XGBOOST vs BUY AND HOLD
+================================================================================
+
+Data da simulação: 29/09/2025 17:03:47
+Capital inicial: R$ 1,000,000.00
+Custo de transação: 0.100%
+
+--------------------------------------------------------------------------------
+RESULTADOS MONETÁRIOS E DE MÉTRICAS POR TICKER
+--------------------------------------------------------------------------------
+
+TICKER: ABEV3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 999,212.52
+  Retorno Total: -0.08%
+  Retorno Anual: -0.08%
+  Sharpe Ratio: 0.044
+  Sortino Ratio: 0.031
+  Calmar Ratio: -0.006
+  Max Drawdown: 12.23%
+  Volatilidade: 10.39%
+  Win Rate: 48.21%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,053,321.16
+  Retorno Total: +5.33%
+  Retorno Anual: +5.38%
+  Sharpe Ratio: 0.482
+  Sortino Ratio: 0.381
+  Calmar Ratio: 0.402
+  Max Drawdown: 13.37%
+  Volatilidade: 12.53%
+  Win Rate: 48.21%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 903,506.46
+  Retorno Total: -9.65%
+  Retorno Anual: -9.69%
+  Sharpe Ratio: -0.401
+  Sortino Ratio: -0.542
+  Calmar Ratio: -0.499
+  Max Drawdown: 19.40%
+  Volatilidade: 20.36%
+  Win Rate: 46.00%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 71.71%
+Precisão (Up): 16.07%
+Recall (Up): 27.27%
+F1-Score (Up): 0.20
+Distribuição Predições: Up: 56, Not-Up: 195
+
+
+TICKER: B3SA3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 994,600.06
+  Retorno Total: -0.54%
+  Retorno Anual: -0.54%
+  Sharpe Ratio: 0.009
+  Sortino Ratio: 0.006
+  Calmar Ratio: -0.046
+  Max Drawdown: 11.94%
+  Volatilidade: 11.44%
+  Win Rate: 58.14%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,023,912.70
+  Retorno Total: +2.39%
+  Retorno Anual: +2.41%
+  Sharpe Ratio: 0.243
+  Sortino Ratio: 0.184
+  Calmar Ratio: 0.182
+  Max Drawdown: 13.23%
+  Volatilidade: 13.61%
+  Win Rate: 60.47%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 747,756.09
+  Retorno Total: -25.22%
+  Retorno Anual: -25.31%
+  Sharpe Ratio: -0.918
+  Sortino Ratio: -1.463
+  Calmar Ratio: -0.740
+  Max Drawdown: 34.21%
+  Volatilidade: 27.72%
+  Win Rate: 49.20%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 73.31%
+Precisão (Up): 27.91%
+Recall (Up): 25.00%
+F1-Score (Up): 0.26
+Distribuição Predições: Up: 43, Not-Up: 208
+
+
+TICKER: BBAS3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 977,692.95
+  Retorno Total: -2.23%
+  Retorno Anual: -2.25%
+  Sharpe Ratio: -0.426
+  Sortino Ratio: -0.273
+  Calmar Ratio: -0.413
+  Max Drawdown: 5.44%
+  Volatilidade: 5.06%
+  Win Rate: 51.11%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 957,583.54
+  Retorno Total: -4.24%
+  Retorno Anual: -4.27%
+  Sharpe Ratio: -0.569
+  Sortino Ratio: -0.357
+  Calmar Ratio: -0.539
+  Max Drawdown: 7.93%
+  Volatilidade: 7.24%
+  Win Rate: 53.33%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 956,791.36
+  Retorno Total: -4.32%
+  Retorno Anual: -4.34%
+  Sharpe Ratio: -0.176
+  Sortino Ratio: -0.254
+  Calmar Ratio: -0.268
+  Max Drawdown: 16.16%
+  Volatilidade: 17.05%
+  Win Rate: 52.80%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 69.32%
+Precisão (Up): 26.67%
+Recall (Up): 21.43%
+F1-Score (Up): 0.24
+Distribuição Predições: Up: 45, Not-Up: 206
+
+
+TICKER: BBDC4.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,034,415.69
+  Retorno Total: +3.44%
+  Retorno Anual: +3.47%
+  Sharpe Ratio: 0.269
+  Sortino Ratio: 0.217
+  Calmar Ratio: 0.220
+  Max Drawdown: 15.78%
+  Volatilidade: 21.64%
+  Win Rate: 52.99%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,019,623.02
+  Retorno Total: +1.96%
+  Retorno Anual: +1.98%
+  Sharpe Ratio: 0.207
+  Sortino Ratio: 0.155
+  Calmar Ratio: 0.102
+  Max Drawdown: 19.46%
+  Volatilidade: 24.38%
+  Win Rate: 52.24%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 733,458.00
+  Retorno Total: -26.65%
+  Retorno Anual: -26.74%
+  Sharpe Ratio: -1.004
+  Sortino Ratio: -1.099
+  Calmar Ratio: -0.964
+  Max Drawdown: 27.74%
+  Volatilidade: 27.27%
+  Win Rate: 46.80%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 51.39%
+Precisão (Up): 27.21%
+Recall (Up): 61.67%
+F1-Score (Up): 0.38
+Distribuição Predições: Up: 136, Not-Up: 115
+
+
+TICKER: ITUB4.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,000,000.00
+  Retorno Total: +0.00%
+  Retorno Anual: +0.00%
+  Sharpe Ratio: -inf
+  Sortino Ratio: 0.000
+  Calmar Ratio: 0.000
+  Max Drawdown: 0.00%
+  Volatilidade: 0.00%
+  Win Rate: 0.00%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,000,000.00
+  Retorno Total: +0.00%
+  Retorno Anual: +0.00%
+  Sharpe Ratio: -inf
+  Sortino Ratio: 0.000
+  Calmar Ratio: 0.000
+  Max Drawdown: 0.00%
+  Volatilidade: 0.00%
+  Win Rate: 0.00%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 983,172.11
+  Retorno Total: -1.68%
+  Retorno Anual: -1.69%
+  Sharpe Ratio: -0.002
+  Sortino Ratio: -0.002
+  Calmar Ratio: -0.103
+  Max Drawdown: 16.48%
+  Volatilidade: 18.38%
+  Win Rate: 48.40%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 94.02%
+Precisão (Up): 0.00%
+Recall (Up): 0.00%
+F1-Score (Up): 0.00
+Distribuição Predições: Up: 0, Not-Up: 251
+
+
+TICKER: PETR4.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,191,936.71
+  Retorno Total: +19.19%
+  Retorno Anual: +19.36%
+  Sharpe Ratio: 1.607
+  Sortino Ratio: 1.601
+  Calmar Ratio: 2.877
+  Max Drawdown: 6.73%
+  Volatilidade: 11.47%
+  Win Rate: 53.40%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,256,887.14
+  Retorno Total: +25.69%
+  Retorno Anual: +25.92%
+  Sharpe Ratio: 1.801
+  Sortino Ratio: 1.897
+  Calmar Ratio: 3.502
+  Max Drawdown: 7.40%
+  Volatilidade: 13.34%
+  Win Rate: 54.37%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,173,837.86
+  Retorno Total: +17.38%
+  Retorno Anual: +17.46%
+  Sharpe Ratio: 0.771
+  Sortino Ratio: 1.021
+  Calmar Ratio: 1.033
+  Max Drawdown: 16.90%
+  Volatilidade: 25.02%
+  Win Rate: 50.00%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 61.35%
+Precisão (Up): 41.75%
+Recall (Up): 53.75%
+F1-Score (Up): 0.47
+Distribuição Predições: Up: 103, Not-Up: 148
+
+
+TICKER: VALE3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 892,274.74
+  Retorno Total: -10.77%
+  Retorno Anual: -10.85%
+  Sharpe Ratio: -0.959
+  Sortino Ratio: -0.566
+  Calmar Ratio: -0.639
+  Max Drawdown: 16.98%
+  Volatilidade: 11.35%
+  Win Rate: 41.18%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 897,828.06
+  Retorno Total: -10.22%
+  Retorno Anual: -10.29%
+  Sharpe Ratio: -0.877
+  Sortino Ratio: -0.512
+  Calmar Ratio: -0.596
+  Max Drawdown: 17.26%
+  Volatilidade: 11.66%
+  Win Rate: 41.18%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 773,513.95
+  Retorno Total: -22.65%
+  Retorno Anual: -22.73%
+  Sharpe Ratio: -1.006
+  Sortino Ratio: -1.790
+  Calmar Ratio: -0.957
+  Max Drawdown: 23.75%
+  Volatilidade: 23.09%
+  Win Rate: 40.40%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 78.09%
+Precisão (Up): 14.71%
+Recall (Up): 16.13%
+F1-Score (Up): 0.15
+Distribuição Predições: Up: 34, Not-Up: 217
+
+
+TICKER: VIVT3.SA
+----------------------------------------
+Estratégia: Modelo de Predição
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,019,385.61
+  Retorno Total: +1.94%
+  Retorno Anual: +1.95%
+  Sharpe Ratio: 0.769
+  Sortino Ratio: 0.257
+  Calmar Ratio: 1.286
+  Max Drawdown: 1.52%
+  Volatilidade: 2.57%
+  Win Rate: 50.00%
+
+Estratégia: Simulação Simples
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 1,013,438.78
+  Retorno Total: +1.34%
+  Retorno Anual: +1.35%
+  Sharpe Ratio: 0.374
+  Sortino Ratio: 0.097
+  Calmar Ratio: 0.403
+  Max Drawdown: 3.36%
+  Volatilidade: 3.81%
+  Win Rate: 60.00%
+
+Estratégia: Buy and Hold
+  Capital Inicial: R$ 1,000,000.00
+  Capital Final: R$ 940,691.12
+  Retorno Total: -5.93%
+  Retorno Anual: -5.95%
+  Sharpe Ratio: -0.158
+  Sortino Ratio: -0.230
+  Calmar Ratio: -0.280
+  Max Drawdown: 21.27%
+  Volatilidade: 22.71%
+  Win Rate: 48.80%
+
+Métricas de ML:
+----------------------------------------
+Acurácia: 85.26%
+Precisão (Up): 10.00%
+Recall (Up): 3.45%
+F1-Score (Up): 0.05
+Distribuição Predições: Up: 10, Not-Up: 241
+
+
+================================================================================
+RESUMO GERAL
+================================================================================
+
+Retorno médio do modelo XGBoost: +1.37%
+Retorno médio do modelo simples: +2.78%
+Retorno médio Buy and Hold: -9.84%
+Total de tickers analisados: 8
+Total de simulações realizadas: 32

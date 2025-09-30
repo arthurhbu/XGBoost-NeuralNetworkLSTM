@@ -1,3 +1,52 @@
+TESTAR OUTROS THRESHOLDINGS DO BACKTEST E DO TRAIN_MODELS
+```
+Perfeito! Agora tenho uma visão completa do fluxo. Vou responder à sua pergunta com base na análise do código.
+
+## Resposta à sua dúvida sobre as métricas de ML
+
+**Suas métricas de ML são baseadas APENAS no modelo, não no backtest.** Você está correto em sua preocupação, e posso confirmar que não há interferência do backtest nas métricas de ML.
+
+### Como funciona o fluxo:
+
+1. **Dados de teste (`y_test`)**: Vêm diretamente da divisão temporal dos dados originais através da função `split_data()` (linhas 1300-1308). São os rótulos verdadeiros (multiclasse: 0=down, 1=flat, 2=up) do período de teste.
+
+2. **Predições (`predictions`)**: São geradas exclusivamente pelo modelo treinado:
+   - O modelo faz `predict_proba()` nos dados de simulação (linha 1357)
+   - Os scores são calculados como `P(up) - P(down)` (linha 1358)
+   - As ações binárias (0/1) são geradas aplicando thresholds aos scores (linhas 1359-1361)
+
+3. **Função `calculate_ml_metrics`**: Compara diretamente:
+   - `y_true_up = (y_test == 2)` - rótulos verdadeiros convertidos para binário up/not-up
+   - `y_pred_actions` - ações geradas pelo modelo via thresholds
+
+### O que NÃO interfere nas métricas de ML:
+
+- ❌ Custos de transação
+- ❌ Slippage
+- ❌ Position sizing
+- ❌ Histerese de hold mínimo
+- ❌ Execução realista de trades
+- ❌ Qualquer lógica de portfólio
+
+### O que SIM interfere:
+
+- ✅ **Apenas os thresholds** (`buy_threshold` e `sell_threshold`) que convertem scores em ações
+- ✅ **O modelo treinado** que gera as probabilidades
+
+### Conclusão:
+
+Suas métricas de ML são **puramente baseadas no modelo** e na qualidade dos sinais que ele gera. Elas medem quão bem o modelo consegue identificar momentos de alta (classe 2) quando convertido para ações de compra/venda através dos thresholds.
+
+Se as métricas estão baixas, o problema está no:
+1. **Modelo** (qualidade das predições)
+2. **Thresholds** (muito conservadores ou agressivos)
+3. **Dados de treinamento** (features ou rótulos)
+
+**Não está no backtest** - ele só executa as ações que o modelo sugere, mas não influencia na avaliação da qualidade dessas sugestões.
+```
+
+
+
 - Mexer Indicadores
 - Terminar implementação do thresholding do target
 - Teste unitário em cada modelo com diferentes parametros

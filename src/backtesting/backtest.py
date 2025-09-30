@@ -1,17 +1,3 @@
-"""
-Módulo de Backtesting para Modelos de Trading
-
-Este módulo implementa um sistema completo de backtesting para modelos de predição
-de preços de ações, incluindo simulação realista com custos de transação,
-otimização de thresholds e geração de relatórios detalhados.
-
-Funcionalidades principais:
-- Otimização de thresholds baseada em métricas financeiras
-- Simulação de portfólio com execução realista
-- Geração de relatórios em múltiplos formatos
-- Sistema de logging estruturado
-- Comparação com estratégias Buy & Hold
-"""
 
 import json
 import logging
@@ -36,11 +22,11 @@ DEFAULT_HOLD_MIN_DAYS = 1
 # DEFAULT_SELL_GRID = np.arange(0.15, 0.46, 0.05)
 # EXPANDED_BUY_GRID = np.arange(0.50, 0.95, 0.02)
 # EXPANDED_SELL_GRID = np.arange(0.05, 0.55, 0.02)
-# Grades mais conservadoras para melhor precisão
-DEFAULT_BUY_GRID = np.arange(0.65, 0.90, 0.05)  # Mais conservador: 0.65-0.85
-DEFAULT_SELL_GRID = np.arange(0.10, 0.40, 0.05)  # Mais conservador: 0.10-0.35
-EXPANDED_BUY_GRID = np.arange(0.60, 0.95, 0.02)  # Grade expandida mais conservadora
-EXPANDED_SELL_GRID = np.arange(0.05, 0.50, 0.02)  # Grade expandida mais conservadora
+# Grades mais sensíveis para melhor recall e precisão
+DEFAULT_BUY_GRID = np.arange(0.20, 0.60, 0.05)  # Mais sensível: 0.20-0.55
+DEFAULT_SELL_GRID = np.arange(-0.30, 0.10, 0.05)  # Mais sensível: -0.30 a 0.05
+EXPANDED_BUY_GRID = np.arange(0.10, 0.70, 0.02)  # Grade expandida mais sensível
+EXPANDED_SELL_GRID = np.arange(-0.40, 0.20, 0.02)  # Grade expandida mais sensível
 
 # Configurações de slippage realista
 SLIPPAGE_CONFIG = {
@@ -107,10 +93,10 @@ def analyze_class_distribution_and_adjust_thresholds(probabilities, current_buy_
         'percentile_95': np.percentile(score, 95)
     }
     
-    # Sugerir thresholds mais conservadores baseados na distribuição
-    # Usar percentis mais altos para compra e mais baixos para venda
-    suggested_buy = max(0.70, min(0.85, score_stats['percentile_75']))
-    suggested_sell = min(0.30, max(0.05, score_stats['percentile_25']))
+    # Sugerir thresholds mais sensíveis baseados na distribuição
+    # Usar percentis mais baixos para compra e mais altos para venda para melhor recall
+    suggested_buy = max(0.20, min(0.60, score_stats['percentile_60']))
+    suggested_sell = min(0.10, max(-0.20, score_stats['percentile_40']))
     
     # Garantir que buy > sell
     if suggested_buy <= suggested_sell:
@@ -127,6 +113,7 @@ def analyze_class_distribution_and_adjust_thresholds(probabilities, current_buy_
     }
     
     return suggested_buy, suggested_sell, analysis_info
+
 
 def generate_actions_from_score(score_series, buy_threshold=0.25, sell_threshold=-0.05, minimum_hold_days=3):
     """
@@ -156,6 +143,7 @@ def generate_actions_from_score(score_series, buy_threshold=0.25, sell_threshold
 
     return np.array(trading_actions, dtype=int)
 
+
 def compute_up_down_score_from_proba(probabilities_matrix):
     """
     Calcula score s = P(up) - P(down) a partir de probabilidades multiclasse.
@@ -165,6 +153,7 @@ def compute_up_down_score_from_proba(probabilities_matrix):
     p_down = probabilities_matrix[:, 0]
     p_up = probabilities_matrix[:, 2]
     return p_up - p_down
+
 
 def simulate_portfolio_execution_next_open(
     test_dataframe, 
@@ -337,6 +326,7 @@ def calculate_position_fraction(probability, sizing_config):
         # Fallback para linear se método não reconhecido
         return calculate_position_fraction(probability, {**sizing_config, 'method': 'linear'})
 
+
 def calculate_sharpe_ratio(portfolio_value_series):
     """
     Calcula o Índice de Sharpe anualizado para uma série de valores de portfólio.
@@ -363,6 +353,7 @@ def calculate_sharpe_ratio(portfolio_value_series):
     
     return sharpe_ratio
 
+
 def calculate_max_drawdown(portfolio_value_series):
     """
     Calcula o Maximum Drawdown (MDD) de uma série de valores de portfólio.
@@ -386,6 +377,7 @@ def calculate_max_drawdown(portfolio_value_series):
     max_drawdown = drawdown.min()
     
     return abs(max_drawdown)  # Retornar valor absoluto
+
 
 def calculate_win_rate(portfolio_value_series, trading_actions=None):
     """
@@ -430,6 +422,7 @@ def calculate_win_rate(portfolio_value_series, trading_actions=None):
         win_rate = (daily_returns > 0).mean()
     
     return win_rate
+
 
 def calculate_advanced_metrics(portfolio_value_series, trading_actions=None):
     """
@@ -480,25 +473,27 @@ def calculate_advanced_metrics(portfolio_value_series, trading_actions=None):
         'final_value': final_value
     }
 
+
 def adaptive_threshold_optimization(model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, minimum_hold_days=3):
 
-    # Grades mais conservadoras para melhor precisão
-    coarse_buy_grid = np.arange(0.60, 0.90, 0.10)  # 0.60, 0.70, 0.80
-    coarse_sell_grid = np.arange(0.05, 0.35, 0.10)  # 0.05, 0.15, 0.25
+    # Grades mais sensíveis para melhor recall e precisão
+    coarse_buy_grid = np.arange(0.10, 0.80, 0.10)  # 0.20, 0.30, 0.40, 0.50
+    coarse_sell_grid = np.arange(-0.50, 0.20, 0.10)  # -0.30, -0.20, -0.10, 0.00
 
     best_buy_coarse, best_sell_coarse, _ = optimize_trading_thresholds_financial(
         model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=coarse_buy_grid, sell_threshold_grid=coarse_sell_grid, minimum_hold_days=minimum_hold_days
     )
 
-    # Grade de refinamento mais conservadora
-    fine_buy_grid = np.arange(max(0.60, best_buy_coarse - 0.08), 
-                              min(0.90, best_buy_coarse + 0.08), 0.01)
-    fine_sell_grid = np.arange(max(0.05, best_sell_coarse - 0.08), 
-                               min(0.40, best_sell_coarse + 0.08), 0.01)
+    # Grade de refinamento mais sensível
+    fine_buy_grid = np.arange(max(0.05, best_buy_coarse - 0.10), 
+                            min(0.85, best_buy_coarse + 0.10), 0.01)
+    fine_sell_grid = np.arange(max(-0.60, best_sell_coarse - 0.10), 
+                            min(0.30, best_sell_coarse + 0.10), 0.01)
 
     return optimize_trading_thresholds_financial(
         model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=fine_buy_grid, sell_threshold_grid=fine_sell_grid, minimum_hold_days=minimum_hold_days
     )
+
 
 def optimize_trading_thresholds_financial(
     model, 
@@ -508,7 +503,8 @@ def optimize_trading_thresholds_financial(
     transaction_cost_percentage, 
     buy_threshold_grid=None, 
     sell_threshold_grid=None, 
-    minimum_hold_days=3
+    minimum_hold_days=3,
+    y_validation=None
 ):
     """
     Otimiza thresholds de compra e venda para maximizar o Sharpe Ratio no conjunto de validação.
@@ -536,7 +532,8 @@ def optimize_trading_thresholds_financial(
         sell_threshold_grid = DEFAULT_SELL_GRID
 
     # Probabilidades multiclasse e score s = P(up) - P(down)
-    probabilities = model.predict_proba(x_validation)
+    dtest = xgb.DMatrix(x_validation)
+    probabilities = model.predict(dtest)
     score = compute_up_down_score_from_proba(probabilities)
 
     # Inicializar variáveis de otimização
@@ -602,6 +599,7 @@ def _load_cdi_data(backtest_configuration):
     else:
         return None
 
+
 def _apply_daily_cash_return(cash_amount, current_date, cdi_data, fixed_daily_rate):
     """
     Aplica rendimento diário ao caixa disponível.
@@ -635,6 +633,7 @@ def _apply_daily_cash_return(cash_amount, current_date, cdi_data, fixed_daily_ra
         return cash_amount * (1.0 + fixed_daily_rate)
     
     return cash_amount
+
 
 def _execute_buy_order(cash, stocks_held, execution_price, transaction_cost_pct, 
                       lot_size, sizing_config, probability, volume, volatility, 
@@ -693,6 +692,7 @@ def _execute_buy_order(cash, stocks_held, execution_price, transaction_cost_pct,
 
         return cash, stocks_held, False, 0
 
+
 def _execute_sell_order(cash, stocks_held, execution_price, transaction_cost_pct, 
                        volume, volatility, slippage_config, current_date):
     """
@@ -728,6 +728,7 @@ def _execute_sell_order(cash, stocks_held, execution_price, transaction_cost_pct
     
     return new_cash, new_stocks_held, True, net_sale_value
 
+
 def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_capital, transaction_cost_percentage, backtest_configuration=None):
     """
     Executa backtesting realista com logging estruturado e custos de transação.
@@ -757,6 +758,7 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
     sizing_config = {"enabled": True}
     slippage_config = SLIPPAGE_CONFIG.copy()
     cdi_data = None
+    test_dataframe = test_dataframe.copy()
     
     if isinstance(backtest_configuration, dict):
         lot_size = int(backtest_configuration.get('lot_size', DEFAULT_LOT_SIZE))
@@ -846,6 +848,7 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
 
     return pd.Series(portfolio_value_history, index=test_dataframe.index[:-1])
 
+
 def run_buy_and_hold_strategy(test_dataframe, initial_capital):
     """
     Simula estratégia Buy and Hold (comprar e manter).
@@ -871,6 +874,7 @@ def run_buy_and_hold_strategy(test_dataframe, initial_capital):
     portfolio_value_history = stocks_quantity * test_dataframe[price_column]
     
     return portfolio_value_history
+
 
 def run_profit_techniques_backtest(test_dataframe, predictions, probabilities, initial_capital, backtest_configuration=None):
 
@@ -925,6 +929,7 @@ def run_profit_techniques_backtest(test_dataframe, predictions, probabilities, i
 
     return pd.Series(portfolio_value_history, index=test_dataframe.index[:-1])
 
+
 def run_simple_backtest(test_dataframe, predictions, initial_capital):
     """
     Executa backtesting simplificado sem custos de transação.
@@ -973,6 +978,7 @@ def run_simple_backtest(test_dataframe, predictions, initial_capital):
 
     return pd.Series(portfolio_value_history, index=test_dataframe.index[:-1])
 
+
 def calculate_portfolio_metrics(portfolio_value_history, strategy_label, ticker_symbol, trading_actions=None):
     """
     Calcula métricas básicas e avançadas de performance do portfólio.
@@ -1010,6 +1016,7 @@ def calculate_portfolio_metrics(portfolio_value_history, strategy_label, ticker_
     })
     
     return metrics
+
 
 def generate_text_report(results_data, backtest_configuration, output_path):
     """
@@ -1083,6 +1090,7 @@ def generate_text_report(results_data, backtest_configuration, output_path):
         
         _write_summary_statistics(file, results_data)
 
+
 def _group_results_by_ticker(results_data):
     """
     Agrupa resultados por ticker para facilitar exibição.
@@ -1094,15 +1102,14 @@ def _group_results_by_ticker(results_data):
         dict: Dicionário com ticker como chave e lista de resultados como valor
     """
     ticker_results = {}
-    print(results_data)
     for result in results_data:
-        print(result)
         ticker = result['ticker']
-        print(ticker)
         if ticker not in ticker_results:
             ticker_results[ticker] = []
         ticker_results[ticker].append(result)
     return ticker_results
+
+
 
 def _write_summary_statistics(file, results_data):
     """
@@ -1132,6 +1139,7 @@ def _write_summary_statistics(file, results_data):
     
     file.write(f"Total de tickers analisados: {len(set(r['ticker'] for r in results_data))}\n")
     file.write(f"Total de simulações realizadas: {len(results_data)}\n")
+
 
 def generate_json_report(results_data, backtest_configuration, output_path):
     """
@@ -1179,6 +1187,7 @@ def generate_json_report(results_data, backtest_configuration, output_path):
     with open(json_file_path, 'w', encoding='utf-8') as file:
         json.dump(report_data, file, indent=2, ensure_ascii=False, default=str)
 
+
 def _calculate_performance_statistics(report_data, results_data):
     """
     Calcula estatísticas de performance para cada estratégia.
@@ -1219,29 +1228,13 @@ def _calculate_performance_statistics(report_data, results_data):
             'total_return': sum(r['retorno_total'] for r in buyhold_results)
         }
 
-def _load_configuration():
-    """
-    Carrega configuração do arquivo YAML.
-    
-    Returns:
-        tuple: (config, backtest_config, features_path, model_path)
-    """
-    config_path = Path(__file__).resolve().parents[2] / "config.yaml"
-    with open(config_path, "r") as file:
-        config = yaml.safe_load(file)
 
-    features_path = Path(__file__).resolve().parents[2] / config['data']['features_data_path']
-    model_path = Path(__file__).resolve().parents[2] / config['model_training']['model_output_path']
-    backtest_config = config["backtesting"]
-    
-    return config, backtest_config, features_path, model_path
-
-def _process_single_ticker(ticker_symbol, features_path, model_path, config, backtest_configuration):
+def _process_single_ticker(ticker_symbol,features_path, model_path, config, backtest_configuration):
     """
     Processa um único ticker através de todo o pipeline de backtesting.
     
     Args:
-        ticker_symbol: Símbolo do ticker (ex: 'PETR4.SA')
+        ticker_symbol: Símbolo do ticker (ex: 'PETR4.SA')	
         features_path: Caminho para dados de features
         model_path: Caminho para modelos salvos
         config: Configuração completa
@@ -1252,41 +1245,48 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     """
     print(f"PROCESSANDO: {ticker_symbol}")
     
+    #Carregar dataframe com target
+    labeled_dir = Path(__file__).resolve().parents[2] / "data" / "04_labeled"
+    labeled_csv = labeled_dir / f"{ticker_symbol}.csv"
+    labeled_meta = labeled_dir / f"{ticker_symbol}_meta.json"
+    
+    if labeled_csv.exists() and labeled_meta.exists():
+        dataframe = pd.read_csv(labeled_csv, index_col='Date', parse_dates=True)
+        saved_meta = json.loads(labeled_meta.read_text())
+    else:
+        base_params = {
+            'objective': 'multi:softprob',  
+            'num_class': 3,                 
+            'eval_metric': 'auc',      
+            'n_estimators': 500,
+            'max_depth': 5,
+            'n_jobs': -1,
+            'tree_method': 'hist',          
+            'seed': 42,   
+            'max_delta_step': 1.0                   
+        }
+        features_file_path = features_path / f"{ticker_symbol}.csv"
+        dataframe = pd.read_csv(features_file_path, index_col='Date', parse_dates=True)
+        best_target_params = find_optimal_target_params(dataframe, config, base_params)
+        dataframe = create_FIXED_triple_barrier_target(
+            dataframe,
+            config['model_training']['target_column'],
+            **best_target_params
+        )
+    
     # Verificar existência do modelo
     model_file_path = model_path / f"{ticker_symbol}.json"
     if not model_file_path.exists():
         print(f"ERRO: Modelo não encontrado: {model_file_path}")
         return None, None
     
-    # Carregar dados de features
-    features_file_path = features_path / f"{ticker_symbol}.csv"
-    dataframe = pd.read_csv(features_file_path, index_col='Date', parse_dates=True)
-    print(f" Dados: {dataframe.index[0].date()} até {dataframe.index[-1].date()} ({len(dataframe)} registros)")
-
     # Carregar modelo
-    model = xgb.XGBClassifier()
-    model.load_model(model_file_path)
-    print(f"  Modelo carregado")
+    booster = xgb.Booster()
+    booster.load_model(model_file_path)
+    model = booster
 
-    # Preparar dados - usar a mesma função de target do treinamento (triclasse)
-    from ..models.train_models import create_dynamic_triple_barrier_target
-    
-    # Usar os mesmos parâmetros do triple barrier method do config
-    triple_barrier_config = config['model_training'].get("triple_barrier", {})
-    holding_days = triple_barrier_config.get("holding_days", 5)
-    profit_multiplier = triple_barrier_config.get("profit_multiplier", 2.0)
-    loss_multiplier = triple_barrier_config.get("loss_multiplier", 1.5)
-    
-    dataframe = create_dynamic_triple_barrier_target(
-        dataframe, 
-        config['model_training']['target_column'],
-        holding_days=holding_days,
-        profit_multiplier=profit_multiplier,
-        loss_multiplier=loss_multiplier,
-    )
-    
     # Split dos dados
-    x_train, y_train, x_val, y_val, x_test, y_test = split_data(
+    x_train, y_train, x_val, y_val, _, _ = split_data(
         dataframe,
         config['model_training']['train_final_date'],
         config['model_training']['validation_start_date'],
@@ -1304,31 +1304,30 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     val_end = config['model_training']['validation_end_date']
     validation_dataframe = dataframe[val_start:val_end]
 
-    print(f"  Otimizando thresholds financeiros na validação...")
     buy_threshold, sell_threshold, best_sharpe = adaptive_threshold_optimization(
         model, x_val, validation_dataframe, backtest_configuration['initial_capital'],
         backtest_configuration['transaction_cost_pct'], minimum_hold_days=hold_min_days
     )
-    print(f"  Thresholds otimizados: buy={buy_threshold:.2f} sell={sell_threshold:.2f} | Sharpe validação={best_sharpe:.2f}")
-    
+
     # Análise adicional da distribuição de classes para ajuste fino
-    probabilities_val = model.predict_proba(x_val)
-    suggested_buy, suggested_sell, analysis_info = analyze_class_distribution_and_adjust_thresholds(
-        probabilities_val, buy_threshold, sell_threshold
-    )
+    # probabilities_val = model.predict_proba(x_val)
     
-    print(f"  Análise de distribuição:")
-    print(f"    Score médio: {analysis_info['score_stats']['mean']:.3f}")
-    print(f"    P75: {analysis_info['score_stats']['percentile_75']:.3f}")
-    print(f"    P25: {analysis_info['score_stats']['percentile_25']:.3f}")
-    print(f"    Thresholds sugeridos: buy={suggested_buy:.2f} sell={suggested_sell:.2f}")
+    # suggested_buy, suggested_sell, analysis_info = analyze_class_distribution_and_adjust_thresholds(
+    #     probabilities_val, buy_threshold, sell_threshold
+    # )
     
-    # Usar thresholds sugeridos se forem mais conservadores
-    if suggested_buy > buy_threshold and suggested_sell < sell_threshold:
-        buy_threshold, sell_threshold = suggested_buy, suggested_sell
-        print(f"  Usando thresholds mais conservadores: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
-    else:
-        print(f"  Mantendo thresholds otimizados: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
+    # print(f"  Análise de distribuição:")
+    # print(f"    Score médio: {analysis_info['score_stats']['mean']:.3f}")
+    # print(f"    P75: {analysis_info['score_stats']['percentile_75']:.3f}")
+    # print(f"    P25: {analysis_info['score_stats']['percentile_25']:.3f}")
+    # print(f"    Thresholds sugeridos: buy={suggested_buy:.2f} sell={suggested_sell:.2f}")
+    
+    # # Usar thresholds sugeridos se forem mais conservadores
+    # if suggested_buy > buy_threshold and suggested_sell < sell_threshold:
+    #     buy_threshold, sell_threshold = suggested_buy, suggested_sell
+    #     print(f"  Usando thresholds mais conservadores: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
+    # else:
+    #     print(f"  Mantendo thresholds otimizados: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
 
     # Preparar dados de simulação
     simulation_dataframe = dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
@@ -1343,7 +1342,10 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     
     # Gerar predições multiclasse e converter para ações via score
     x_simulation = simulation_dataframe.drop(columns=[config['model_training']['target_column']])
-    probabilities = model.predict_proba(x_simulation)
+    
+    dtest = xgb.DMatrix(x_simulation)
+    probabilities = model.predict(dtest)
+    p_up = probabilities[:, 2]
     score_sim = compute_up_down_score_from_proba(probabilities)
     predictions = generate_actions_from_score(
         score_sim, buy_threshold=buy_threshold, sell_threshold=sell_threshold, minimum_hold_days=hold_min_days
@@ -1351,13 +1353,9 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     
     # Executar diferentes estratégias
     realistic_portfolio = run_realistic_backtest(
-        simulation_dataframe, predictions, score_sim, backtest_configuration['initial_capital'],
+        simulation_dataframe, predictions, p_up, backtest_configuration['initial_capital'],
         backtest_configuration['transaction_cost_pct'], backtest_configuration
     )
-
-    # simple_portfolio_with_profit_techniques = run_profit_techniques_backtest(
-    #     simulation_dataframe, predictions, score_sim, backtest_configuration['initial_capital'], backtest_configuration
-    # )
 
     simple_portfolio = run_profit_techniques_backtest(
         simulation_dataframe, predictions, score_sim, backtest_configuration['initial_capital'], backtest_configuration
@@ -1371,7 +1369,7 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     model_metrics = calculate_portfolio_metrics(realistic_portfolio, "Modelo de Predição", ticker_symbol, predictions)
     simple_metrics = calculate_portfolio_metrics(simple_portfolio, "Simulação Simples", ticker_symbol, predictions)
     buy_and_hold_metrics = calculate_portfolio_metrics(buy_and_hold_portfolio, "Buy and Hold", ticker_symbol)
-    ml_metrics = calculate_ml_metrics(y_test, predictions)
+    ml_metrics = calculate_ml_metrics(simulation_dataframe['target'], predictions)
     ml_metrics_entry = {
         'ticker': ticker_symbol,
         'label': 'Métricas de ML',
@@ -1386,6 +1384,25 @@ def _process_single_ticker(ticker_symbol, features_path, model_path, config, bac
     })
 
     return [model_metrics, simple_metrics, buy_and_hold_metrics, ml_metrics_entry], results_dataframe
+
+
+def _load_configuration():
+    """
+    Carrega configuração do arquivo YAML.
+    
+    Returns:
+        tuple: (config, backtest_config, features_path, model_path)
+    """
+    config_path = Path(__file__).resolve().parents[2] / "config.yaml"
+    with open(config_path, "r") as file:
+        config = yaml.safe_load(file)
+
+    features_path = Path(__file__).resolve().parents[2] / config['data']['features_data_path']
+    model_path = Path(__file__).resolve().parents[2] / config['model_training']['model_output_path']
+    backtest_config = config["backtesting"]
+    
+    return config, backtest_config, features_path, model_path
+
 
 def _save_results_and_generate_reports(all_results, backtest_configuration):
     """
@@ -1402,8 +1419,8 @@ def _save_results_and_generate_reports(all_results, backtest_configuration):
     
     # Criar DataFrame com todos os resultados
     results_dataframe = pd.DataFrame(all_results)
-    # final_results_path = f"{backtest_configuration['results_path']}/results_simulated_{timestamp}.csv"
-    final_results_path = f"{backtest_configuration['results_path']}/ITUB4SA_Teste.csv"
+    final_results_path = f"{backtest_configuration['results_path']}/results_simulated_{timestamp}.csv"
+    # final_results_path = f"{backtest_configuration['results_path']}/ITUB4SA_Teste.csv"
     results_dataframe.to_csv(final_results_path)
     
     # Criar relatórios em TXT e JSON
@@ -1415,6 +1432,7 @@ def _save_results_and_generate_reports(all_results, backtest_configuration):
     print("- results_simulated.csv (formato CSV)")
     print("- results_simulated.txt (formato TXT legível)")
     print("- results_simulated.json (formato JSON estruturado)")
+
 
 def main():
     """
@@ -1437,9 +1455,6 @@ def main():
     # Processar cada ticker
     for feature_data_file in os.listdir(features_path):
         ticker_symbol = feature_data_file.replace(".csv", "")
-
-        if ticker_symbol != 'ITUB4.SA':
-            continue
         
         results, simulation_dataframe = _process_single_ticker(
             ticker_symbol, features_path, model_path, config, backtest_configuration
@@ -1456,9 +1471,3 @@ def main():
     
     # Salvar resultados e gerar relatórios
     _save_results_and_generate_reports(all_results, backtest_configuration)
-
-    
-
-
-if __name__ == "__main__":
-    main()

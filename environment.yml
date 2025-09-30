@@ -17,6 +17,7 @@ dependencies:
   - yfinance
   - pywavelets
   - optuna
+  - optuna-integration
 
   # - pip:
   #   - python-bcb

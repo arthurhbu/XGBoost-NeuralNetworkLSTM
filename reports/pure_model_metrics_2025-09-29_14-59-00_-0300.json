@@ -1,0 +1,42 @@
+[
+  {
+    "ticker": "PETR4.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "VALE3.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "BBDC4.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "ITUB4.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "BBAS3.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "B3SA3.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "ABEV3.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  },
+  {
+    "ticker": "VIVT3.SA",
+    "status": "error",
+    "error": "attempted relative import with no known parent package"
+  }
+]

@@ -1,0 +1,610 @@
+[
+  {
+    "ticker": "PETR4.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.16491664946079254,
+        "avg_true": 0.1076923076923077,
+        "count": 65
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.2610305845737457,
+        "avg_true": 0.2826086956521739,
+        "count": 46
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.35325202345848083,
+        "avg_true": 0.36464088397790057,
+        "count": 181
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.4418363869190216,
+        "avg_true": 0.5543478260869565,
+        "count": 92
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5502645969390869,
+        "avg_true": 0.5,
+        "count": 26
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6579245924949646,
+        "avg_true": 0.7142857142857143,
+        "count": 63
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": 0.7243838310241699,
+        "avg_true": 0.88,
+        "count": 25
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      }
+    ],
+    "brier_up": 0.20748467066701362
+  },
+  {
+    "ticker": "VALE3.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": 0.04847831279039383,
+        "avg_true": 0.0,
+        "count": 189
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.1376311033964157,
+        "avg_true": 0.0,
+        "count": 119
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.24506092071533203,
+        "avg_true": 0.0,
+        "count": 36
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.3429415225982666,
+        "avg_true": 0.1875,
+        "count": 16
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.45157894492149353,
+        "avg_true": 1.0,
+        "count": 9
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5513166785240173,
+        "avg_true": 1.0,
+        "count": 16
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6505640149116516,
+        "avg_true": 1.0,
+        "count": 31
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": 0.7578317523002625,
+        "avg_true": 1.0,
+        "count": 37
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": 0.8457891941070557,
+        "avg_true": 1.0,
+        "count": 31
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": 0.9327344298362732,
+        "avg_true": 1.0,
+        "count": 14
+      }
+    ],
+    "brier_up": 0.0413061476552124
+  },
+  {
+    "ticker": "BBDC4.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": 0.08509724587202072,
+        "avg_true": 0.0,
+        "count": 44
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.14343418180942535,
+        "avg_true": 0.0,
+        "count": 152
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.2435641586780548,
+        "avg_true": 0.0,
+        "count": 68
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.35160326957702637,
+        "avg_true": 0.09375,
+        "count": 32
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.4403417110443115,
+        "avg_true": 0.65,
+        "count": 20
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5634729862213135,
+        "avg_true": 0.84,
+        "count": 25
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6530465483665466,
+        "avg_true": 0.9344262295081968,
+        "count": 61
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": 0.7526482343673706,
+        "avg_true": 1.0,
+        "count": 66
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": 0.835120439529419,
+        "avg_true": 1.0,
+        "count": 29
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": 0.9048540592193604,
+        "avg_true": 1.0,
+        "count": 1
+      }
+    ],
+    "brier_up": 0.07359418122089013
+  },
+  {
+    "ticker": "ITUB4.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": 0.05360836535692215,
+        "avg_true": 0.0,
+        "count": 264
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.14141589403152466,
+        "avg_true": 0.0,
+        "count": 82
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.24767522513866425,
+        "avg_true": 0.058823529411764705,
+        "count": 17
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.3440607786178589,
+        "avg_true": 0.3333333333333333,
+        "count": 6
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.44761136174201965,
+        "avg_true": 0.75,
+        "count": 4
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5446866154670715,
+        "avg_true": 1.0,
+        "count": 9
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6480135321617126,
+        "avg_true": 1.0,
+        "count": 29
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": 0.7494937777519226,
+        "avg_true": 1.0,
+        "count": 38
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": 0.8573720455169678,
+        "avg_true": 1.0,
+        "count": 43
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": 0.9113810062408447,
+        "avg_true": 1.0,
+        "count": 6
+      }
+    ],
+    "brier_up": 0.03070156209553017
+  },
+  {
+    "ticker": "BBAS3.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": 0.0711691752076149,
+        "avg_true": 0.0,
+        "count": 43
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.14926835894584656,
+        "avg_true": 0.02127659574468085,
+        "count": 94
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.246281236410141,
+        "avg_true": 0.12222222222222222,
+        "count": 90
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.354914128780365,
+        "avg_true": 0.31746031746031744,
+        "count": 63
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.4461468458175659,
+        "avg_true": 0.6304347826086957,
+        "count": 46
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5526911616325378,
+        "avg_true": 0.75,
+        "count": 40
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6540494561195374,
+        "avg_true": 0.8775510204081632,
+        "count": 49
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": 0.7465906739234924,
+        "avg_true": 0.9111111111111111,
+        "count": 45
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": 0.8406025171279907,
+        "avg_true": 0.92,
+        "count": 25
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": 0.9186730980873108,
+        "avg_true": 1.0,
+        "count": 3
+      }
+    ],
+    "brier_up": 0.12812254863334477
+  },
+  {
+    "ticker": "B3SA3.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.17906609177589417,
+        "avg_true": 0.04,
+        "count": 25
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.25776562094688416,
+        "avg_true": 0.15853658536585366,
+        "count": 82
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.3543221652507782,
+        "avg_true": 0.2127659574468085,
+        "count": 141
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.4571014940738678,
+        "avg_true": 0.5369127516778524,
+        "count": 149
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5331333875656128,
+        "avg_true": 0.6935483870967742,
+        "count": 62
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6580211520195007,
+        "avg_true": 0.84,
+        "count": 25
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": 0.7309123277664185,
+        "avg_true": 1.0,
+        "count": 14
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      }
+    ],
+    "brier_up": 0.1944390259498773
+  },
+  {
+    "ticker": "ABEV3.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": 0.08870555460453033,
+        "avg_true": 0.0,
+        "count": 42
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.1417764127254486,
+        "avg_true": 0.05555555555555555,
+        "count": 270
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.24045301973819733,
+        "avg_true": 0.1956521739130435,
+        "count": 92
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.33755263686180115,
+        "avg_true": 0.4146341463414634,
+        "count": 41
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.4498087465763092,
+        "avg_true": 0.7777777777777778,
+        "count": 36
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5390020608901978,
+        "avg_true": 1.0,
+        "count": 14
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": 0.6394934058189392,
+        "avg_true": 1.0,
+        "count": 3
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      }
+    ],
+    "brier_up": 0.10768652961355572
+  },
+  {
+    "ticker": "VIVT3.SA",
+    "reliability": [
+      {
+        "bin_left": 0.0,
+        "bin_right": 0.1,
+        "avg_pred": 0.08336332440376282,
+        "avg_true": 0.0,
+        "count": 144
+      },
+      {
+        "bin_left": 0.1,
+        "bin_right": 0.2,
+        "avg_pred": 0.14108164608478546,
+        "avg_true": 0.13167259786476868,
+        "count": 281
+      },
+      {
+        "bin_left": 0.2,
+        "bin_right": 0.30000000000000004,
+        "avg_pred": 0.24332402646541595,
+        "avg_true": 0.4,
+        "count": 45
+      },
+      {
+        "bin_left": 0.30000000000000004,
+        "bin_right": 0.4,
+        "avg_pred": 0.3491388261318207,
+        "avg_true": 0.3684210526315789,
+        "count": 19
+      },
+      {
+        "bin_left": 0.4,
+        "bin_right": 0.5,
+        "avg_pred": 0.44078630208969116,
+        "avg_true": 0.875,
+        "count": 8
+      },
+      {
+        "bin_left": 0.5,
+        "bin_right": 0.6000000000000001,
+        "avg_pred": 0.5316793918609619,
+        "avg_true": 1.0,
+        "count": 1
+      },
+      {
+        "bin_left": 0.6000000000000001,
+        "bin_right": 0.7000000000000001,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.7000000000000001,
+        "bin_right": 0.8,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.8,
+        "bin_right": 0.9,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      },
+      {
+        "bin_left": 0.9,
+        "bin_right": 1.0,
+        "avg_pred": NaN,
+        "avg_true": NaN,
+        "count": 0
+      }
+    ],
+    "brier_up": 0.10404162067302095
+  }
+]
