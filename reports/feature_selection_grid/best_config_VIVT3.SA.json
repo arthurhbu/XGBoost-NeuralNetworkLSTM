@@ -1,0 +1,26 @@
+{
+  "ticker": "VIVT3.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "sigmoid",
+    "sharpe_ratio": 1.1678374904109585,
+    "f1_up": 0.31343283582089554,
+    "auprc": 0.476596126247431,
+    "brier_score": 0.23031005651980696,
+    "n_features": 11
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "wavelet_cD",
+    "BB_lower",
+    "OBV",
+    "RSI",
+    "MACD"
+  ]
+}

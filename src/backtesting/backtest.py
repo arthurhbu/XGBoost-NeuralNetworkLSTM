@@ -143,6 +143,34 @@ def generate_actions_from_score(score_series, buy_threshold=0.25, sell_threshold
 
     return np.array(trading_actions, dtype=int)
 
+def generate_actions_from_prob(prob_series, buy_threshold=0.6, sell_threshold=0.4, minimum_hold_days=3, gate_threshold=None):
+    """
+    Converte probabilidade p_up em ações 0/1 com histerese e gating opcional.
+    """
+    trading_actions = []
+    current_position = 0
+    days_since_last_change = minimum_hold_days
+
+    for p_up in prob_series:
+        desired_position = current_position
+        can_buy = (p_up >= buy_threshold) and (gate_threshold is None or p_up >= gate_threshold)
+        can_sell = (p_up <= sell_threshold)
+
+        if can_buy:
+            desired_position = 1
+        elif can_sell:
+            desired_position = 0
+
+        if desired_position != current_position and days_since_last_change >= minimum_hold_days:
+            current_position = desired_position
+            days_since_last_change = 0
+        else:
+            days_since_last_change += 1
+
+        trading_actions.append(current_position)
+
+    return np.array(trading_actions, dtype=int)
+
 
 def compute_up_down_score_from_proba(probabilities_matrix):
     """
@@ -474,7 +502,7 @@ def calculate_advanced_metrics(portfolio_value_series, trading_actions=None):
     }
 
 
-def adaptive_threshold_optimization(model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, minimum_hold_days=3):
+def adaptive_threshold_optimization(model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, minimum_hold_days=3, gate_threshold=None):
 
     # Grades mais sensíveis para melhor recall e precisão
     coarse_buy_grid = np.arange(0.10, 0.80, 0.10)  # 0.20, 0.30, 0.40, 0.50
@@ -484,14 +512,49 @@ def adaptive_threshold_optimization(model, x_validation, validation_dataframe, i
         model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=coarse_buy_grid, sell_threshold_grid=coarse_sell_grid, minimum_hold_days=minimum_hold_days
     )
 
-    # Grade de refinamento mais sensível
-    fine_buy_grid = np.arange(max(0.05, best_buy_coarse - 0.10), 
-                            min(0.85, best_buy_coarse + 0.10), 0.01)
-    fine_sell_grid = np.arange(max(-0.60, best_sell_coarse - 0.10), 
-                            min(0.30, best_sell_coarse + 0.10), 0.01)
+    # Grade de refinamento conservadora para probabilidade calibrada
+    fine_buy_grid = np.arange(0.55, 0.85, 0.02)
+    fine_sell_grid = np.arange(0.35, 0.55, 0.02)
 
     return optimize_trading_thresholds_financial(
-        model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=fine_buy_grid, sell_threshold_grid=fine_sell_grid, minimum_hold_days=minimum_hold_days
+        model, x_validation, validation_dataframe, initial_capital, transaction_cost_percentage, buy_threshold_grid=fine_buy_grid, sell_threshold_grid=fine_sell_grid, minimum_hold_days=minimum_hold_days, gate_threshold=gate_threshold
+    )
+
+
+def adaptive_threshold_optimization_with_probs(probabilities, validation_dataframe, initial_capital, transaction_cost_percentage, minimum_hold_days=3, gate_threshold=None):
+    """
+    Otimiza thresholds usando probabilidades pré-calculadas (calibradas ou não).
+    
+    Args:
+        probabilities: Array de probabilidades multiclasse já calculadas
+        validation_dataframe: DataFrame OHLCV para simulação de validação
+        initial_capital: Capital inicial para simulação
+        transaction_cost_percentage: Custo de transação como percentual
+        minimum_hold_days: Mínimo de dias entre mudanças de posição
+        gate_threshold: Threshold de confiança opcional
+    
+    Returns:
+        tuple: (best_buy_threshold, best_sell_threshold, best_sharpe_ratio)
+    """
+    
+    # Grades mais sensíveis para melhor recall e precisão
+    coarse_buy_grid = np.arange(0.10, 0.80, 0.10)
+    coarse_sell_grid = np.arange(-0.50, 0.20, 0.10)
+
+    best_buy_coarse, best_sell_coarse, _ = optimize_trading_thresholds_financial_with_probs(
+        probabilities, validation_dataframe, initial_capital, transaction_cost_percentage, 
+        buy_threshold_grid=coarse_buy_grid, sell_threshold_grid=coarse_sell_grid, 
+        minimum_hold_days=minimum_hold_days, gate_threshold=gate_threshold
+    )
+
+    # Grade de refinamento conservadora para probabilidade calibrada
+    fine_buy_grid = np.arange(0.55, 0.85, 0.02)
+    fine_sell_grid = np.arange(0.35, 0.55, 0.02)
+
+    return optimize_trading_thresholds_financial_with_probs(
+        probabilities, validation_dataframe, initial_capital, transaction_cost_percentage, 
+        buy_threshold_grid=fine_buy_grid, sell_threshold_grid=fine_sell_grid, 
+        minimum_hold_days=minimum_hold_days, gate_threshold=gate_threshold
     )
 
 
@@ -504,7 +567,8 @@ def optimize_trading_thresholds_financial(
     buy_threshold_grid=None, 
     sell_threshold_grid=None, 
     minimum_hold_days=3,
-    y_validation=None
+    y_validation=None,
+    gate_threshold=None
 ):
     """
     Otimiza thresholds de compra e venda para maximizar o Sharpe Ratio no conjunto de validação.
@@ -525,16 +589,23 @@ def optimize_trading_thresholds_financial(
     Returns:
         tuple: (best_buy_threshold, best_sell_threshold, best_sharpe_ratio)
     """
+    
     # Definir grades padrão se não fornecidas
     if buy_threshold_grid is None:
         buy_threshold_grid = DEFAULT_BUY_GRID
     if sell_threshold_grid is None:
         sell_threshold_grid = DEFAULT_SELL_GRID
 
-    # Probabilidades multiclasse e score s = P(up) - P(down)
-    dtest = xgb.DMatrix(x_validation)
-    probabilities = model.predict(dtest)
-    score = compute_up_down_score_from_proba(probabilities)
+    # Probabilidades multiclasse
+    if hasattr(model, 'predict_proba'):
+        probabilities = model.predict_proba(x_validation)
+    else:
+        dtest = xgb.DMatrix(x_validation)
+        probabilities = model.predict(dtest)
+    # Probabilidade de alta
+    p_up_vec = probabilities[:, 2] if probabilities.ndim == 2 and probabilities.shape[1] >= 3 else (
+        probabilities[:, -1] if probabilities.ndim == 2 else probabilities
+    )
 
     # Inicializar variáveis de otimização
     best_sharpe_ratio = -np.inf
@@ -548,11 +619,92 @@ def optimize_trading_thresholds_financial(
                 continue
                 
             # Gerar ações de trading com thresholds atuais
-            trading_actions = generate_actions_from_score(
-                score,
+            trading_actions = generate_actions_from_prob(
+                p_up_vec,
                 buy_threshold=buy_threshold,
                 sell_threshold=sell_threshold,
-                minimum_hold_days=minimum_hold_days
+                minimum_hold_days=minimum_hold_days,
+                gate_threshold=gate_threshold
+            )
+            
+            # Alinhar tamanhos dos dados se necessário
+            data_size = min(len(validation_dataframe), len(trading_actions))
+            validation_data_subset = validation_dataframe.iloc[:data_size]
+            actions_subset = trading_actions[:data_size]
+            
+            # Simular portfólio e calcular Sharpe
+            portfolio_simulation = simulate_portfolio_execution_next_open(
+                validation_data_subset, 
+                actions_subset, 
+                initial_capital, 
+                transaction_cost_percentage
+            )
+            current_sharpe_ratio = calculate_sharpe_ratio(portfolio_simulation)
+            
+            # Atualizar melhor combinação se encontrou Sharpe maior
+            if current_sharpe_ratio > best_sharpe_ratio:
+                best_sharpe_ratio = current_sharpe_ratio
+                best_threshold_pair = (buy_threshold, sell_threshold)
+
+    return best_threshold_pair[0], best_threshold_pair[1], best_sharpe_ratio
+
+
+def optimize_trading_thresholds_financial_with_probs(
+    probabilities, 
+    validation_dataframe, 
+    initial_capital, 
+    transaction_cost_percentage, 
+    buy_threshold_grid=None, 
+    sell_threshold_grid=None, 
+    minimum_hold_days=3,
+    gate_threshold=None
+):
+    """
+    Otimiza thresholds de compra e venda usando probabilidades pré-calculadas.
+    
+    Args:
+        probabilities: Array de probabilidades multiclasse já calculadas
+        validation_dataframe: DataFrame OHLCV para simulação de validação
+        initial_capital: Capital inicial para simulação
+        transaction_cost_percentage: Custo de transação como percentual
+        buy_threshold_grid: Grade de thresholds de compra para testar
+        sell_threshold_grid: Grade de thresholds de venda para testar
+        minimum_hold_days: Mínimo de dias entre mudanças de posição
+        gate_threshold: Threshold de confiança opcional
+    
+    Returns:
+        tuple: (best_buy_threshold, best_sell_threshold, best_sharpe_ratio)
+    """
+    
+    # Definir grades padrão se não fornecidas
+    if buy_threshold_grid is None:
+        buy_threshold_grid = DEFAULT_BUY_GRID
+    if sell_threshold_grid is None:
+        sell_threshold_grid = DEFAULT_SELL_GRID
+
+    # Probabilidade de alta
+    p_up_vec = probabilities[:, 2] if probabilities.ndim == 2 and probabilities.shape[1] >= 3 else (
+        probabilities[:, -1] if probabilities.ndim == 2 else probabilities
+    )
+
+    # Inicializar variáveis de otimização
+    best_sharpe_ratio = -np.inf
+    best_threshold_pair = (0.5, 0.5)
+
+    # Busca em grade pelos melhores thresholds
+    for buy_threshold in buy_threshold_grid:
+        for sell_threshold in sell_threshold_grid:
+            # Pular combinações inválidas (sell >= buy)
+            if sell_threshold >= buy_threshold:
+                continue
+                
+            # Gerar ações de trading com thresholds atuais
+            trading_actions = generate_actions_from_prob(
+                p_up_vec,
+                buy_threshold=buy_threshold,
+                sell_threshold=sell_threshold,
+                minimum_hold_days=minimum_hold_days,
+                gate_threshold=gate_threshold
             )
             
             # Alinhar tamanhos dos dados se necessário
@@ -829,7 +981,7 @@ def run_realistic_backtest(test_dataframe, predictions, probabilities, initial_c
                 sell_trades += 1
         
         # Aplicar rendimento diário ao caixa
-        # # available_cash = _apply_daily_cash_return(
+        # available_cash = _apply_daily_cash_return(
         #     available_cash, current_date, cdi_data, cash_daily_rate
         # )
         
@@ -1257,7 +1409,7 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
         base_params = {
             'objective': 'multi:softprob',  
             'num_class': 3,                 
-            'eval_metric': 'auc',      
+            'eval_metric': 'aucpr',      
             'n_estimators': 500,
             'max_depth': 5,
             'n_jobs': -1,
@@ -1275,13 +1427,13 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
         )
     
     # Verificar existência do modelo
-    model_file_path = model_path / f"{ticker_symbol}.json"
+    model_file_path = model_path / "01_original" / f"{ticker_symbol}.json"
     if not model_file_path.exists():
         print(f"ERRO: Modelo não encontrado: {model_file_path}")
         return None, None
     
     # Carregar modelo (tentar calibrado primeiro, depois original)
-    calibrated_model_path = model_path / f"{ticker_symbol}_calibrated.pkl"
+    calibrated_model_path = model_path / "02_calibrated" / f"{ticker_symbol}_calibrated.pkl"
     
     if calibrated_model_path.exists():
         print(f"  Carregando modelo calibrado...")
@@ -1315,9 +1467,33 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
     val_end = config['model_training']['validation_end_date']
     validation_dataframe = dataframe[val_start:val_end]
 
-    buy_threshold, sell_threshold, best_sharpe = adaptive_threshold_optimization(
-        model, x_val, validation_dataframe, backtest_configuration['initial_capital'],
-        backtest_configuration['transaction_cost_pct'], minimum_hold_days=hold_min_days
+    # Calcular gate_threshold (percentil) se habilitado
+    gate_threshold = None
+    cg_cfg = threshold_config.get('confidence_gating') if isinstance(threshold_config, dict) else None
+    if isinstance(cg_cfg, dict) and cg_cfg.get('enabled', False):
+        if hasattr(model, 'predict_proba'):
+            val_probs = model.predict_proba(x_val)
+        else:
+            dval = xgb.DMatrix(x_val)
+            val_probs = model.predict(dval)
+        p_up_val = val_probs[:, 2] if val_probs.ndim == 2 and val_probs.shape[1] >= 3 else (
+            val_probs[:, -1] if val_probs.ndim == 2 else val_probs
+        )
+        perc = float(cg_cfg.get('percentile', 80))
+        gate_threshold = float(np.percentile(p_up_val, perc))
+
+    # Usar probabilidades calibradas para otimização de thresholds
+    if use_calibrated:
+        print(f"  Usando probabilidades calibradas para otimização de thresholds...")
+        val_probs_calibrated = model.predict_proba(x_val)
+    else:
+        print(f"  Usando probabilidades originais para otimização de thresholds...")
+        dval = xgb.DMatrix(x_val)
+        val_probs_calibrated = model.predict(dval)
+    
+    buy_threshold, sell_threshold, best_sharpe = adaptive_threshold_optimization_with_probs(
+        val_probs_calibrated, validation_dataframe, backtest_configuration['initial_capital'],
+        backtest_configuration['transaction_cost_pct'], minimum_hold_days=hold_min_days, gate_threshold=gate_threshold
     )
 
     # Análise adicional da distribuição de classes para ajuste fino
@@ -1351,21 +1527,21 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
     if len(simulation_dataframe) < 50:
         print(f"  AVISO: Poucos dados ({len(simulation_dataframe)})")
     
-    # Gerar predições multiclasse e converter para ações via score
+    # Gerar predições multiclasse e converter para ações via probabilidade
     x_simulation = simulation_dataframe.drop(columns=[config['model_training']['target_column']])
     
     if use_calibrated:
         # Usar modelo calibrado
-        probabilities = model.predict_proba(x_simulation)
+        probabilities_calibrated = model.predict_proba(x_simulation)
     else:
         # Usar modelo XGBoost original
         dtest = xgb.DMatrix(x_simulation)
-        probabilities = model.predict(dtest)
+        probabilities_calibrated = model.predict(dtest)
     
-    p_up = probabilities[:, 2]
-    score_sim = compute_up_down_score_from_proba(probabilities)
-    predictions = generate_actions_from_score(
-        score_sim, buy_threshold=buy_threshold, sell_threshold=sell_threshold, minimum_hold_days=hold_min_days
+    p_up = probabilities_calibrated[:, 2]
+    score_sim = compute_up_down_score_from_proba(probabilities_calibrated) if probabilities_calibrated.ndim == 2 else p_up
+    predictions = generate_actions_from_prob(
+        p_up, buy_threshold=buy_threshold, sell_threshold=sell_threshold, minimum_hold_days=hold_min_days, gate_threshold=gate_threshold
     )
     
     # Executar diferentes estratégias
@@ -1466,12 +1642,11 @@ def main():
 
     # Carregar configurações
     config, backtest_configuration, features_path, model_path = _load_configuration()
-    
+    tickers = config['data']['tickers']
     all_results = []
     
     # Processar cada ticker
-    for feature_data_file in os.listdir(features_path):
-        ticker_symbol = feature_data_file.replace(".csv", "")
+    for ticker_symbol in tickers:
         
         results, simulation_dataframe = _process_single_ticker(
             ticker_symbol, features_path, model_path, config, backtest_configuration

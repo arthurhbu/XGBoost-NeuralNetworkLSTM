@@ -1,0 +1,26 @@
+{
+  "ticker": "BBDC4.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "isotonic",
+    "sharpe_ratio": 0.7793056391296884,
+    "f1_up": 0.1507537688442211,
+    "auprc": 0.46716320194370153,
+    "brier_score": 0.21905441917765542,
+    "n_features": 11
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "BB_upper",
+    "wavelet_cD",
+    "OBV",
+    "MACD",
+    "RSI"
+  ]
+}

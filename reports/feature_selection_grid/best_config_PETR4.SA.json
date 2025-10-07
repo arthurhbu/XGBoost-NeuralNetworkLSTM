@@ -1,0 +1,25 @@
+{
+  "ticker": "PETR4.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "none",
+    "sharpe_ratio": 1.5777181722699518,
+    "f1_up": 0.31893687707641194,
+    "auprc": 0.36767693260721224,
+    "brier_score": 0.2693792115262273,
+    "n_features": 10
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "BB_lower",
+    "MACD",
+    "wavelet_cD",
+    "RSI"
+  ]
+}

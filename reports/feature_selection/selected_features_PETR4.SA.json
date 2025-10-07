@@ -1,0 +1,15 @@
+{
+  "ticker": "PETR4.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "BB_lower",
+    "MACD",
+    "wavelet_cD",
+    "RSI"
+  ]
+}

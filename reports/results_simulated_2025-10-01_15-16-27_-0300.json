@@ -1,0 +1,461 @@
+{
+  "metadata": {
+    "simulation_date": "2025-10-01T15:16:27.863777",
+    "initial_capital": 100000.0,
+    "transaction_cost_pct": 0.001,
+    "total_tickers": 8,
+    "total_simulations": 32
+  },
+  "results_by_ticker": {
+    "PETR4.SA": {
+      "model_prediction": {
+        "ticker": "PETR4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 122423.87576600643,
+        "retorno_total": 22.370352197658683,
+        "retorno_anual_pct": 22.568146786348198,
+        "sharpe_ratio": 1.7592601221610076,
+        "sortino_ratio": 2.1607680441738233,
+        "calmar_ratio": 3.551266426288573,
+        "max_drawdown_pct": 6.354957380636225,
+        "volatilidade_pct": 12.018838570961119,
+        "win_rate_pct": 45.0
+      },
+      "model_simple": {
+        "ticker": "PETR4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 112458.7290872236,
+        "retorno_total": 12.458729087223608,
+        "retorno_anual_pct": 12.564414453363671,
+        "sharpe_ratio": 1.0065053867256741,
+        "sortino_ratio": 1.1230062956215998,
+        "calmar_ratio": 1.5808137778250841,
+        "max_drawdown_pct": 7.948067400228538,
+        "volatilidade_pct": 12.577305610627104,
+        "win_rate_pct": 45.0
+      },
+      "buy_and_hold": {
+        "ticker": "PETR4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 117383.78592864318,
+        "retorno_total": 17.38378592864318,
+        "retorno_anual_pct": 17.45876647598339,
+        "sharpe_ratio": 0.7714891618226246,
+        "sortino_ratio": 1.0213926291829294,
+        "calmar_ratio": 1.0330775205938558,
+        "max_drawdown_pct": 16.89976417834294,
+        "volatilidade_pct": 25.016569680101536,
+        "win_rate_pct": 50.0
+      }
+    },
+    "VALE3.SA": {
+      "model_prediction": {
+        "ticker": "VALE3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 101461.68317831252,
+        "retorno_total": 1.4173242548566778,
+        "retorno_anual_pct": 1.4287434670992472,
+        "sharpe_ratio": 0.17714922860839571,
+        "sortino_ratio": 0.16345950787572658,
+        "calmar_ratio": 0.15197102937936754,
+        "max_drawdown_pct": 9.401419947828698,
+        "volatilidade_pct": 12.135087776267214,
+        "win_rate_pct": 43.859649122807014
+      },
+      "model_simple": {
+        "ticker": "VALE3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 93826.69493549083,
+        "retorno_total": -6.173305064509171,
+        "retorno_anual_pct": -6.221122554292624,
+        "sharpe_ratio": -0.4680018948492692,
+        "sortino_ratio": -0.4364935279455458,
+        "calmar_ratio": -0.5619927154515456,
+        "max_drawdown_pct": 11.069756570232629,
+        "volatilidade_pct": 12.20918963291397,
+        "win_rate_pct": 42.10526315789473
+      },
+      "buy_and_hold": {
+        "ticker": "VALE3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 77351.39470303607,
+        "retorno_total": -22.64860529696393,
+        "retorno_anual_pct": -22.72770718886147,
+        "sharpe_ratio": -1.006382247033826,
+        "sortino_ratio": -1.7904369972563687,
+        "calmar_ratio": -0.9567695593171174,
+        "max_drawdown_pct": 23.75463032611854,
+        "volatilidade_pct": 23.0884031254387,
+        "win_rate_pct": 40.400000000000006
+      }
+    },
+    "BBDC4.SA": {
+      "model_prediction": {
+        "ticker": "BBDC4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 111966.40490811429,
+        "retorno_total": 11.917453333200868,
+        "retorno_anual_pct": 12.018306279950108,
+        "sharpe_ratio": 0.8872389426350078,
+        "sortino_ratio": 1.1229751338695693,
+        "calmar_ratio": 0.8666980296215394,
+        "max_drawdown_pct": 13.866774665679275,
+        "volatilidade_pct": 13.91849407634142,
+        "win_rate_pct": 51.32743362831859
+      },
+      "model_simple": {
+        "ticker": "BBDC4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 105706.55320388945,
+        "retorno_total": 5.706553203889442,
+        "retorno_anual_pct": 5.753494545077387,
+        "sharpe_ratio": 0.46711168134991365,
+        "sortino_ratio": 0.5852659761064903,
+        "calmar_ratio": 0.4148632157482129,
+        "max_drawdown_pct": 13.868413314737632,
+        "volatilidade_pct": 14.123931893038844,
+        "win_rate_pct": 46.902654867256636
+      },
+      "buy_and_hold": {
+        "ticker": "BBDC4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 73345.80009197087,
+        "retorno_total": -26.65419990802913,
+        "retorno_anual_pct": -26.744726042664023,
+        "sharpe_ratio": -1.0044334133942063,
+        "sortino_ratio": -1.098557853322212,
+        "calmar_ratio": -0.9640607906177172,
+        "max_drawdown_pct": 27.7417423288499,
+        "volatilidade_pct": 27.268443406948716,
+        "win_rate_pct": 46.800000000000004
+      }
+    },
+    "ITUB4.SA": {
+      "model_prediction": {
+        "ticker": "ITUB4.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 110724.73191465632,
+        "retorno_total": 10.67632319765288,
+        "retorno_anual_pct": 10.766175478003914,
+        "sharpe_ratio": 378.318306356837,
+        "sortino_ratio": 0,
+        "calmar_ratio": 0,
+        "max_drawdown_pct": 0.0,
+        "volatilidade_pct": 0.027141923437186563,
+        "win_rate_pct": 0.0
+      },
+      "model_simple": {
+        "ticker": "ITUB4.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 100000.0,
+        "retorno_total": 0.0,
+        "retorno_anual_pct": 0.0,
+        "sharpe_ratio": -Infinity,
+        "sortino_ratio": 0,
+        "calmar_ratio": 0,
+        "max_drawdown_pct": 0.0,
+        "volatilidade_pct": 0.0,
+        "win_rate_pct": 0.0
+      },
+      "buy_and_hold": {
+        "ticker": "ITUB4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 98317.21066214197,
+        "retorno_total": -1.6827893378580372,
+        "retorno_anual_pct": -1.6894367240500197,
+        "sharpe_ratio": -0.0015325068342512116,
+        "sortino_ratio": -0.002384137613784716,
+        "calmar_ratio": -0.1025314033304946,
+        "max_drawdown_pct": 16.477261299198002,
+        "volatilidade_pct": 18.38064268833971,
+        "win_rate_pct": 48.4
+      }
+    },
+    "BBAS3.SA": {
+      "model_prediction": {
+        "ticker": "BBAS3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 110864.7656505693,
+        "retorno_total": 10.816295710988255,
+        "retorno_anual_pct": 10.907383030890806,
+        "sharpe_ratio": 1.5107679763274848,
+        "sortino_ratio": 0.7536090081089319,
+        "calmar_ratio": 2.76227963610753,
+        "max_drawdown_pct": 3.9486889337029463,
+        "volatilidade_pct": 7.045436007996152,
+        "win_rate_pct": 54.166666666666664
+      },
+      "model_simple": {
+        "ticker": "BBAS3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 101821.14894888908,
+        "retorno_total": 1.821148948889073,
+        "retorno_anual_pct": 1.8358510670705819,
+        "sharpe_ratio": 0.29111990524765663,
+        "sortino_ratio": 0.14540913282339063,
+        "calmar_ratio": 0.40578272244667135,
+        "max_drawdown_pct": 4.524221869283388,
+        "volatilidade_pct": 7.1509794337844035,
+        "win_rate_pct": 54.166666666666664
+      },
+      "buy_and_hold": {
+        "ticker": "BBAS3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 95679.13605531957,
+        "retorno_total": -4.320863944680431,
+        "retorno_anual_pct": -4.337699675634998,
+        "sharpe_ratio": -0.17594236199285773,
+        "sortino_ratio": -0.25411692712941314,
+        "calmar_ratio": -0.2684132960179686,
+        "max_drawdown_pct": 16.160524608827934,
+        "volatilidade_pct": 17.04757031834731,
+        "win_rate_pct": 52.800000000000004
+      }
+    },
+    "B3SA3.SA": {
+      "model_prediction": {
+        "ticker": "B3SA3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 131596.8780540162,
+        "retorno_total": 31.539344060317642,
+        "retorno_anual_pct": 31.828137781954457,
+        "sharpe_ratio": 1.9785002352887955,
+        "sortino_ratio": 2.091930551172643,
+        "calmar_ratio": 3.605904549565174,
+        "max_drawdown_pct": 8.826672293861057,
+        "volatilidade_pct": 14.558658287647685,
+        "win_rate_pct": 57.534246575342465
+      },
+      "model_simple": {
+        "ticker": "B3SA3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 124831.13271875092,
+        "retorno_total": 24.831132718750926,
+        "retorno_anual_pct": 25.05282140826861,
+        "sharpe_ratio": 1.5257161201466662,
+        "sortino_ratio": 1.529715385650431,
+        "calmar_ratio": 2.8042585933011193,
+        "max_drawdown_pct": 8.93384849318654,
+        "volatilidade_pct": 15.495935141988914,
+        "win_rate_pct": 56.16438356164384
+      },
+      "buy_and_hold": {
+        "ticker": "B3SA3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 74775.60944246201,
+        "retorno_total": -25.22439055753799,
+        "retorno_anual_pct": -25.310936676535988,
+        "sharpe_ratio": -0.9181851192869608,
+        "sortino_ratio": -1.4632680358875503,
+        "calmar_ratio": -0.7398142204969136,
+        "max_drawdown_pct": 34.21255766013162,
+        "volatilidade_pct": 27.71794463219498,
+        "win_rate_pct": 49.2
+      }
+    },
+    "ABEV3.SA": {
+      "model_prediction": {
+        "ticker": "ABEV3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 117783.17416620265,
+        "retorno_total": 17.73167950690311,
+        "retorno_anual_pct": 17.885526160529118,
+        "sharpe_ratio": 2.031160699036104,
+        "sortino_ratio": 1.6149110831851143,
+        "calmar_ratio": 2.9868468088553533,
+        "max_drawdown_pct": 5.9880962450107615,
+        "volatilidade_pct": 8.302650206364806,
+        "win_rate_pct": 54.54545454545454
+      },
+      "model_simple": {
+        "ticker": "ABEV3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 109219.16963781716,
+        "retorno_total": 9.21916963781717,
+        "retorno_anual_pct": 9.296249994463924,
+        "sharpe_ratio": 1.0153570113768806,
+        "sortino_ratio": 0.8353511459987915,
+        "calmar_ratio": 1.48307478130798,
+        "max_drawdown_pct": 6.268227409453492,
+        "volatilidade_pct": 9.198967587404603,
+        "win_rate_pct": 50.0
+      },
+      "buy_and_hold": {
+        "ticker": "ABEV3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 90350.64598780114,
+        "retorno_total": -9.649354012198863,
+        "retorno_anual_pct": -9.68587277529711,
+        "sharpe_ratio": -0.40074044817287446,
+        "sortino_ratio": -0.541980789323025,
+        "calmar_ratio": -0.49916688072336607,
+        "max_drawdown_pct": 19.40407737240271,
+        "volatilidade_pct": 20.355644058466158,
+        "win_rate_pct": 46.0
+      }
+    },
+    "VIVT3.SA": {
+      "model_prediction": {
+        "ticker": "VIVT3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 110724.73191465632,
+        "retorno_total": 10.67632319765288,
+        "retorno_anual_pct": 10.766175478003914,
+        "sharpe_ratio": 378.318306356837,
+        "sortino_ratio": 0,
+        "calmar_ratio": 0,
+        "max_drawdown_pct": 0.0,
+        "volatilidade_pct": 0.027141923437186563,
+        "win_rate_pct": 0.0
+      },
+      "model_simple": {
+        "ticker": "VIVT3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 100000.0,
+        "retorno_total": 0.0,
+        "retorno_anual_pct": 0.0,
+        "sharpe_ratio": -Infinity,
+        "sortino_ratio": 0,
+        "calmar_ratio": 0,
+        "max_drawdown_pct": 0.0,
+        "volatilidade_pct": 0.0,
+        "win_rate_pct": 0.0
+      },
+      "buy_and_hold": {
+        "ticker": "VIVT3.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 94069.11177018369,
+        "retorno_total": -5.930888229816311,
+        "retorno_anual_pct": -5.953799491437328,
+        "sharpe_ratio": -0.15813278750606483,
+        "sortino_ratio": -0.2299356338405818,
+        "calmar_ratio": -0.2799112045204126,
+        "max_drawdown_pct": 21.270314997351758,
+        "volatilidade_pct": 22.709159146712526,
+        "win_rate_pct": 48.8
+      }
+    }
+  },
+  "summary": {
+    "model_performance": {
+      "average_return": 14.643136932403873,
+      "best_performer": {
+        "ticker": "B3SA3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 131596.8780540162,
+        "retorno_total": 31.539344060317642,
+        "retorno_anual_pct": 31.828137781954457,
+        "sharpe_ratio": 1.9785002352887955,
+        "sortino_ratio": 2.091930551172643,
+        "calmar_ratio": 3.605904549565174,
+        "max_drawdown_pct": 8.826672293861057,
+        "volatilidade_pct": 14.558658287647685,
+        "win_rate_pct": 57.534246575342465
+      },
+      "worst_performer": {
+        "ticker": "VALE3.SA",
+        "label": "Modelo de Predição",
+        "capital_inicial": 100043.73900000002,
+        "capital_final": 101461.68317831252,
+        "retorno_total": 1.4173242548566778,
+        "retorno_anual_pct": 1.4287434670992472,
+        "sharpe_ratio": 0.17714922860839571,
+        "sortino_ratio": 0.16345950787572658,
+        "calmar_ratio": 0.15197102937936754,
+        "max_drawdown_pct": 9.401419947828698,
+        "volatilidade_pct": 12.135087776267214,
+        "win_rate_pct": 43.859649122807014
+      },
+      "total_return": 117.14509545923099
+    },
+    "buyhold_performance": {
+      "average_return": -9.840913169805187,
+      "best_performer": {
+        "ticker": "PETR4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 117383.78592864318,
+        "retorno_total": 17.38378592864318,
+        "retorno_anual_pct": 17.45876647598339,
+        "sharpe_ratio": 0.7714891618226246,
+        "sortino_ratio": 1.0213926291829294,
+        "calmar_ratio": 1.0330775205938558,
+        "max_drawdown_pct": 16.89976417834294,
+        "volatilidade_pct": 25.016569680101536,
+        "win_rate_pct": 50.0
+      },
+      "worst_performer": {
+        "ticker": "BBDC4.SA",
+        "label": "Buy and Hold",
+        "capital_inicial": 100000.0,
+        "capital_final": 73345.80009197087,
+        "retorno_total": -26.65419990802913,
+        "retorno_anual_pct": -26.744726042664023,
+        "sharpe_ratio": -1.0044334133942063,
+        "sortino_ratio": -1.098557853322212,
+        "calmar_ratio": -0.9640607906177172,
+        "max_drawdown_pct": 27.7417423288499,
+        "volatilidade_pct": 27.268443406948716,
+        "win_rate_pct": 46.800000000000004
+      },
+      "total_return": -78.7273053584415
+    },
+    "simple_model_performance": {
+      "average_return": 5.982928566507631,
+      "best_performer": {
+        "ticker": "B3SA3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 124831.13271875092,
+        "retorno_total": 24.831132718750926,
+        "retorno_anual_pct": 25.05282140826861,
+        "sharpe_ratio": 1.5257161201466662,
+        "sortino_ratio": 1.529715385650431,
+        "calmar_ratio": 2.8042585933011193,
+        "max_drawdown_pct": 8.93384849318654,
+        "volatilidade_pct": 15.495935141988914,
+        "win_rate_pct": 56.16438356164384
+      },
+      "worst_performer": {
+        "ticker": "VALE3.SA",
+        "label": "Simulação Simples",
+        "capital_inicial": 100000.0,
+        "capital_final": 93826.69493549083,
+        "retorno_total": -6.173305064509171,
+        "retorno_anual_pct": -6.221122554292624,
+        "sharpe_ratio": -0.4680018948492692,
+        "sortino_ratio": -0.4364935279455458,
+        "calmar_ratio": -0.5619927154515456,
+        "max_drawdown_pct": 11.069756570232629,
+        "volatilidade_pct": 12.20918963291397,
+        "win_rate_pct": 42.10526315789473
+      },
+      "total_return": 47.86342853206105
+    }
+  }
+}

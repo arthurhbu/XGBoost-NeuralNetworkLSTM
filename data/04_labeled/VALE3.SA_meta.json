@@ -2,9 +2,9 @@
   "ticker": "VALE3.SA",
   "target_column": "target",
   "target_params": {
-    "holding_days": 7,
-    "profit_threshold": 0.04,
-    "loss_threshold": -0.01
+    "holding_days": 10,
+    "k_profit_atr": 2.0,
+    "k_loss_atr": 1.5
   },
   "train_final_date": "2021-12-31",
   "validation_start_date": "2022-01-01",

@@ -1,0 +1,27 @@
+{
+  "ticker": "ITUB4.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "none",
+    "sharpe_ratio": 1.621276999682833,
+    "f1_up": 0.49640287769784175,
+    "auprc": 0.5516412353519939,
+    "brier_score": 0.19693257140427683,
+    "n_features": 12
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "wavelet_cD",
+    "wavelet_cA",
+    "EMA_long",
+    "OBV",
+    "RSI",
+    "MACD"
+  ]
+}

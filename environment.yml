@@ -18,6 +18,7 @@ dependencies:
   - pywavelets
   - optuna
   - optuna-integration
+  - seaborn
 
   # - pip:
   #   - python-bcb

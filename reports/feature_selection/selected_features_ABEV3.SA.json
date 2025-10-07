@@ -1,0 +1,16 @@
+{
+  "ticker": "ABEV3.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "wavelet_cD",
+    "EMA_long",
+    "OBV",
+    "MACD",
+    "RSI"
+  ]
+}

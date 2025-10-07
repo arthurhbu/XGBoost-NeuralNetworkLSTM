@@ -1,0 +1,16 @@
+{
+  "ticker": "BBAS3.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "EMA_long",
+    "wavelet_cD",
+    "OBV",
+    "MACD",
+    "RSI"
+  ]
+}

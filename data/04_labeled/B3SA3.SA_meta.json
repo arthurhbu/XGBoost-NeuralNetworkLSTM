@@ -2,9 +2,9 @@
   "ticker": "B3SA3.SA",
   "target_column": "target",
   "target_params": {
-    "holding_days": 10,
-    "profit_threshold": 0.045,
-    "loss_threshold": -0.03
+    "holding_days": 7,
+    "k_profit_atr": 1.5,
+    "k_loss_atr": 1.0
   },
   "train_final_date": "2021-12-31",
   "validation_start_date": "2022-01-01",

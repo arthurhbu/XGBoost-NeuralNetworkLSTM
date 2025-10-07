@@ -1,0 +1,16 @@
+{
+  "ticker": "VIVT3.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "wavelet_cD",
+    "BB_lower",
+    "OBV",
+    "RSI",
+    "MACD"
+  ]
+}

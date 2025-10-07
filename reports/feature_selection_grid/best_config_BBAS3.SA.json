@@ -1,0 +1,26 @@
+{
+  "ticker": "BBAS3.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "none",
+    "sharpe_ratio": 1.9999122776932654,
+    "f1_up": 0.1308411214953271,
+    "auprc": 0.4717676321812095,
+    "brier_score": 0.273206831243906,
+    "n_features": 11
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "EMA_long",
+    "wavelet_cD",
+    "OBV",
+    "MACD",
+    "RSI"
+  ]
+}

@@ -1,0 +1,92 @@
+================================================================================
+RELATÓRIO - ETAPA 7: SELEÇÃO GLOBAL DE FEATURES
+================================================================================
+
+Data da implementação: 01/10/2025
+Objetivo: Remover features consistentemente menos importantes para melhorar performance
+
+--------------------------------------------------------------------------------
+IMPLEMENTAÇÃO REALIZADA
+--------------------------------------------------------------------------------
+
+1. ANÁLISE DE FEATURE IMPORTANCE
+   - Analisadas 8 tickers com 20 features cada
+   - Identificadas 5 features consistentemente menos importantes
+   - Redução média de 25% no número de features
+
+2. FEATURES REMOVIDAS (GLOBAL)
+   - Volume: Consistently low importance across all tickers
+   - MACD_signal: Consistently low importance across all tickers  
+   - MACD_hist: Consistently low importance across all tickers
+   - ADX: Consistently low importance across all tickers
+   - MFI: Consistently low importance across all tickers
+
+3. FEATURES MANTIDAS (15 features)
+   - wavelet_cD, wavelet_cA (Wavelet features - alta importância)
+   - EMA_long, EMA_short (Médias móveis - alta importância)
+   - BB_upper, BB_lower, BB_middle (Bollinger Bands - alta importância)
+   - ATR, OBV (Volatilidade e Volume - alta importância)
+   - Close, Open, High, Low (Preços - importância moderada)
+   - RSI, MACD (Indicadores técnicos - importância moderada)
+
+--------------------------------------------------------------------------------
+RESULTADOS DA IMPLEMENTAÇÃO
+--------------------------------------------------------------------------------
+
+TICKERS PROCESSADOS: 8
+- ABEV3.SA: 20 → 15 features (-25%)
+- B3SA3.SA: 20 → 15 features (-25%)
+- BBAS3.SA: 20 → 15 features (-25%)
+- BBDC4.SA: 20 → 15 features (-25%)
+- ITUB4.SA: 20 → 15 features (-25%)
+- PETR4.SA: 20 → 15 features (-25%)
+- VALE3.SA: 20 → 15 features (-25%)
+- VIVT3.SA: 20 → 15 features (-25%)
+
+ARQUIVOS GERADOS:
+- data/03_features_selected/ (dados com features selecionadas)
+- data/03_features_selected/feature_selection_impact_report.csv
+- config.yaml atualizado para usar features selecionadas
+
+--------------------------------------------------------------------------------
+PRÓXIMOS PASSOS
+--------------------------------------------------------------------------------
+
+1. TREINAR MODELOS COM FEATURES SELECIONADAS
+   - Executar: python -m src.models.train_models
+   - Usar ambiente conda: conda activate projeto-analise-financeira
+
+2. EXECUTAR BACKTESTING
+   - Executar: python -m src.backtesting.backtest
+   - Comparar resultados com ETAPA 6
+
+3. ANÁLISE DE IMPACTO
+   - Verificar se B3SA3.SA e VIVT3.SA melhoraram
+   - Verificar se outros tickers mantiveram performance
+   - Identificar próximas otimizações
+
+--------------------------------------------------------------------------------
+EXPECTATIVAS
+--------------------------------------------------------------------------------
+
+MELHORIAS ESPERADAS:
+- Redução de overfitting (menos features = menos ruído)
+- Melhoria em B3SA3.SA e VIVT3.SA (tickers problemáticos)
+- Manutenção da performance em tickers que funcionam bem
+- Tempo de treinamento mais rápido (menos features)
+
+MÉTRICAS A MONITORAR:
+- Retorno Total (Simulação Simples)
+- Sharpe Ratio
+- Max Drawdown
+- Win Rate
+- Tempo de treinamento
+
+--------------------------------------------------------------------------------
+STATUS: IMPLEMENTAÇÃO CONCLUÍDA ✅
+--------------------------------------------------------------------------------
+
+A seleção global de features foi implementada com sucesso. O sistema está pronto
+para treinar modelos e executar backtesting com as features otimizadas.
+
+Próximo passo: Treinar modelos e comparar resultados com etapas anteriores.

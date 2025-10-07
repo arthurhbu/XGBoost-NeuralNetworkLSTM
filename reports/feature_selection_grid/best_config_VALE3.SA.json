@@ -1,0 +1,25 @@
+{
+  "ticker": "VALE3.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "isotonic",
+    "sharpe_ratio": 1.3291452396190582,
+    "f1_up": 0.07106598984771574,
+    "auprc": 0.5108246631377594,
+    "brier_score": 0.21084331403050324,
+    "n_features": 10
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "EMA_long",
+    "MACD",
+    "wavelet_cD",
+    "RSI"
+  ]
+}

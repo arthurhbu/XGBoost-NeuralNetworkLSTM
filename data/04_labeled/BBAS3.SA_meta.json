@@ -3,8 +3,8 @@
   "target_column": "target",
   "target_params": {
     "holding_days": 5,
-    "profit_threshold": 0.025,
-    "loss_threshold": -0.02
+    "k_profit_atr": 1.5,
+    "k_loss_atr": 1.5
   },
   "train_final_date": "2021-12-31",
   "validation_start_date": "2022-01-01",

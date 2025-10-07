@@ -1,0 +1,38 @@
+================================================================================
+RECOMENDAÇÕES BASEADAS NA ANÁLISE DE FEATURE IMPORTANCE
+================================================================================
+
+1. ANÁLISE GERAL:
+   - Total de tickers analisados: 8
+   - Tickers com alta concentração (>70%): 0
+   - Tickers com baixa concentração (<50%): 8
+
+2. TICKERS PROBLEMÁTICOS:
+
+   B3SA3.SA:
+   - Features com baixa importância: 10
+   - Features com alta variância: 2
+   - Candidatos a overfitting: 0
+
+   VIVT3.SA:
+   - Features com baixa importância: 10
+   - Features com alta variância: 2
+   - Candidatos a overfitting: 0
+
+3. RECOMENDAÇÕES ESPECÍFICAS:
+
+   Para tickers com baixa concentração de importância:
+   - ABEV3.SA: Considerar adicionar features mais específicas
+   - B3SA3.SA: Considerar adicionar features mais específicas
+   - BBAS3.SA: Considerar adicionar features mais específicas
+   - BBDC4.SA: Considerar adicionar features mais específicas
+   - ITUB4.SA: Considerar adicionar features mais específicas
+   - PETR4.SA: Considerar adicionar features mais específicas
+   - VALE3.SA: Considerar adicionar features mais específicas
+   - VIVT3.SA: Considerar adicionar features mais específicas
+
+4. RECOMENDAÇÕES GERAIS:
+   - Implementar feature selection baseada em importância
+   - Testar remoção de features com baixa importância
+   - Considerar feature engineering específico por ticker
+   - Implementar regularização mais forte para tickers com overfitting

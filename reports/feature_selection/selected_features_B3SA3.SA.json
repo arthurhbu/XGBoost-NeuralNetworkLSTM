@@ -1,0 +1,16 @@
+{
+  "ticker": "B3SA3.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "BB_upper",
+    "wavelet_cD",
+    "MACD",
+    "OBV",
+    "RSI"
+  ]
+}

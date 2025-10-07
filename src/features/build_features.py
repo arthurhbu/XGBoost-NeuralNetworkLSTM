@@ -60,11 +60,11 @@ def create_technical_indicators(dataframe, indicators_config):
     
     dataframe = clean_and_convert_data(dataframe)
     
-    close_prices = dataframe['Close'].values
-    high_prices = dataframe['High'].values
-    low_prices = dataframe['Low'].values
-    open_prices = dataframe['Open'].values
-    volume = dataframe['Volume'].values
+    close_prices = dataframe['Close'].shift(1).values
+    high_prices = dataframe['High'].shift(1).values
+    low_prices = dataframe['Low'].shift(1).values
+    open_prices = dataframe['Open'].shift(1).values
+    volume = dataframe['Volume'].shift(1).values
 
     dataframe.loc[:, 'RSI'] = talib.RSI(close_prices, timeperiod=indicators_config['rsi_length'])
     
@@ -78,7 +78,7 @@ def create_technical_indicators(dataframe, indicators_config):
     
     dataframe.loc[:, 'MACD'] = macd
     dataframe.loc[:, 'MACD_signal'] = macdsignal
-    dataframe.loc[:, 'MACD_hist'] = macdhist
+    # dataframe.loc[:, 'MACD_hist'] = macdhist
     
     upper, middle, lower = talib.BBANDS(close_prices, timeperiod=indicators_config['bbands_length'], nbdevup=indicators_config['bbands_std'], nbdevdn=indicators_config['bbands_std'], matype=0)
     
@@ -128,7 +128,8 @@ def create_wavelet_features(dataframe, wavelet_config):
                     level=wavelet_config['level'],
                     mode='constant'
                 )
-                cA, cD = coeffs
+                cA = coeffs[0]
+                cD = coeffs[1]
                 cA_list.append(cA[-1])
                 cD_list.append(cD[-1])
             except Exception as e:
@@ -170,6 +171,6 @@ def main():
 
         # Salvar o CSV com o índice (datas) incluído
         data.to_csv(f'{data_config["features_data_path"]}/{ticker}.csv')
-
+        
 if __name__ == "__main__":
     main()

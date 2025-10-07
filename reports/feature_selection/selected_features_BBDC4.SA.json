@@ -1,0 +1,16 @@
+{
+  "ticker": "BBDC4.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "BB_upper",
+    "wavelet_cD",
+    "OBV",
+    "MACD",
+    "RSI"
+  ]
+}

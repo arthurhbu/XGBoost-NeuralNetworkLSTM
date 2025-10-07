@@ -1,0 +1,15 @@
+{
+  "ticker": "VALE3.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "EMA_long",
+    "MACD",
+    "wavelet_cD",
+    "RSI"
+  ]
+}

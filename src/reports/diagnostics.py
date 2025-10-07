@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from datetime import datetime
 from typing import List, Optional
-
+from itertools import product
 import pandas as pd
 import yaml
 import numpy as np

@@ -1,0 +1,26 @@
+{
+  "ticker": "ABEV3.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "isotonic",
+    "sharpe_ratio": 0.8192961595021759,
+    "f1_up": 0.05813953488372093,
+    "auprc": 0.3964642171022723,
+    "brier_score": 0.20751283467522716,
+    "n_features": 11
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "wavelet_cD",
+    "EMA_long",
+    "OBV",
+    "MACD",
+    "RSI"
+  ]
+}

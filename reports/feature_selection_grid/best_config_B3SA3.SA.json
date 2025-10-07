@@ -1,0 +1,26 @@
+{
+  "ticker": "B3SA3.SA",
+  "best_params": {
+    "top_k": 20,
+    "corr_threshold": 0.9,
+    "calibration": "none",
+    "sharpe_ratio": 0.7824824742696729,
+    "f1_up": 0.36101083032490977,
+    "auprc": 0.47934633919082426,
+    "brier_score": 0.23693922960925906,
+    "n_features": 11
+  },
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "BB_upper",
+    "wavelet_cD",
+    "MACD",
+    "OBV",
+    "RSI"
+  ]
+}

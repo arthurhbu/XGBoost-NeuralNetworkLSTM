@@ -1,0 +1,17 @@
+{
+  "ticker": "ITUB4.SA",
+  "selected_features": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "ATR",
+    "Volume",
+    "wavelet_cD",
+    "wavelet_cA",
+    "EMA_long",
+    "OBV",
+    "RSI",
+    "MACD"
+  ]
+}
