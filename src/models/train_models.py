@@ -45,8 +45,9 @@ def create_dynamic_triple_barrier_target(df, target_column, profit_multiplier, l
     target = np.full(len(df), np.nan)
     
     for i in range(len(df) - holding_days):
-        entry_price = df['Open'].iloc[i]
-        atr_value = df['ATR'].iloc[i-1] if i > 0 else df['ATR'].iloc[i]
+        entry_price = df['Open'].iloc[i].item()
+        # CORRIGIDO: Garantir que atr_value seja um valor escalar
+        atr_value = df['ATR'].iloc[i-1].item() if i > 0 else df['ATR'].iloc[i].item()
         
         if pd.isna(atr_value) or atr_value == 0:
             continue
@@ -59,7 +60,7 @@ def create_dynamic_triple_barrier_target(df, target_column, profit_multiplier, l
             if i + j >= len(df):
                 break
                 
-            day_high, day_low = df['High'].iloc[i+j], df['Low'].iloc[i+j]
+            day_high, day_low = df['High'].iloc[i+j].item(), df['Low'].iloc[i+j].item()
             
             if day_high >= profit_barrier:
                 outcome = 1
@@ -94,7 +95,7 @@ def create_FIXED_triple_barrier_target(
     target = np.full(len(df), np.nan) 
 
     for i in range(len(df) - holding_days):
-        entry_price = df['Open'].iloc[i]
+        entry_price = df['Open'].iloc[i].item()
         
         # Barreiras fixas
         profit_barrier = entry_price * (1 + profit_threshold)
@@ -105,8 +106,8 @@ def create_FIXED_triple_barrier_target(
         for j in range(1, holding_days + 1):
             if i + j >= len(df): break
 
-            day_high = df['High'].iloc[i+j]
-            day_low = df['Low'].iloc[i+j]
+            day_high = df['High'].iloc[i+j].item()
+            day_low = df['Low'].iloc[i+j].item()
 
             if day_high >= profit_barrier:
                 outcome = 1; break
@@ -744,6 +745,11 @@ def main():
     
     feature_data_path = config["data"]["features_data_path"]
     model_training_config = config["model_training"]
+    
+    # Importar gerenciador de colunas essenciais
+    from ..data.essential_columns_manager import EssentialColumnsManager
+    essential_manager = EssentialColumnsManager()
+    
     base_params = {
         'objective': 'multi:softprob',  
         'num_class': 3,                 
@@ -769,16 +775,43 @@ def main():
 
         print(f"\n{'='*60}\nProcessando Ticker: {ticker}\n{'='*60}")
         df_features = pd.read_csv(str(feature_csv_path), index_col=0, parse_dates=True)
+        
+        # CORRIGIDO: Separar features do modelo das colunas essenciais
+        print(f"🔧 Separando features do modelo das colunas essenciais para {ticker}...")
+        
+        # 1. Carregar colunas essenciais separadamente (sem injetar no modelo)
+        df_essential = essential_manager.load_essential_columns(ticker)
+        if df_essential is None:
+            # Se não existir, extrair do arquivo original
+            original_features_path = Path(__file__).resolve().parents[2] / "data" / "03_features" / ticker_file
+            if original_features_path.exists():
+                df_original = pd.read_csv(original_features_path, index_col=0, parse_dates=True)
+                df_essential = essential_manager.extract_essential_columns(df_original, ticker)
+            else:
+                print(f"⚠️  Não foi possível obter colunas essenciais para {ticker}")
+                df_essential = pd.DataFrame()
+        
+        # 2. Para find_optimal_target_params, usar dados com colunas essenciais
+        if not df_essential.empty:
+            # CORRIGIDO: Remover colunas duplicadas antes de concatenar
+            # Remove colunas do df_features que já existem no df_essential
+            df_features_clean = df_features.drop(columns=df_essential.columns, errors='ignore')
+            df_for_targets = pd.concat([df_features_clean, df_essential], axis=1)
+            print(f"✅ Usando {len(df_essential.columns)} colunas essenciais para criar targets: {df_essential.columns.tolist()}")
+        else:
+            df_for_targets = df_features.copy()
+            print(f"⚠️  Usando apenas features selecionadas para criar targets")
 
-        best_target_params = find_optimal_target_params(df_features, config, base_params, ticker)
+        best_target_params = find_optimal_target_params(df_for_targets, config, base_params, ticker)
         
         if best_target_params is None:
             print(f"Não foi possível determinar parâmetros de target para {ticker}. Pulando...")
             continue
 
+        # CORRIGIDO: Criar targets usando dados com colunas essenciais
         if 'k_profit_atr' in best_target_params:
             df_final_labels = create_dynamic_triple_barrier_target(
-                df_features.copy(),
+                df_for_targets.copy(),  # Usar dados com colunas essenciais
                 model_training_config["target_column"],
                 profit_multiplier=best_target_params['k_profit_atr'],
                 loss_multiplier=best_target_params['k_loss_atr'],
@@ -786,10 +819,18 @@ def main():
             )
         else:
             df_final_labels = create_FIXED_triple_barrier_target(
-                df_features.copy(),
+                df_for_targets.copy(),  # Usar dados com colunas essenciais
                 model_training_config["target_column"],
                 **best_target_params
             )
+        
+        # IMPORTANTE: Manter apenas as features selecionadas para o modelo (sem data leakage)
+        # As colunas essenciais foram usadas apenas para criar os targets
+        model_features = [col for col in df_features.columns if col not in df_essential.columns]
+        df_final_labels = df_final_labels[model_features + [model_training_config["target_column"]]]
+        
+        print(f"🎯 Modelo treinará com {len(model_features)} features (sem data leakage): {model_features[:5]}...")
+        print(f"📊 Targets criados usando colunas essenciais: {df_essential.columns.tolist()}")
                         
         #Salvar dataframe com target para reutilização
         df_final_labels.to_csv(labeled_file_path)

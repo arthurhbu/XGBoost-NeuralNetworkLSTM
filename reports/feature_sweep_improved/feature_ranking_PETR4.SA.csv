@@ -1,0 +1,16 @@
+feature,rank
+MACD_signal,1
+BB_lower,2
+EMA_long,3
+BB_middle,4
+OBV,5
+EMA_short,6
+BB_upper,7
+ATR,8
+ADX,9
+MACD_hist,10
+wavelet_cA,11
+MFI,12
+MACD,13
+RSI,14
+wavelet_cD,15

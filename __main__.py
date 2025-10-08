@@ -4,5 +4,5 @@ from src.analysis.feature_importance_sweep import run_sweep as feature_importanc
 
 if __name__ == "__main__":
     # train_models()
-    feature_importance_sweep()
-    # backtest()
+    # feature_importance_sweep()
+    backtest()

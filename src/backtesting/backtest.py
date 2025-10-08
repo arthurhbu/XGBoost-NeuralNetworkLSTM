@@ -1432,21 +1432,11 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
         print(f"ERRO: Modelo não encontrado: {model_file_path}")
         return None, None
     
-    # Carregar modelo (tentar calibrado primeiro, depois original)
-    calibrated_model_path = model_path / "02_calibrated" / f"{ticker_symbol}_calibrated.pkl"
-    
-    if calibrated_model_path.exists():
-        print(f"  Carregando modelo calibrado...")
-        import pickle
-        with open(calibrated_model_path, 'rb') as f:
-            model = pickle.load(f)
-        use_calibrated = True
-    else:
-        print(f"  Carregando modelo original...")
-        booster = xgb.Booster()
-        booster.load_model(model_file_path)
-        model = booster
-        use_calibrated = False
+
+    print(f"  Carregando modelo original...")
+    booster = xgb.Booster()
+    booster.load_model(model_file_path)
+    model = booster
 
     # Split dos dados
     x_train, y_train, x_val, y_val, _, _ = split_data(

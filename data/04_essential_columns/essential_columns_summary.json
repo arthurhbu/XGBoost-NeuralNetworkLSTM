@@ -1,0 +1,58 @@
+{
+  "PETR4.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "VALE3.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "BBDC4.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "ITUB4.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "BBAS3.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "B3SA3.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "ABEV3.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ],
+  "VIVT3.SA": [
+    "ATR",
+    "Open",
+    "High",
+    "Low",
+    "Close"
+  ]
+}

@@ -38,12 +38,39 @@ feature_selection:
     - RSI
     - MACD
   per_ticker:
+    # Configurações otimizadas baseadas no feature sweep melhorado
+    PETR4.SA:
+      optimal_k: 5
+      best_features: [MACD_signal, BB_lower, EMA_long, BB_middle, OBV]
+      sharpe_score: 0.9672
+    VALE3.SA:
+      optimal_k: 10
+      best_features: [EMA_long, BB_middle, BB_upper, OBV, BB_lower, ATR, EMA_short, MACD_signal, ADX, wavelet_cA]
+      sharpe_score: 0.7240
+    BBDC4.SA:
+      optimal_k: 2
+      best_features: [BB_upper, EMA_long]
+      sharpe_score: 0.3012
+    ITUB4.SA:
+      optimal_k: 3
+      best_features: [wavelet_cD, ATR, EMA_long]
+      sharpe_score: 0.4814
+    BBAS3.SA:
+      optimal_k: 2
+      best_features: [EMA_long, BB_upper]
+      sharpe_score: 0.5209
     B3SA3.SA:
-      remove: [Volume, MFI, ADX, MACD_hist, MACD_signal, ATR, OBV, High, RSI, Open]
-      priority: [wavelet_cD, BB_upper, EMA_long, wavelet_cA, EMA_short, BB_middle, Close, BB_lower, Low, MACD]
+      optimal_k: 12
+      best_features: [EMA_long, BB_upper, BB_lower, BB_middle, EMA_short, wavelet_cD, MACD_signal, OBV, ATR, RSI, MACD, wavelet_cA]
+      sharpe_score: 0.6564
+    ABEV3.SA:
+      optimal_k: 10
+      best_features: [wavelet_cD, ATR, EMA_long, OBV, BB_middle, BB_upper, EMA_short, BB_lower, MACD, MACD_hist]
+      sharpe_score: 0.4262
     VIVT3.SA:
-      remove: [Volume, MFI, ADX, MACD_hist, MACD_signal, ATR, OBV, High, RSI, Open]
-      priority: [wavelet_cD, ATR, BB_lower, EMA_long, EMA_short, BB_middle, Close, BB_upper, Low, MACD]
+      optimal_k: 8
+      best_features: [wavelet_cD, EMA_long, BB_lower, BB_middle, BB_upper, EMA_short, ATR, OBV]
+      sharpe_score: 0.4257
 
 features:
   indicators:

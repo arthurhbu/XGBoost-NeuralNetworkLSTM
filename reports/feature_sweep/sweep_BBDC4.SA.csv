@@ -1,9 +1,11 @@
 ticker,k,sharpe_val,features_used
-BBDC4.SA,1,-0.092714074568716,BB_upper
-BBDC4.SA,2,0.35960900691062764,"BB_upper, EMA_long"
-BBDC4.SA,3,-0.26007086902326,"BB_upper, EMA_long, ATR"
-BBDC4.SA,5,0.9101681186793423,"BB_upper, EMA_long, ATR, BB_lower, BB_middle"
-BBDC4.SA,8,0.3982496297820297,"BB_upper, EMA_long, ATR, BB_lower, BB_middle, Open, OBV, wavelet_cA"
-BBDC4.SA,10,0.2972701245267248,"BB_upper, EMA_long, ATR, BB_lower, BB_middle, Open, OBV, wavelet_cA, Low, EMA_short"
-BBDC4.SA,12,0.17618446792640483,"BB_upper, EMA_long, ATR, BB_lower, BB_middle, Open, OBV, wavelet_cA, Low, EMA_short, Close, MACD"
-BBDC4.SA,15,0.7434300703996961,"BB_upper, EMA_long, ATR, BB_lower, BB_middle, Open, OBV, wavelet_cA, Low, EMA_short, Close, MACD, wavelet_cD, RSI, High"
+BBDC4.SA,1,0.13474955379940426,BB_upper
+BBDC4.SA,2,0.7311611521149459,"BB_upper, ATR"
+BBDC4.SA,3,0.39731685049366255,"BB_upper, ATR, EMA_long"
+BBDC4.SA,5,0.7956959464181441,"BB_upper, ATR, EMA_long, BB_lower, BB_middle"
+BBDC4.SA,8,0.160289026616928,"BB_upper, ATR, EMA_long, BB_lower, BB_middle, OBV, Open, MACD_hist"
+BBDC4.SA,10,0.4633753843834713,"BB_upper, ATR, EMA_long, BB_lower, BB_middle, OBV, Open, MACD_hist, wavelet_cA, EMA_short"
+BBDC4.SA,12,0.04568156130232415,"BB_upper, ATR, EMA_long, BB_lower, BB_middle, OBV, Open, MACD_hist, wavelet_cA, EMA_short, MACD_signal, Low"
+BBDC4.SA,15,0.69483368204823,"BB_upper, ATR, EMA_long, BB_lower, BB_middle, OBV, Open, MACD_hist, wavelet_cA, EMA_short, MACD_signal, Low, wavelet_cD, MFI, RSI"
+BBDC4.SA,18,0.33511431072790493,"BB_upper, ATR, EMA_long, BB_lower, BB_middle, OBV, Open, MACD_hist, wavelet_cA, EMA_short, MACD_signal, Low, wavelet_cD, MFI, RSI, MACD, High, ADX"
+BBDC4.SA,20,0.5103713220966414,"BB_upper, ATR, EMA_long, BB_lower, BB_middle, OBV, Open, MACD_hist, wavelet_cA, EMA_short, MACD_signal, Low, wavelet_cD, MFI, RSI, MACD, High, ADX, Close, Volume"

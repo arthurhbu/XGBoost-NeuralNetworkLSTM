@@ -1,9 +1,11 @@
 ticker,k,sharpe_val,features_used
-PETR4.SA,1,1.5225510112302665,BB_middle
-PETR4.SA,2,1.5225510112302665,"BB_middle, EMA_short"
-PETR4.SA,3,1.5225510112302665,"BB_middle, EMA_short, BB_lower"
-PETR4.SA,5,0.9105068217585903,"BB_middle, EMA_short, BB_lower, EMA_long, ATR"
-PETR4.SA,8,0.19953857495123575,"BB_middle, EMA_short, BB_lower, EMA_long, ATR, BB_upper, OBV, Open"
-PETR4.SA,10,0.7757108500033545,"BB_middle, EMA_short, BB_lower, EMA_long, ATR, BB_upper, OBV, Open, Low, MACD"
-PETR4.SA,12,0.45010257303890683,"BB_middle, EMA_short, BB_lower, EMA_long, ATR, BB_upper, OBV, Open, Low, MACD, High, RSI"
-PETR4.SA,15,0.41459539436684734,"BB_middle, EMA_short, BB_lower, EMA_long, ATR, BB_upper, OBV, Open, Low, MACD, High, RSI, Close, wavelet_cA, wavelet_cD"
+PETR4.SA,1,-0.42000463711453745,MACD_signal
+PETR4.SA,2,-0.19669109184494926,"MACD_signal, EMA_short"
+PETR4.SA,3,1.2540853685847768,"MACD_signal, EMA_short, BB_lower"
+PETR4.SA,5,0.0,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long"
+PETR4.SA,8,0.5488320885469987,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long, BB_upper, ATR, Low"
+PETR4.SA,10,0.0,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long, BB_upper, ATR, Low, OBV, MACD_hist"
+PETR4.SA,12,0.12933950688284845,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long, BB_upper, ATR, Low, OBV, MACD_hist, ADX, Open"
+PETR4.SA,15,0.0430961388667894,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long, BB_upper, ATR, Low, OBV, MACD_hist, ADX, Open, MACD, wavelet_cA, High"
+PETR4.SA,18,1.2152512356025817,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long, BB_upper, ATR, Low, OBV, MACD_hist, ADX, Open, MACD, wavelet_cA, High, MFI, RSI, Close"
+PETR4.SA,20,0.08653493840979783,"MACD_signal, EMA_short, BB_lower, BB_middle, EMA_long, BB_upper, ATR, Low, OBV, MACD_hist, ADX, Open, MACD, wavelet_cA, High, MFI, RSI, Close, wavelet_cD, Volume"

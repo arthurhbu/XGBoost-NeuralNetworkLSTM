@@ -1,9 +1,11 @@
 ticker,k,sharpe_val,features_used
-ITUB4.SA,1,0.36058461815885107,Open
-ITUB4.SA,2,0.04746348015002041,"Open, wavelet_cA"
-ITUB4.SA,3,-0.33335492468297306,"Open, wavelet_cA, wavelet_cD"
-ITUB4.SA,5,-0.04959263574842064,"Open, wavelet_cA, wavelet_cD, ATR, EMA_long"
-ITUB4.SA,8,0.22855630019560724,"Open, wavelet_cA, wavelet_cD, ATR, EMA_long, High, Close, BB_middle"
-ITUB4.SA,10,0.8604094567258607,"Open, wavelet_cA, wavelet_cD, ATR, EMA_long, High, Close, BB_middle, OBV, BB_upper"
-ITUB4.SA,12,0.5237347468407959,"Open, wavelet_cA, wavelet_cD, ATR, EMA_long, High, Close, BB_middle, OBV, BB_upper, Low, BB_lower"
-ITUB4.SA,15,-0.16072432025306332,"Open, wavelet_cA, wavelet_cD, ATR, EMA_long, High, Close, BB_middle, OBV, BB_upper, Low, BB_lower, EMA_short, RSI, MACD"
+ITUB4.SA,1,0.23955822228442714,wavelet_cA
+ITUB4.SA,2,-0.5656576871294047,"wavelet_cA, wavelet_cD"
+ITUB4.SA,3,-0.8396122060892167,"wavelet_cA, wavelet_cD, Open"
+ITUB4.SA,5,0.1378389747962404,"wavelet_cA, wavelet_cD, Open, ATR, High"
+ITUB4.SA,8,0.9835538976922573,"wavelet_cA, wavelet_cD, Open, ATR, High, BB_middle, EMA_long, BB_lower"
+ITUB4.SA,10,-0.032399078425678206,"wavelet_cA, wavelet_cD, Open, ATR, High, BB_middle, EMA_long, BB_lower, Close, OBV"
+ITUB4.SA,12,-0.1378826256802744,"wavelet_cA, wavelet_cD, Open, ATR, High, BB_middle, EMA_long, BB_lower, Close, OBV, MACD_signal, BB_upper"
+ITUB4.SA,15,-0.08459264308153759,"wavelet_cA, wavelet_cD, Open, ATR, High, BB_middle, EMA_long, BB_lower, Close, OBV, MACD_signal, BB_upper, EMA_short, MFI, Low"
+ITUB4.SA,18,0.4091491085318267,"wavelet_cA, wavelet_cD, Open, ATR, High, BB_middle, EMA_long, BB_lower, Close, OBV, MACD_signal, BB_upper, EMA_short, MFI, Low, MACD_hist, ADX, RSI"
+ITUB4.SA,20,-0.8786392255476143,"wavelet_cA, wavelet_cD, Open, ATR, High, BB_middle, EMA_long, BB_lower, Close, OBV, MACD_signal, BB_upper, EMA_short, MFI, Low, MACD_hist, ADX, RSI, MACD, Volume"

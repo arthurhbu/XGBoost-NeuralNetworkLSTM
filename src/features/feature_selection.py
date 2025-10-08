@@ -75,12 +75,16 @@ class GlobalFeatureSelector:
             features_to_keep = [col for col in original_features 
                               if col in self.global_high_importance_features]
             
+        elif strategy == 'optimized':
+            # NOVA: Usar as melhores features descobertas pelo feature sweep
+            features_to_keep = self._get_custom_features(ticker, original_features)
+            
         elif strategy == 'custom':
-            # Estratégia personalizada por ticker
+            # Estratégia personalizada por ticker (legado)
             features_to_keep = self._get_custom_features(ticker, original_features)
             
         else:
-            raise ValueError(f"Estratégia '{strategy}' não reconhecida")
+            raise ValueError(f"Estratégia '{strategy}' não reconhecida. Use: 'conservative', 'aggressive', 'optimized', ou 'custom'")
         
         # Aplicar seleção
         df_selected = df[features_to_keep].copy()
@@ -98,24 +102,42 @@ class GlobalFeatureSelector:
     
     def _get_custom_features(self, ticker: str, original_features: List[str]) -> List[str]:
         """
-        Retorna features customizadas para um ticker específico.
+        Retorna features customizadas para um ticker específico baseadas no feature sweep otimizado.
         
         Args:
             ticker: Nome do ticker
             original_features: Lista de features originais
         
         Returns:
-            Lista de features customizadas
+            Lista de features customizadas (melhores features descobertas pelo sweep)
         """
         # Configurações específicas por ticker vindas do config.yaml
         if ticker in self.per_ticker_cfg:
             config = self.per_ticker_cfg[ticker]
-            features_to_remove = config.get('remove', [])
-            return [col for col in original_features if col not in features_to_remove]
-        else:
-            # Para outros tickers, usar estratégia conservadora
-            return [col for col in original_features 
-                   if col not in self.global_low_importance_features]
+            
+            # NOVO: Usar as melhores features descobertas pelo feature sweep
+            if 'best_features' in config:
+                best_features = config['best_features']
+                optimal_k = config.get('optimal_k', len(best_features))
+                sharpe_score = config.get('sharpe_score', 0.0)
+                
+                print(f"  🎯 Usando features otimizadas para {ticker}:")
+                print(f"    K ótimo: {optimal_k}")
+                print(f"    Sharpe score: {sharpe_score:.4f}")
+                print(f"    Features: {best_features}")
+                
+                # Retornar apenas as features que existem no dataset
+                available_features = [f for f in best_features if f in original_features]
+                return available_features
+            
+            # Fallback: usar configuração antiga se disponível
+            elif 'remove' in config:
+                features_to_remove = config.get('remove', [])
+                return [col for col in original_features if col not in features_to_remove]
+        
+        # Para outros tickers, usar estratégia conservadora
+        return [col for col in original_features 
+               if col not in self.global_low_importance_features]
     
     def analyze_feature_impact(self, original_df: pd.DataFrame, 
                               selected_df: pd.DataFrame, 
@@ -228,13 +250,18 @@ def main():
     input_dir = project_root / "data" / "03_features"
     output_dir = project_root / "data" / "03_features_selected"
     
-    # Aplicar seleção conservadora
+    # Aplicar seleção otimizada (baseada no feature sweep melhorado)
+    print("🚀 APLICANDO SELEÇÃO DE FEATURES OTIMIZADA")
+    print("   Baseada nos melhores resultados do feature sweep melhorado")
+    print("=" * 60)
+    
     impact_analysis = apply_global_feature_selection_to_all_tickers(
-        input_dir, output_dir, strategy='conservative'
+        input_dir, output_dir, strategy='optimized'
     )
     
-    print(f"\nSeleção global de features concluída!")
+    print(f"\n✅ Seleção global de features otimizada concluída!")
     print(f"   Dados processados salvos em: {output_dir}")
+    print(f"   Usando as melhores features descobertas pelo sweep para cada ticker")
 
 
 if __name__ == "__main__":
