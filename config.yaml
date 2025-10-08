@@ -14,6 +14,37 @@ data:
   raw_data_path: "data/01_raw/"
   features_data_path: "data/03_features_selected/"
 
+feature_selection:
+  global_low_importance:
+    - Volume
+    - MFI
+    - MACD_hist
+    - MACD_signal
+    - ADX
+  global_high_importance:
+    - wavelet_cD
+    - wavelet_cA
+    - EMA_long
+    - EMA_short
+    - BB_upper
+    - BB_lower
+    - BB_middle
+    - ATR
+    - OBV
+    - Close
+    - Open
+    - High
+    - Low
+    - RSI
+    - MACD
+  per_ticker:
+    B3SA3.SA:
+      remove: [Volume, MFI, ADX, MACD_hist, MACD_signal, ATR, OBV, High, RSI, Open]
+      priority: [wavelet_cD, BB_upper, EMA_long, wavelet_cA, EMA_short, BB_middle, Close, BB_lower, Low, MACD]
+    VIVT3.SA:
+      remove: [Volume, MFI, ADX, MACD_hist, MACD_signal, ATR, OBV, High, RSI, Open]
+      priority: [wavelet_cD, ATR, BB_lower, EMA_long, EMA_short, BB_middle, Close, BB_upper, Low, MACD]
+
 features:
   indicators:
     ema_short: 21
@@ -59,6 +90,9 @@ model_training:
     min_samples_per_class: 50  # Mais amostras por classe
   
   target_selection_metric: ['auc_pr_up', 'f1_up', 'sharpe_val']
+
+  calibration:
+    enabled: false
 
   triple_barrier_grid:
     - {holding_days: 7, profit_threshold: 0.02, loss_threshold: -0.01}

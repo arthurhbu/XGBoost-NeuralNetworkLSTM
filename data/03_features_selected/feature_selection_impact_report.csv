@@ -1,0 +1,9 @@
+ticker,original_features,selected_features,removed_features,reduction_pct,removed_feature_list,selected_feature_list
+ABEV3.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+B3SA3.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+BBAS3.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+BBDC4.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+ITUB4.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+PETR4.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+VALE3.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"
+VIVT3.SA,20,15,5,25.0,"['Volume', 'MACD_signal', 'MACD_hist', 'ADX', 'MFI']","['Close', 'High', 'Low', 'Open', 'RSI', 'EMA_short', 'EMA_long', 'MACD', 'BB_upper', 'BB_middle', 'BB_lower', 'ATR', 'OBV', 'wavelet_cA', 'wavelet_cD']"

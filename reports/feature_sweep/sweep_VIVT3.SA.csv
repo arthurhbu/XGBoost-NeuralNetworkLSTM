@@ -1,0 +1,9 @@
+ticker,k,sharpe_val,features_used
+VIVT3.SA,1,0.12245550416900772,wavelet_cD
+VIVT3.SA,2,0.39313326609767196,"wavelet_cD, BB_middle"
+VIVT3.SA,3,1.0346401553632596,"wavelet_cD, BB_middle, EMA_long"
+VIVT3.SA,5,0.744519752454706,"wavelet_cD, BB_middle, EMA_long, BB_upper, BB_lower"
+VIVT3.SA,8,0.7022196513401955,"wavelet_cD, BB_middle, EMA_long, BB_upper, BB_lower, Open, EMA_short, OBV"
+VIVT3.SA,10,0.2547549475015136,"wavelet_cD, BB_middle, EMA_long, BB_upper, BB_lower, Open, EMA_short, OBV, ATR, wavelet_cA"
+VIVT3.SA,12,-0.015632427506237247,"wavelet_cD, BB_middle, EMA_long, BB_upper, BB_lower, Open, EMA_short, OBV, ATR, wavelet_cA, RSI, Close"
+VIVT3.SA,15,0.01603143611167522,"wavelet_cD, BB_middle, EMA_long, BB_upper, BB_lower, Open, EMA_short, OBV, ATR, wavelet_cA, RSI, Close, High, MACD, Low"

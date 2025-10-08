@@ -30,22 +30,18 @@ class GlobalFeatureSelector:
         """
         self.config_path = config_path
         self.config = self._load_config()
-        
-        # Features identificadas como consistentemente menos importantes
-        self.global_low_importance_features = [
-            'Volume',      # Consistently low across all tickers
-            'MFI',         # Consistently low across all tickers  
-            'MACD_hist',   # Consistently low across all tickers
-            'MACD_signal', # Consistently low across all tickers
-            'ADX'          # Consistently low across all tickers
-        ]
-        
-        # Features que devem ser mantidas (alta importância)
-        self.global_high_importance_features = [
+
+        # Ler listas do config quando disponíveis; manter defaults como fallback
+        fs_cfg = (self.config or {}).get('feature_selection', {})
+        self.global_low_importance_features = fs_cfg.get('global_low_importance', [
+            'Volume', 'MFI', 'MACD_hist', 'MACD_signal', 'ADX'
+        ])
+        self.global_high_importance_features = fs_cfg.get('global_high_importance', [
             'wavelet_cD', 'wavelet_cA', 'EMA_long', 'EMA_short',
             'BB_upper', 'BB_lower', 'BB_middle', 'ATR', 'OBV',
             'Close', 'Open', 'High', 'Low', 'RSI', 'MACD'
-        ]
+        ])
+        self.per_ticker_cfg = fs_cfg.get('per_ticker', {})
     
     def _load_config(self) -> dict:
         """Carrega configuração do arquivo YAML."""
@@ -111,25 +107,10 @@ class GlobalFeatureSelector:
         Returns:
             Lista de features customizadas
         """
-        # Configurações específicas por ticker
-        ticker_configs = {
-            'B3SA3.SA': {
-                'remove': ['Volume', 'MFI', 'ADX', 'MACD_hist', 'MACD_signal', 
-                          'ATR', 'OBV', 'High', 'RSI', 'Open'],
-                'priority': ['wavelet_cD', 'BB_upper', 'EMA_long', 'wavelet_cA', 
-                           'EMA_short', 'BB_middle', 'Close', 'BB_lower', 'Low', 'MACD']
-            },
-            'VIVT3.SA': {
-                'remove': ['Volume', 'MFI', 'ADX', 'MACD_hist', 'MACD_signal', 
-                          'ATR', 'OBV', 'High', 'RSI', 'Open'],
-                'priority': ['wavelet_cD', 'ATR', 'BB_lower', 'EMA_long', 
-                           'EMA_short', 'BB_middle', 'Close', 'BB_upper', 'Low', 'MACD']
-            }
-        }
-        
-        if ticker in ticker_configs:
-            config = ticker_configs[ticker]
-            features_to_remove = config['remove']
+        # Configurações específicas por ticker vindas do config.yaml
+        if ticker in self.per_ticker_cfg:
+            config = self.per_ticker_cfg[ticker]
+            features_to_remove = config.get('remove', [])
             return [col for col in original_features if col not in features_to_remove]
         else:
             # Para outros tickers, usar estratégia conservadora
@@ -220,17 +201,17 @@ def apply_global_feature_selection_to_all_tickers(
             impact_analysis[ticker] = impact
             
         except Exception as e:
-            print(f"  ❌ Erro ao processar {ticker}: {e}")
+            print(f"  Erro ao processar {ticker}: {e}")
             continue
     
     # Salvar relatório de impacto
     impact_df = pd.DataFrame.from_dict(impact_analysis, orient='index')
     impact_report = output_dir / "feature_selection_impact_report.csv"
     impact_df.to_csv(impact_report, index=False)
-    print(f"\n📋 Relatório de impacto salvo em: {impact_report}")
+    print(f"\nRelatório de impacto salvo em: {impact_report}")
     
     # Mostrar resumo
-    print(f"\n📈 RESUMO DA SELEÇÃO DE FEATURES")
+    print(f"\nRESUMO DA SELEÇÃO DE FEATURES")
     print("=" * 40)
     print(f"Tickers processados: {len(impact_analysis)}")
     print(f"Redução média de features: {impact_df['reduction_pct'].mean():.1f}%")
@@ -252,7 +233,7 @@ def main():
         input_dir, output_dir, strategy='conservative'
     )
     
-    print(f"\n✅ Seleção global de features concluída!")
+    print(f"\nSeleção global de features concluída!")
     print(f"   Dados processados salvos em: {output_dir}")
 
 

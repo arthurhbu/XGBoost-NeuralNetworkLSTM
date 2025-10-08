@@ -1,0 +1,9 @@
+ticker,k,sharpe_val,features_used,best_features
+PETR4.SA,1,1.5225510112302665,BB_middle,BB_middle
+VALE3.SA,8,0.9851793290262046,"BB_middle, EMA_long, BB_upper, BB_lower, OBV, ATR, EMA_short, Open","BB_middle, EMA_long, BB_upper, BB_lower, OBV, ATR, EMA_short, Open"
+BBDC4.SA,5,0.9101681186793423,"BB_upper, EMA_long, ATR, BB_lower, BB_middle","BB_upper, EMA_long, ATR, BB_lower, BB_middle"
+ITUB4.SA,10,0.8604094567258607,"Open, wavelet_cA, wavelet_cD, ATR, EMA_long, High, Close, BB_middle, OBV, BB_upper","Open, wavelet_cA, wavelet_cD, ATR, EMA_long, High, Close, BB_middle, OBV, BB_upper"
+BBAS3.SA,10,0.9027142283641371,"EMA_long, BB_middle, BB_upper, BB_lower, wavelet_cA, Open, OBV, ATR, wavelet_cD, EMA_short","EMA_long, BB_middle, BB_upper, BB_lower, wavelet_cA, Open, OBV, ATR, wavelet_cD, EMA_short"
+B3SA3.SA,15,1.2480073076124314,"EMA_long, BB_middle, BB_upper, Open, wavelet_cD, BB_lower, High, MACD, ATR, wavelet_cA, EMA_short, OBV, Low, RSI, Close","EMA_long, BB_middle, BB_upper, Open, wavelet_cD, BB_lower, High, MACD, ATR, wavelet_cA, EMA_short, OBV, Low, RSI, Close"
+ABEV3.SA,3,0.7983293622408744,"wavelet_cD, BB_middle, ATR","wavelet_cD, BB_middle, ATR"
+VIVT3.SA,3,1.0346401553632596,"wavelet_cD, BB_middle, EMA_long","wavelet_cD, BB_middle, EMA_long"

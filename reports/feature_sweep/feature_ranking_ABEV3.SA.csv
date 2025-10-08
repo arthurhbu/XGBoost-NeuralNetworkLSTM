@@ -1,0 +1,16 @@
+feature,rank
+wavelet_cD,1
+BB_middle,2
+ATR,3
+OBV,4
+EMA_long,5
+EMA_short,6
+BB_upper,7
+Open,8
+wavelet_cA,9
+BB_lower,10
+MACD,11
+Close,12
+RSI,13
+Low,14
+High,15

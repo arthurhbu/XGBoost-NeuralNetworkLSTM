@@ -874,49 +874,48 @@ def main():
             importance_df.to_csv(importance_output_path, index=False)
             print(f"  Feature importance salva em: {importance_output_path}")
 
-        # Avaliar calibração antes da calibração
-        dval_test = xgb.DMatrix(x_val)
-        prob_before = final_model.predict(dval_test)
-        calib_before = evaluate_calibration_quality(y_val, prob_before, f"{ticker} (ANTES)")
-            
-        # Testar ambos os métodos de calibração
-        methods = ['isotonic', 'sigmoid']
-        best_calibrator = None
-        best_brier = float('inf')
-        best_method = None
-            
-        for method in methods:
-            try:
-                calibrator = create_calibrated_model(
-                    final_model, x_train, y_train, x_val, y_val, method
-                )
-                    
-                # Avaliar calibração após calibração
-                prob_after = calibrator.predict_proba(x_val)
-                calib_after = evaluate_calibration_quality(y_val, prob_after, f"{ticker} ({method.upper()})")
-                    
-                if calib_after['brier_score'] < best_brier:
-                    best_brier = calib_after['brier_score']
-                    best_calibrator = calibrator
-                    best_method = method
-                        
-            except Exception as e:
-                print(f"  Erro na calibração {method}: {str(e)}")
-                continue
-            
-        if best_calibrator is not None:
-            print(f" Melhor método: {best_method.upper()} (Brier: {best_brier:.4f})")
-                
-            # Salvar modelo calibrado
-            calibrated_model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / "02_calibrated" / f"{ticker.replace('.csv', '')}_calibrated.pkl"
-            import pickle
-            with open(calibrated_model_path, 'wb') as f:
-                pickle.dump(best_calibrator, f)
-                
-            print(f" Modelo calibrado salvo: {calibrated_model_path}")
-        else:
-            print(f" Falha na calibração para {ticker}")
+        # Calibração (opcional via config)
+        calibration_cfg = model_training_config.get('calibration', {"enabled": False})
+        if calibration_cfg.get('enabled', False):
+            # Avaliar calibração antes da calibração
+            dval_test = xgb.DMatrix(x_val)
+            prob_before = final_model.predict(dval_test)
+            calib_before = evaluate_calibration_quality(y_val, prob_before, f"{ticker} (ANTES)")
+
+            # Testar ambos os métodos de calibração
+            methods = ['isotonic', 'sigmoid']
             best_calibrator = None
+            best_brier = float('inf')
+            best_method = None
+
+            for method in methods:
+                try:
+                    calibrator = create_calibrated_model(
+                        final_model, x_train, y_train, x_val, y_val, method
+                    )
+                    # Avaliar calibração após calibração
+                    prob_after = calibrator.predict_proba(x_val)
+                    calib_after = evaluate_calibration_quality(y_val, prob_after, f"{ticker} ({method.upper()})")
+                    if calib_after['brier_score'] < best_brier:
+                        best_brier = calib_after['brier_score']
+                        best_calibrator = calibrator
+                        best_method = method
+                except Exception as e:
+                    print(f"  Erro na calibração {method}: {str(e)}")
+                    continue
+
+            if best_calibrator is not None:
+                print(f" Melhor método: {best_method.upper()} (Brier: {best_brier:.4f})")
+                # Salvar modelo calibrado
+                calibrated_model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / "02_calibrated" / f"{ticker.replace('.csv', '')}_calibrated.pkl"
+                import pickle
+                with open(calibrated_model_path, 'wb') as f:
+                    pickle.dump(best_calibrator, f)
+                print(f" Modelo calibrado salvo: {calibrated_model_path}")
+            else:
+                print(f" Falha na calibração para {ticker}")
+        else:
+            print("Calibração desabilitada via configuração. Pulando etapa de calibração.")
 
         # Salvar modelo original também
         model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / "01_original" / f"{ticker.replace('.csv', '')}.json"

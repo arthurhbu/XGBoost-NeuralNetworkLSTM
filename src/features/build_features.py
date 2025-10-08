@@ -78,7 +78,7 @@ def create_technical_indicators(dataframe, indicators_config):
     
     dataframe.loc[:, 'MACD'] = macd
     dataframe.loc[:, 'MACD_signal'] = macdsignal
-    # dataframe.loc[:, 'MACD_hist'] = macdhist
+    dataframe.loc[:, 'MACD_hist'] = macdhist
     
     upper, middle, lower = talib.BBANDS(close_prices, timeperiod=indicators_config['bbands_length'], nbdevup=indicators_config['bbands_std'], nbdevdn=indicators_config['bbands_std'], matype=0)
     
