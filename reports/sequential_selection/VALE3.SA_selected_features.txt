@@ -1,0 +1,15 @@
+Ticker: VALE3.SA
+Melhor k: 4
+Score Composto: 1.1861
+Sharpe Ratio: 1.3632
+Calmar Ratio: 1.5594
+Max Drawdown: 0.2537
+Total Return: 0.9913
+Accuracy: 0.4920
+Trades Made: 11
+Win Rate: 0.0000
+Features selecionadas:
+ 1. BB_upper
+ 2. EMA_long
+ 3. OBV
+ 4. BB_middle

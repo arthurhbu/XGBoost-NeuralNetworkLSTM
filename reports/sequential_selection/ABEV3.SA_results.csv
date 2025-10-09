@@ -1,0 +1,14 @@
+k,features,sharpe_ratio
+3,"['wavelet_cD', 'OBV', 'ATR']",0.6726552426237739
+4,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower']",0.2558323685680264
+5,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA']",0.5067995829349135
+6,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle']",0.12000662509342981
+7,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long']",0.3691808484274919
+8,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper']",-0.08343046958558502
+9,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD']",0.018325736292614837
+10,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD', 'EMA_short']",0.27872356818967037
+11,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD', 'EMA_short', 'RSI']",0.14981280300341274
+12,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD', 'EMA_short', 'RSI', 'ADX']",-0.1044063751262511
+13,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD', 'EMA_short', 'RSI', 'ADX', 'MACD_signal']",0.01134415722331412
+14,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD', 'EMA_short', 'RSI', 'ADX', 'MACD_signal', 'MACD_hist']",0.09739529402535858
+15,"['wavelet_cD', 'OBV', 'ATR', 'BB_lower', 'wavelet_cA', 'BB_middle', 'EMA_long', 'BB_upper', 'MACD', 'EMA_short', 'RSI', 'ADX', 'MACD_signal', 'MACD_hist', 'Volume']",0.03965889427067179

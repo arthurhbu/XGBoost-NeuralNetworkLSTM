@@ -1,0 +1,17 @@
+Ticker: ITUB4.SA
+Melhor k: 6
+Score Composto: 1.5366
+Sharpe Ratio: 1.4179
+Calmar Ratio: 2.5888
+Max Drawdown: 0.0636
+Total Return: 0.3648
+Accuracy: 0.4960
+Trades Made: 14
+Win Rate: 0.0000
+Features selecionadas:
+ 1. ATR
+ 2. BB_lower
+ 3. OBV
+ 4. BB_middle
+ 5. EMA_short
+ 6. RSI

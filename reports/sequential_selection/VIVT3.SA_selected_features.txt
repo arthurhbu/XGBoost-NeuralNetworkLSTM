@@ -1,0 +1,14 @@
+Ticker: VIVT3.SA
+Melhor k: 3
+Score Composto: -0.0521
+Sharpe Ratio: -0.4271
+Calmar Ratio: -0.1576
+Max Drawdown: 0.3036
+Total Return: -0.1011
+Accuracy: 0.4819
+Trades Made: 82
+Win Rate: 0.0000
+Features selecionadas:
+ 1. wavelet_cD
+ 2. wavelet_cA
+ 3. ADX

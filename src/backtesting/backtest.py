@@ -18,15 +18,18 @@ DEFAULT_SLIPPAGE_BPS = 0.2
 DEFAULT_LOT_SIZE = 100
 DEFAULT_CASH_DAILY_RATE = 0.0
 DEFAULT_HOLD_MIN_DAYS = 1
-# DEFAULT_BUY_GRID = np.arange(0.55, 0.86, 0.05)
-# DEFAULT_SELL_GRID = np.arange(0.15, 0.46, 0.05)
-# EXPANDED_BUY_GRID = np.arange(0.50, 0.95, 0.02)
-# EXPANDED_SELL_GRID = np.arange(0.05, 0.55, 0.02)
+
 # Grades mais sensíveis para melhor recall e precisão
-DEFAULT_BUY_GRID = np.arange(0.20, 0.60, 0.05)  # Mais sensível: 0.20-0.55
-DEFAULT_SELL_GRID = np.arange(-0.30, 0.10, 0.05)  # Mais sensível: -0.30 a 0.05
+DEFAULT_BUY_GRID = np.arange(0.00, 0.85, 0.05)  # Mais sensível: 0.20-0.55
+DEFAULT_SELL_GRID = np.arange(-0.30, 0.30, 0.05)  # Mais sensível: -0.30 a 0.05
 EXPANDED_BUY_GRID = np.arange(0.10, 0.70, 0.02)  # Grade expandida mais sensível
 EXPANDED_SELL_GRID = np.arange(-0.40, 0.20, 0.02)  # Grade expandida mais sensível
+
+# Grades mais sensíveis para melhor recall e precisão - OTIMIZADAS PARA TICKERS PROBLEMÁTICOS
+# DEFAULT_BUY_GRID = np.arange(0.15, 0.50, 0.05)  # Mais sensível: 0.15-0.45 (era 0.20-0.55)
+# DEFAULT_SELL_GRID = np.arange(-0.35, 0.05, 0.05)  # Mais sensível: -0.35 a 0.00 (era -0.30 a 0.05)
+# EXPANDED_BUY_GRID = np.arange(0.05, 0.60, 0.02)  # Grade expandida mais sensível (era 0.10-0.70)
+# EXPANDED_SELL_GRID = np.arange(-0.45, 0.15, 0.02)  # Grade expandida mais sensível (era -0.40 a 0.20)
 
 # Configurações de slippage realista
 SLIPPAGE_CONFIG = {
@@ -1438,6 +1441,18 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
     booster.load_model(model_file_path)
     model = booster
 
+    # Carregar dados essenciais para simulação de portfólio (Open, High, Low, Close)
+    # Estes dados são usados APENAS para simulação de portfólio, NÃO para treinamento/predição
+    essential_dir = Path(__file__).resolve().parents[2] / "data" / "04_essential_columns"
+    essential_csv = essential_dir / f"{ticker_symbol}_essential.csv"
+    
+    if essential_csv.exists():
+        essential_dataframe = pd.read_csv(essential_csv, index_col='Date', parse_dates=True)
+        print(f"  Dados essenciais carregados: {len(essential_dataframe)} registros")
+    else:
+        print(f"  AVISO: Arquivo de dados essenciais não encontrado: {essential_csv}")
+        essential_dataframe = None
+    
     # Split dos dados
     x_train, y_train, x_val, y_val, _, _ = split_data(
         dataframe,
@@ -1455,7 +1470,14 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
     
     val_start = config['model_training']['validation_start_date']
     val_end = config['model_training']['validation_end_date']
-    validation_dataframe = dataframe[val_start:val_end]
+    
+    # Usar dados essenciais para simulação de portfólio se disponíveis
+    if essential_dataframe is not None:
+        validation_dataframe = essential_dataframe[val_start:val_end]
+        print(f"  Usando dados essenciais para simulação de portfólio: {len(validation_dataframe)} registros")
+    else:
+        validation_dataframe = dataframe[val_start:val_end]
+        print(f"  Usando dados de features para simulação de portfólio: {len(validation_dataframe)} registros")
 
     # Calcular gate_threshold (percentil) se habilitado
     gate_threshold = None
@@ -1472,43 +1494,23 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
         perc = float(cg_cfg.get('percentile', 80))
         gate_threshold = float(np.percentile(p_up_val, perc))
 
-    # Usar probabilidades calibradas para otimização de thresholds
-    if use_calibrated:
-        print(f"  Usando probabilidades calibradas para otimização de thresholds...")
-        val_probs_calibrated = model.predict_proba(x_val)
-    else:
-        print(f"  Usando probabilidades originais para otimização de thresholds...")
-        dval = xgb.DMatrix(x_val)
-        val_probs_calibrated = model.predict(dval)
+    # Usar probabilidades originais do XGBoost para otimização de thresholds
+    print(f"  Usando probabilidades originais do XGBoost para otimização de thresholds...")
+    dval = xgb.DMatrix(x_val)
+    val_probs = model.predict(dval)
     
     buy_threshold, sell_threshold, best_sharpe = adaptive_threshold_optimization_with_probs(
-        val_probs_calibrated, validation_dataframe, backtest_configuration['initial_capital'],
+        val_probs, validation_dataframe, backtest_configuration['initial_capital'],
         backtest_configuration['transaction_cost_pct'], minimum_hold_days=hold_min_days, gate_threshold=gate_threshold
     )
 
-    # Análise adicional da distribuição de classes para ajuste fino
-    # probabilities_val = model.predict_proba(x_val)
-    
-    # suggested_buy, suggested_sell, analysis_info = analyze_class_distribution_and_adjust_thresholds(
-    #     probabilities_val, buy_threshold, sell_threshold
-    # )
-    
-    # print(f"  Análise de distribuição:")
-    # print(f"    Score médio: {analysis_info['score_stats']['mean']:.3f}")
-    # print(f"    P75: {analysis_info['score_stats']['percentile_75']:.3f}")
-    # print(f"    P25: {analysis_info['score_stats']['percentile_25']:.3f}")
-    # print(f"    Thresholds sugeridos: buy={suggested_buy:.2f} sell={suggested_sell:.2f}")
-    
-    # # Usar thresholds sugeridos se forem mais conservadores
-    # if suggested_buy > buy_threshold and suggested_sell < sell_threshold:
-    #     buy_threshold, sell_threshold = suggested_buy, suggested_sell
-    #     print(f"  Usando thresholds mais conservadores: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
-    # else:
-    #     print(f"  Mantendo thresholds otimizados: buy={buy_threshold:.2f} sell={sell_threshold:.2f}")
-
     # Preparar dados de simulação
-    simulation_dataframe = dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
-    print(f"  Simulação: {len(simulation_dataframe)} registros")
+    if essential_dataframe is not None:
+        simulation_dataframe = essential_dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
+        print(f"  Simulação (dados essenciais): {len(simulation_dataframe)} registros")
+    else:
+        simulation_dataframe = dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
+        print(f"  Simulação (dados de features): {len(simulation_dataframe)} registros")
     
     if len(simulation_dataframe) == 0:
         print(f"  ERRO: Nenhum dado para simulação")
@@ -1518,18 +1520,43 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
         print(f"  AVISO: Poucos dados ({len(simulation_dataframe)})")
     
     # Gerar predições multiclasse e converter para ações via probabilidade
-    x_simulation = simulation_dataframe.drop(columns=[config['model_training']['target_column']])
-    
-    if use_calibrated:
-        # Usar modelo calibrado
-        probabilities_calibrated = model.predict_proba(x_simulation)
+    # IMPORTANTE: Para predições, usar APENAS as features selecionadas (sem colunas essenciais)
+    if config['model_training']['target_column'] in simulation_dataframe.columns:
+        x_simulation = simulation_dataframe.drop(columns=[config['model_training']['target_column']])
     else:
-        # Usar modelo XGBoost original
-        dtest = xgb.DMatrix(x_simulation)
-        probabilities_calibrated = model.predict(dtest)
+        # Se não há coluna target, usar todas as colunas disponíveis
+        x_simulation = simulation_dataframe.copy()
     
-    p_up = probabilities_calibrated[:, 2]
-    score_sim = compute_up_down_score_from_proba(probabilities_calibrated) if probabilities_calibrated.ndim == 2 else p_up
+    # Garantir que temos apenas as features necessárias para o modelo
+    # O modelo foi treinado com features específicas, então devemos usar apenas essas
+    if essential_dataframe is not None:
+        # Se estamos usando dados essenciais para simulação, precisamos das features originais
+        # Carregar dados de features originais para predição
+        features_file_path = features_path / f"{ticker_symbol}.csv"
+        if features_file_path.exists():
+            features_dataframe = pd.read_csv(features_file_path, index_col='Date', parse_dates=True)
+            # Filtrar para o período de simulação
+            x_simulation = features_dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
+            
+            # IMPORTANTE: Remover colunas OHLC que não foram usadas no treinamento do modelo
+            # O modelo foi treinado apenas com features técnicas, não com OHLC
+            essential_cols_to_exclude = ['Open', 'High', 'Low', 'Close']
+            model_features = [col for col in x_simulation.columns 
+                            if col not in essential_cols_to_exclude]
+            x_simulation = x_simulation[model_features]
+            
+            print(f"  Usando dados de features originais para predição: {len(x_simulation)} registros")
+            print(f"  Features do modelo: {list(x_simulation.columns)}")
+        else:
+            print(f"  ERRO: Arquivo de features não encontrado: {features_file_path}")
+            return None, None
+
+    # Usar modelo XGBoost original
+    dtest = xgb.DMatrix(x_simulation)
+    probabilities = model.predict(dtest)
+    
+    p_up = probabilities[:, 2]
+    score_sim = compute_up_down_score_from_proba(probabilities) if probabilities.ndim == 2 else p_up
     predictions = generate_actions_from_prob(
         p_up, buy_threshold=buy_threshold, sell_threshold=sell_threshold, minimum_hold_days=hold_min_days, gate_threshold=gate_threshold
     )
@@ -1552,7 +1579,26 @@ def _process_single_ticker(ticker_symbol,features_path, model_path, config, back
     model_metrics = calculate_portfolio_metrics(realistic_portfolio, "Modelo de Predição", ticker_symbol, predictions)
     simple_metrics = calculate_portfolio_metrics(simple_portfolio, "Simulação Simples", ticker_symbol, predictions)
     buy_and_hold_metrics = calculate_portfolio_metrics(buy_and_hold_portfolio, "Buy and Hold", ticker_symbol)
-    ml_metrics = calculate_ml_metrics(simulation_dataframe['target'], predictions)
+    # Calcular métricas de ML apenas se target estiver disponível
+    if config['model_training']['target_column'] in simulation_dataframe.columns:
+        ml_metrics = calculate_ml_metrics(simulation_dataframe[config['model_training']['target_column']], predictions)
+    else:
+        # Se não há coluna target no simulation_dataframe, tentar carregar dos dados labeled
+        try:
+            labeled_simulation = dataframe[backtest_configuration['initial_simulation_date']:backtest_configuration['final_simulation_date']]
+            if config['model_training']['target_column'] in labeled_simulation.columns:
+                # Alinhar tamanhos se necessário
+                min_size = min(len(labeled_simulation), len(predictions))
+                target_values = labeled_simulation[config['model_training']['target_column']].iloc[:min_size]
+                predictions_aligned = predictions[:min_size]
+                ml_metrics = calculate_ml_metrics(target_values, predictions_aligned)
+                print(f"  Métricas de ML calculadas usando dados labeled: {len(target_values)} registros")
+            else:
+                ml_metrics = {'accuracy': 0, 'precision': 0, 'recall': 0, 'f1': 0}
+                print(f"  AVISO: Coluna 'target' não encontrada nos dados labeled")
+        except Exception as e:
+            ml_metrics = {'accuracy': 0, 'precision': 0, 'recall': 0, 'f1': 0}
+            print(f"  ERRO ao calcular métricas de ML: {e}")
     ml_metrics_entry = {
         'ticker': ticker_symbol,
         'label': 'Métricas de ML',

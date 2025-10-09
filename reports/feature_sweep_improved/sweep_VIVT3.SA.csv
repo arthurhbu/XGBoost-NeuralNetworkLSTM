@@ -1,8 +1,0 @@
-ticker,k,sharpe_val,adjusted_sharpe,features_used
-VIVT3.SA,1,-0.08431532384568366,-0.08431532384568366,wavelet_cD
-VIVT3.SA,2,-0.18743555105825307,-0.18743555105825307,"wavelet_cD, EMA_long"
-VIVT3.SA,3,0.3075921562703995,0.3075921562703995,"wavelet_cD, EMA_long, BB_lower"
-VIVT3.SA,5,0.33334418703850976,0.33334418703850976,"wavelet_cD, EMA_long, BB_lower, BB_middle, BB_upper"
-VIVT3.SA,8,0.42565860413769824,0.42565860413769824,"wavelet_cD, EMA_long, BB_lower, BB_middle, BB_upper, EMA_short, ATR, OBV"
-VIVT3.SA,10,0.3902837695108988,0.3902837695108988,"wavelet_cD, EMA_long, BB_lower, BB_middle, BB_upper, EMA_short, ATR, OBV, ADX, MACD_hist"
-VIVT3.SA,12,0.3525874794249768,0.3525874794249768,"wavelet_cD, EMA_long, BB_lower, BB_middle, BB_upper, EMA_short, ATR, OBV, ADX, MACD_hist, RSI, wavelet_cA"

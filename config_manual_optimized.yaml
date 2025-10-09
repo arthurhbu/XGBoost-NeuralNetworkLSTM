@@ -1,0 +1,360 @@
+backtesting:
+  cash_daily_rate: 0.0004
+  final_simulation_date: '2025-01-01'
+  initial_capital: 100000.0
+  initial_simulation_date: '2024-01-01'
+  lot_size: 1
+  position_sizing:
+    enabled: true
+    max_fraction: 1.0
+    method: sigmoid
+    min_fraction: 0.2
+  results_path: reports
+  slippage_config:
+    base_bps: 0.2
+    max_bps: 2.0
+    min_bps: 0.1
+    size_factor: 0.3
+    volatility_factor: 1.0
+    volume_factor: 0.5
+  threshold_optimization:
+    enabled: true
+    hold_min_days: 5
+    max_threshold: 0.6
+    metric: sharpe
+    min_threshold: 0.5
+  transaction_cost_pct: 0.001
+  use_real_cdi: true
+data:
+  end_date: '2025-08-18'
+  features_data_path: data/03_features_selected/
+  raw_data_path: data/01_raw/
+  start_date: '2017-01-01'
+  tickers:
+  - PETR4.SA
+  - VALE3.SA
+  - BBDC4.SA
+  - ITUB4.SA
+  - BBAS3.SA
+  - B3SA3.SA
+  - ABEV3.SA
+  - VIVT3.SA
+feature_selection:
+  global_high_importance:
+  - wavelet_cD
+  - wavelet_cA
+  - EMA_long
+  - EMA_short
+  - BB_upper
+  - BB_lower
+  - BB_middle
+  - ATR
+  - OBV
+  - Close
+  - Open
+  - High
+  - Low
+  - RSI
+  - MACD
+  global_low_importance:
+  - Volume
+  - MFI
+  - MACD_hist
+  - MACD_signal
+  - ADX
+  per_ticker:
+    ABEV3.SA:
+      best_features:
+      - wavelet_cD
+      - BB_upper
+      - EMA_long
+      - EMA_short
+      - BB_middle
+      - Open
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - &id001 !!python/object/apply:numpy.dtype
+        args:
+        - f8
+        - false
+        - true
+        state: !!python/tuple
+        - 3
+        - <
+        - null
+        - null
+        - null
+        - -1
+        - -1
+        - 0
+      - !!binary |
+        lqxkJStZB0A=
+      optimal_k: 6
+      reasoning:
+      - "Otimiza\xE7\xE3o padr\xE3o"
+      - "Manter features de alta correla\xE7\xE3o"
+      - Ajustar thresholds baseado na performance
+      strategy: standard_optimization
+    B3SA3.SA:
+      best_features:
+      - wavelet_cD
+      - Open
+      - BB_lower
+      - EMA_short
+      - BB_middle
+      - EMA_long
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        UvflsRVBEkA=
+      optimal_k: 6
+      reasoning:
+      - "Otimiza\xE7\xE3o padr\xE3o"
+      - "Manter features de alta correla\xE7\xE3o"
+      - Ajustar thresholds baseado na performance
+      strategy: standard_optimization
+    BBAS3.SA:
+      best_features:
+      - wavelet_cD
+      - BB_upper
+      - BB_middle
+      - EMA_short
+      - EMA_long
+      - Open
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        579Itfkv8j8=
+      optimal_k: 6
+      reasoning:
+      - "Distribui\xE7\xE3o balanceada"
+      - Otimizar features existentes
+      - Focar em momentum e volume
+      - Ajustar thresholds moderadamente
+      strategy: balanced_optimization
+    BBDC4.SA:
+      best_features:
+      - wavelet_cD
+      - EMA_long
+      - BB_middle
+      - BB_upper
+      - EMA_short
+      - BB_lower
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0byB0LyBAEA=
+      optimal_k: 6
+      reasoning:
+      - "Otimiza\xE7\xE3o padr\xE3o"
+      - "Manter features de alta correla\xE7\xE3o"
+      - Ajustar thresholds baseado na performance
+      strategy: standard_optimization
+    ITUB4.SA:
+      best_features:
+      - wavelet_cD
+      - ATR
+      - Volume
+      - BB_upper
+      - Open
+      - BB_middle
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        2LSfLIFNC0A=
+      optimal_k: 6
+      reasoning:
+      - Desbalanceamento severo detectado
+      - "Focar em features com maior correla\xE7\xE3o"
+      - "Considerar undersampling da classe majorit\xE1ria"
+      - Usar thresholds mais agressivos
+      strategy: rebalance_focus
+    PETR4.SA:
+      best_features:
+      - wavelet_cD
+      - MACD_signal
+      - MACD
+      - Open
+      - BB_upper
+      - BB_middle
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8vypXmqJ/j8=
+      optimal_k: 6
+      reasoning:
+      - "Otimiza\xE7\xE3o padr\xE3o"
+      - "Manter features de alta correla\xE7\xE3o"
+      - Ajustar thresholds baseado na performance
+      strategy: standard_optimization
+    VALE3.SA:
+      best_features:
+      - wavelet_cD
+      - EMA_long
+      - BB_lower
+      - EMA_short
+      - BB_middle
+      - BB_upper
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        +uoeaWXyAEA=
+      optimal_k: 6
+      reasoning:
+      - "Otimiza\xE7\xE3o padr\xE3o"
+      - "Manter features de alta correla\xE7\xE3o"
+      - Ajustar thresholds baseado na performance
+      strategy: standard_optimization
+    VIVT3.SA:
+      best_features:
+      - wavelet_cD
+      - Close
+      - wavelet_cA
+      - ADX
+      - Volume
+      - High
+      imbalance_ratio: !!python/object/apply:numpy._core.multiarray.scalar
+      - *id001
+      - !!binary |
+        IWlDVKmTCEA=
+      optimal_k: 6
+      reasoning:
+      - Desbalanceamento severo detectado
+      - "Focar em features com maior correla\xE7\xE3o"
+      - "Considerar undersampling da classe majorit\xE1ria"
+      - Usar thresholds mais agressivos
+      strategy: rebalance_focus
+  sequential_selection:
+    backtest_params:
+      buy_threshold: 0.1
+      initial_capital: 100000.0
+      sell_threshold: -0.1
+      transaction_cost: 0.001
+    composite_score_weights:
+      accuracy: 0.2
+      calmar_ratio: 0.3
+      max_drawdown_penalty: 0.1
+      sharpe_ratio: 0.4
+    max_features: 15
+    min_features: 3
+    min_trades_required: 5
+features:
+  indicators:
+    adx_length: 14
+    atr_length: 14
+    bbands_length: 20
+    bbands_std: 2.0
+    ema_long: 50
+    ema_short: 21
+    macd_fast: 12
+    macd_signal: 9
+    macd_slow: 26
+    mfi_length: 14
+    rsi_length: 14
+    stoch_length: 14
+  wavelet:
+    family: db8
+    level: 1
+model_training:
+  model_output_path: models/01_xgboost/
+  target_column: target
+  target_grid_atr:
+    holding_days:
+    - 5
+    - 7
+    - 10
+    - 15
+    k_loss_atr_grid:
+    - 0.5
+    - 0.8
+    - 1.0
+    - 1.5
+    k_profit_atr_grid:
+    - 1.0
+    - 1.5
+    - 2.0
+    - 2.5
+    - 3.0
+  target_selection_metric:
+  - auc_pr_up
+  - f1_up
+  - sharpe_val
+  target_selection_rules:
+    max_up_ratio: 0.4
+    min_num_classes: 3
+    min_samples_per_class: 50
+    min_up_ratio: 0.15
+  test_end_date: '2025-01-01'
+  test_start_date: '2024-01-01'
+  train_final_date: '2021-12-31'
+  triple_barrier:
+    holding_days: 7
+    loss_multiplier: 1.5
+    profit_multiplier: 2.0
+  triple_barrier_grid:
+  - holding_days: 7
+    loss_threshold: -0.01
+    profit_threshold: 0.02
+  - holding_days: 7
+    loss_threshold: -0.015
+    profit_threshold: 0.03
+  - holding_days: 7
+    loss_threshold: -0.025
+    profit_threshold: 0.05
+  - holding_days: 5
+    loss_threshold: -0.025
+    profit_threshold: 0.05
+  - holding_days: 10
+    loss_threshold: -0.02
+    profit_threshold: 0.04
+  - holding_days: 10
+    loss_threshold: -0.025
+    profit_threshold: 0.05
+  - holding_days: 7
+    loss_threshold: -0.02
+    profit_threshold: 0.03
+  - holding_days: 10
+    loss_threshold: -0.03
+    profit_threshold: 0.045
+  - holding_days: 10
+    loss_threshold: -0.02
+    profit_threshold: 0.06
+  - holding_days: 15
+    loss_threshold: -0.025
+    profit_threshold: 0.075
+  - holding_days: 5
+    loss_threshold: -0.02
+    profit_threshold: 0.02
+  - holding_days: 7
+    loss_threshold: -0.02
+    profit_threshold: 0.025
+  - holding_days: 7
+    loss_threshold: -0.01
+    profit_threshold: 0.04
+  - holding_days: 3
+    loss_threshold: -0.015
+    profit_threshold: 0.03
+  - holding_days: 7
+    loss_threshold: -0.01
+    profit_threshold: 0.015
+  - holding_days: 10
+    loss_threshold: -0.015
+    profit_threshold: 0.02
+  - holding_days: 5
+    loss_threshold: -0.02
+    profit_threshold: 0.025
+  - holding_days: 7
+    loss_threshold: -0.025
+    profit_threshold: 0.03
+  - holding_days: 10
+    loss_threshold: -0.02
+    profit_threshold: 0.035
+  validation_end_date: '2023-12-31'
+  validation_start_date: '2022-01-01'
+  xgboost_params:
+    early_stopping_rounds: 50
+    eval_metric: mlogloss
+    learning_rate: 0.05
+    max_depth: 5
+    n_estimators: 1000
+    num_class: 3
+    objective: multi:softprob

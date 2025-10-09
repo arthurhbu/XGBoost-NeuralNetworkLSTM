@@ -1,0 +1,19 @@
+Ticker: PETR4.SA
+Melhor k: 15
+Sharpe Ratio: 1.6715
+Features selecionadas:
+ 1. MACD_signal
+ 2. EMA_long
+ 3. BB_middle
+ 4. BB_lower
+ 5. OBV
+ 6. MACD_hist
+ 7. BB_upper
+ 8. ATR
+ 9. ADX
+10. EMA_short
+11. MACD
+12. wavelet_cA
+13. RSI
+14. MFI
+15. wavelet_cD

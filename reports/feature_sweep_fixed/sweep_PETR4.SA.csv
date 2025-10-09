@@ -1,0 +1,7 @@
+ticker,k,sharpe_val,adjusted_sharpe,features_used
+PETR4.SA,1,0.49849709756169736,0.49849709756169736,BB_lower
+PETR4.SA,2,-0.24979799949662293,-0.24979799949662293,"BB_lower, BB_upper"
+PETR4.SA,3,0.11500893781709601,0.11500893781709601,"BB_lower, BB_upper, BB_middle"
+PETR4.SA,5,-0.2987930481384412,-0.2987930481384412,"BB_lower, BB_upper, BB_middle, EMA_short, wavelet_cA"
+PETR4.SA,8,-0.33798986007915577,-0.33798986007915577,"BB_lower, BB_upper, BB_middle, EMA_short, wavelet_cA, EMA_long, MACD_signal, ATR"
+PETR4.SA,10,0.1959276049173663,0.1959276049173663,"BB_lower, BB_upper, BB_middle, EMA_short, wavelet_cA, EMA_long, MACD_signal, ATR, OBV, MACD"

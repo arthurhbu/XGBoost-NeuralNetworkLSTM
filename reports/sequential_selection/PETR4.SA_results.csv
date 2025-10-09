@@ -1,0 +1,14 @@
+k,features,sharpe_ratio
+3,"['MACD_signal', 'EMA_long', 'BB_middle']",1.5286335119014223
+4,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower']",1.3329127030812076
+5,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV']",1.5286335119014223
+6,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist']",0.7661611957865099
+7,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper']",0.8401946124558196
+8,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR']",1.028290210760798
+9,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX']",1.1986889063911261
+10,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX', 'EMA_short']",1.3579771349983842
+11,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX', 'EMA_short', 'MACD']",1.4130254215989002
+12,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX', 'EMA_short', 'MACD', 'wavelet_cA']",1.4315541023061382
+13,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX', 'EMA_short', 'MACD', 'wavelet_cA', 'RSI']",1.1590365415785977
+14,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX', 'EMA_short', 'MACD', 'wavelet_cA', 'RSI', 'MFI']",1.422247068007422
+15,"['MACD_signal', 'EMA_long', 'BB_middle', 'BB_lower', 'OBV', 'MACD_hist', 'BB_upper', 'ATR', 'ADX', 'EMA_short', 'MACD', 'wavelet_cA', 'RSI', 'MFI', 'wavelet_cD']",1.671459480599233

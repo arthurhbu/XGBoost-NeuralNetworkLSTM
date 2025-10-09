@@ -1,0 +1,231 @@
+data:
+  tickers:
+    - "PETR4.SA" 
+    - "VALE3.SA"
+    - "BBDC4.SA"
+    - "ITUB4.SA"
+    - "BBAS3.SA"
+    - "B3SA3.SA"
+    - "ABEV3.SA"
+    - "VIVT3.SA"
+  start_date: "2017-01-01"
+  end_date: "2025-08-18"
+  
+  raw_data_path: "data/01_raw/"
+  features_data_path: "data/03_features_selected/"
+
+feature_selection:
+  # Configurações para Sequential Feature Selection
+  sequential_selection:
+    min_features: 3
+    max_features: 10
+    min_trades_required: 5
+    composite_score_weights:
+      sharpe_ratio: 0.4
+      calmar_ratio: 0.3
+      accuracy: 0.2
+      max_drawdown_penalty: 0.1
+    backtest_params:
+      buy_threshold: 0.1
+      sell_threshold: -0.1
+      transaction_cost: 0.001
+      initial_capital: 100000.0
+  
+  global_low_importance:
+    - Volume
+    - MFI
+    - MACD_hist
+    - MACD_signal
+    - ADX
+  global_high_importance:
+    - wavelet_cD
+    - wavelet_cA
+    - EMA_long
+    - EMA_short
+    - BB_upper
+    - BB_lower
+    - BB_middle
+    - ATR
+    - OBV
+    - Close
+    - Open
+    - High
+    - Low
+    - RSI
+    - MACD
+  per_ticker:
+    # Configurações otimizadas baseadas nos novos resultados do sequential feature selection
+    # ABEV3.SA e PETR4.SA removidos - já têm performance excelente
+    PETR4.SA: # Lucro alcançado de R$147,415.52
+      optimal_k: 5
+      best_features: [MACD_signal, BB_lower, EMA_long, BB_middle, OBV]
+      sharpe_score: 0.9672
+    ABEV3.SA: # Seleção sequencial - Sharpe: 0.6727
+      optimal_k: 3
+      best_features: [wavelet_cD, OBV, ATR]
+      sharpe_score: 0.6727
+    VALE3.SA: # Melhor resultado: k=8, Score=1.325
+      optimal_k: 8
+      best_features: [BB_middle, EMA_long, BB_upper, OBV, ATR, BB_lower, RSI, MACD]
+      composite_score: 1.325
+      sharpe_score: 1.452
+      calmar_score: 1.891
+    BBDC4.SA: # Melhor resultado: k=7, Score=0.920
+      optimal_k: 7
+      best_features: [BB_upper, ATR, BB_lower, EMA_long, OBV, RSI, BB_middle]
+      composite_score: 0.920
+      sharpe_score: 0.972
+      calmar_score: 1.183
+    ITUB4.SA: # Melhor resultado: k=6, Score=1.537
+      optimal_k: 6
+      best_features: [ATR, BB_lower, OBV, BB_middle, EMA_short, RSI]
+      composite_score: 1.537
+      sharpe_score: 1.418
+      calmar_score: 2.589
+    BBAS3.SA: # Melhor resultado: k=5, Score=1.267
+      optimal_k: 5
+      best_features: [EMA_long, BB_middle, ATR, OBV, RSI]
+      composite_score: 1.267
+      sharpe_score: 1.525
+      calmar_score: 1.696
+    B3SA3.SA: # Melhor resultado: k=8, Score=0.845
+      optimal_k: 8
+      best_features: [EMA_long, BB_upper, BB_lower, OBV, ATR, RSI, MACD, wavelet_cD]
+      composite_score: 0.845
+      sharpe_score: 0.894
+      calmar_score: 0.980
+    VIVT3.SA: # Melhor resultado: k=6, Score=0.293
+      optimal_k: 6
+      best_features: [BB_middle, EMA_short, ATR, OBV, RSI, MACD]
+      composite_score: 0.293
+      sharpe_score: 0.193
+      calmar_score: 0.149
+
+features:
+  indicators:
+    ema_short: 21
+    ema_long: 50
+    macd_fast: 12
+    macd_slow: 26
+    macd_signal: 9
+    rsi_length: 14
+    bbands_length: 20
+    bbands_std: 2.0
+    adx_length: 14
+    atr_length: 14
+    mfi_length: 14
+    stoch_length: 14
+
+  wavelet:
+    family: 'db8'
+    level: 1
+
+model_training:
+  train_final_date: "2021-12-31"
+  validation_start_date: "2022-01-01"
+  validation_end_date: "2023-12-31"
+  test_start_date: "2024-01-01"
+  test_end_date: "2025-01-01"
+  target_column: "target"
+  
+  # Parâmetros do Triple Barrier Method
+  triple_barrier:
+    holding_days: 7
+    profit_multiplier: 2.0
+    loss_multiplier: 1.5     
+
+  target_grid_atr:
+    holding_days: [5,7,10,15]
+    k_profit_atr_grid: [1.0, 1.5, 2.0, 2.5, 3.0]
+    k_loss_atr_grid: [0.5, 0.8, 1.0, 1.5]
+
+  target_selection_rules:
+    min_up_ratio: 0.15      # 15% mínimo de Up (mais restritivo)
+    max_up_ratio: 0.40      # 40% máximo de Up (evitar desbalanceamento)
+    min_num_classes: 3      # Forçar 3 classes
+    min_samples_per_class: 50  # Mais amostras por classe
+  
+  target_selection_metric: ['auc_pr_up', 'f1_up', 'sharpe_val']
+
+
+  triple_barrier_grid:
+    - {holding_days: 7, profit_threshold: 0.02, loss_threshold: -0.01}
+    - {holding_days: 7, profit_threshold: 0.03, loss_threshold: -0.015}
+    - {holding_days: 7, profit_threshold: 0.05, loss_threshold: -0.025}
+    - {holding_days: 5, profit_threshold: 0.05, loss_threshold: -0.025}
+
+    # Tese 2: Risco:Retorno 2:1, Alvos Longos
+    - {holding_days: 10, profit_threshold: 0.04, loss_threshold: -0.02}
+    - {holding_days: 10, profit_threshold: 0.05, loss_threshold: -0.025}
+
+    # Tese 3: Risco:Retorno 1.5:1, Equilibrado
+    - {holding_days: 7, profit_threshold: 0.03, loss_threshold: -0.02}
+    - {holding_days: 10, profit_threshold: 0.045, loss_threshold: -0.03}
+
+    # --- NOVAS TESES SUGERIDAS ---
+    # Tese 4: Estratégias Agressivas (R:R > 2:1, buscando "home runs")
+    - {holding_days: 10, profit_threshold: 0.06, loss_threshold: -0.02}   # Tese 3:1 R:R
+    - {holding_days: 15, profit_threshold: 0.075, loss_threshold: -0.025} # Tese 3:1 R:R com prazo maior
+
+    # Tese 5: Estratégias Conservadoras (R:R próximo de 1:1)
+    - {holding_days: 5, profit_threshold: 0.02, loss_threshold: -0.02}    # Tese 1:1 R:R, ideal para alta precisão
+    - {holding_days: 7, profit_threshold: 0.025, loss_threshold: -0.02}   # Tese ~1.25:1 R:R, muito conservadora
+
+    # Tese 6: Estratégias de "Stop Curto" e Alvo Longo
+    - {holding_days: 7, profit_threshold: 0.04, loss_threshold: -0.01}    # Tese 4:1 R:R, exige altíssima precisão do modelo
+
+    # Tese 7: Swing Trade de curtíssimo prazo (3 dias)
+    - {holding_days: 3, profit_threshold: 0.03, loss_threshold: -0.015}  # Tese 2:1 R:R para movimentos muito rápidos
+
+    - {holding_days: 7, profit_threshold: 0.015, loss_threshold: -0.01}  # Mais brando
+    - {holding_days: 10, profit_threshold: 0.02, loss_threshold: -0.015}  # Mais brando  
+    - {holding_days: 5, profit_threshold: 0.025, loss_threshold: -0.02}   # Mais brando
+    - {holding_days: 7, profit_threshold: 0.03, loss_threshold: -0.025}   # Moderado
+    - {holding_days: 10, profit_threshold: 0.035, loss_threshold: -0.02}  # Moderado
+
+  xgboost_params:
+    objective: "multi:softprob"
+    'num_class': 3
+    eval_metric: "mlogloss"
+    n_estimators: 1000
+    learning_rate: 0.05
+    max_depth: 5
+    early_stopping_rounds: 50
+
+  model_output_path: "models/01_xgboost/"
+
+backtesting:
+  initial_capital: 100000.0
+  transaction_cost_pct: 0.001
+  
+  # Parâmetros realistas adicionais
+  lot_size: 1           # Lotes de 100 ações (padrão B3)
+  use_real_cdi: true          # Usar CDI real do arquivo cdi_daily.csv
+  cash_daily_rate: 0.0004     # Taxa fixa de fallback se CDI real não disponível
+  
+  # Configuração de slippage dinâmico
+  slippage_config:
+    base_bps: 0.2             # Slippage base (0.2 bps)
+    min_bps: 0.1              # Slippage mínimo (0.1 bps)
+    max_bps: 2.0              # Slippage máximo (2.0 bps)
+    volume_factor: 0.5        # Fator de impacto do volume
+    volatility_factor: 1.0    # Fator de impacto da volatilidade
+    size_factor: 0.3          # Fator de impacto do tamanho da ordem
+
+  initial_simulation_date: "2024-01-01"
+  final_simulation_date: "2025-01-01"
+
+  results_path: "reports"
+  
+  threshold_optimization:
+    enabled: true  # Ativar otimização de threshold
+    metric: "sharpe"  # Métrica principal para otimização financeira
+    min_threshold: 0.5  # Threshold mínimo (legado)
+    max_threshold: 0.6  # Threshold máximo (legado)
+    hold_min_days: 5    # Histerese: mínimo de dias entre trocas de estado
+
+  position_sizing:
+    enabled: true
+    min_fraction: 0.2   # fração mínima do capital quando comprado
+    max_fraction: 1.0   # fração máxima do capital quando comprado
+    method: "sigmoid"    # métodos disponíveis: linear, sigmoid, step, quadratic

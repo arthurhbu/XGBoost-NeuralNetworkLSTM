@@ -1,0 +1,7 @@
+Ticker: ABEV3.SA
+Melhor k: 3
+Sharpe Ratio: 0.6727
+Features selecionadas:
+ 1. wavelet_cD
+ 2. OBV
+ 3. ATR

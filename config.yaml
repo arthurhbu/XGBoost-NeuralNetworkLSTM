@@ -1,6 +1,6 @@
 data:
   tickers:
-    - "PETR4.SA"
+    - "PETR4.SA" 
     - "VALE3.SA"
     - "BBDC4.SA"
     - "ITUB4.SA"
@@ -15,6 +15,22 @@ data:
   features_data_path: "data/03_features_selected/"
 
 feature_selection:
+  # Configurações para Sequential Feature Selection
+  sequential_selection:
+    min_features: 3
+    max_features: 15
+    min_trades_required: 5
+    composite_score_weights:
+      sharpe_ratio: 0.4
+      calmar_ratio: 0.3
+      accuracy: 0.2
+      max_drawdown_penalty: 0.1
+    backtest_params:
+      buy_threshold: 0.1
+      sell_threshold: -0.1
+      transaction_cost: 0.001
+      initial_capital: 100000.0
+  
   global_low_importance:
     - Volume
     - MFI
@@ -38,39 +54,52 @@ feature_selection:
     - RSI
     - MACD
   per_ticker:
-    # Configurações otimizadas baseadas no feature sweep melhorado
-    PETR4.SA:
+    # Configurações otimizadas baseadas nos novos resultados do sequential feature selection
+    # ABEV3.SA e PETR4.SA removidos - já têm performance excelente
+    PETR4.SA: # Lucro alcançado de R$147,415.52
       optimal_k: 5
       best_features: [MACD_signal, BB_lower, EMA_long, BB_middle, OBV]
       sharpe_score: 0.9672
-    VALE3.SA:
-      optimal_k: 10
-      best_features: [EMA_long, BB_middle, BB_upper, OBV, BB_lower, ATR, EMA_short, MACD_signal, ADX, wavelet_cA]
-      sharpe_score: 0.7240
-    BBDC4.SA:
-      optimal_k: 2
-      best_features: [BB_upper, EMA_long]
-      sharpe_score: 0.3012
-    ITUB4.SA:
+    ABEV3.SA: # Seleção sequencial - Sharpe: 0.6727
       optimal_k: 3
-      best_features: [wavelet_cD, ATR, EMA_long]
-      sharpe_score: 0.4814
-    BBAS3.SA:
-      optimal_k: 2
-      best_features: [EMA_long, BB_upper]
-      sharpe_score: 0.5209
-    B3SA3.SA:
-      optimal_k: 12
-      best_features: [EMA_long, BB_upper, BB_lower, BB_middle, EMA_short, wavelet_cD, MACD_signal, OBV, ATR, RSI, MACD, wavelet_cA]
-      sharpe_score: 0.6564
-    ABEV3.SA:
-      optimal_k: 10
-      best_features: [wavelet_cD, ATR, EMA_long, OBV, BB_middle, BB_upper, EMA_short, BB_lower, MACD, MACD_hist]
-      sharpe_score: 0.4262
-    VIVT3.SA:
+      best_features: [wavelet_cD, OBV, ATR]
+      sharpe_score: 0.6727
+    VALE3.SA: # Melhor resultado: k=8, Score=1.325
       optimal_k: 8
-      best_features: [wavelet_cD, EMA_long, BB_lower, BB_middle, BB_upper, EMA_short, ATR, OBV]
-      sharpe_score: 0.4257
+      best_features: [BB_middle, EMA_long, BB_upper, OBV, ATR, BB_lower, RSI, MACD]
+      composite_score: 1.325
+      sharpe_score: 1.452
+      calmar_score: 1.891
+    BBDC4.SA: # Melhor resultado: k=7, Score=0.920
+      optimal_k: 7
+      best_features: [BB_upper, ATR, BB_lower, EMA_long, OBV, RSI, BB_middle]
+      composite_score: 0.920
+      sharpe_score: 0.972
+      calmar_score: 1.183
+    ITUB4.SA: # Melhor resultado: k=6, Score=1.537
+      optimal_k: 6
+      best_features: [wavelet_cD]
+      composite_score: 1.537
+      sharpe_score: 1.418
+      calmar_score: 2.589
+    BBAS3.SA: # Melhor resultado: k=5, Score=1.267
+      optimal_k: 5
+      best_features: [wavelet_cD, BB_upper, EMA_short]
+      composite_score: 1.267
+      sharpe_score: 1.525
+      calmar_score: 1.696
+    B3SA3.SA: # Melhor resultado: k=8, Score=0.845
+      optimal_k: 8
+      best_features: [EMA_long, BB_upper, BB_lower, OBV, ATR, RSI, MACD, wavelet_cD]
+      composite_score: 0.845
+      sharpe_score: 0.894
+      calmar_score: 0.980
+    VIVT3.SA: # Melhor resultado: k=6, Score=0.293
+      optimal_k: 6
+      best_features: [wavelet_cD, 'wavelet_cA', 'ADX', 'Volume']
+      composite_score: 0.293
+      sharpe_score: 0.193
+      calmar_score: 0.149
 
 features:
   indicators:
@@ -118,8 +147,6 @@ model_training:
   
   target_selection_metric: ['auc_pr_up', 'f1_up', 'sharpe_val']
 
-  calibration:
-    enabled: false
 
   triple_barrier_grid:
     - {holding_days: 7, profit_threshold: 0.02, loss_threshold: -0.01}

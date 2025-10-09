@@ -1,0 +1,15 @@
+Ticker: BBDC4.SA
+Melhor k: 4
+Score Composto: 0.7292
+Sharpe Ratio: 0.7903
+Calmar Ratio: 0.7638
+Max Drawdown: 0.2005
+Total Return: 0.3026
+Accuracy: 0.5201
+Trades Made: 8
+Win Rate: 0.0000
+Features selecionadas:
+ 1. BB_upper
+ 2. EMA_long
+ 3. ATR
+ 4. BB_lower

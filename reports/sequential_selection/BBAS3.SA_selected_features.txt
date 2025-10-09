@@ -1,0 +1,14 @@
+Ticker: BBAS3.SA
+Melhor k: 3
+Score Composto: 0.7397
+Sharpe Ratio: 0.8468
+Calmar Ratio: 0.8542
+Max Drawdown: 0.1873
+Total Return: 0.3225
+Accuracy: 0.3173
+Trades Made: 20
+Win Rate: 0.0000
+Features selecionadas:
+ 1. BB_upper
+ 2. EMA_short
+ 3. wavelet_cD

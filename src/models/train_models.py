@@ -7,9 +7,6 @@ import xgboost as xgb
 from optuna.integration import XGBoostPruningCallback
 from sklearn.metrics import f1_score, roc_auc_score, precision_score, recall_score, accuracy_score
 from sklearn.utils.class_weight import compute_class_weight
-from sklearn.calibration import CalibratedClassifierCV
-from sklearn.isotonic import IsotonicRegression
-from sklearn.linear_model import LogisticRegression
 import optuna
 import json
 from itertools import product
@@ -497,84 +494,6 @@ def apply_aggressive_class_balancing(x_train, y_train):
     return x_final, y_final
 
 
-def create_calibrated_model(base_model, x_train, y_train, x_val, y_val, calibration_method='isotonic'):
-    """
-    Cria um modelo calibrado usando Platt Scaling ou Isotonic Regression.
-    
-    Args:
-        base_model: Modelo XGBoost base
-        x_train: Features de treinamento
-        y_train: Labels de treinamento
-        x_val: Features de validação
-        y_val: Labels de validação
-        calibration_method: 'isotonic' ou 'sigmoid' (Platt)
-    
-    Returns:
-        CalibratedClassifierCV: Modelo calibrado
-    """
-    print(f"  Aplicando calibração {calibration_method}...")
-    
-    # Wrapper do modelo
-    wrapped_model = XGBoostWrapper(base_model)
-    wrapped_model.classes_ = np.unique(np.concatenate([y_train.values, y_val.values]))
-
-    # Criar calibrador
-    if calibration_method == 'isotonic':
-        calibrator = CalibratedClassifierCV(
-            wrapped_model, 
-            method='isotonic', 
-            cv='prefit'
-        )
-    else:  # sigmoid (Platt)
-        calibrator = CalibratedClassifierCV(
-            wrapped_model, 
-            method='sigmoid', 
-            cv='prefit'
-        )
-    
-    # Treinar calibrador na validação
-    calibrator.fit(x_val, y_val)
-    
-    print(f"  Calibração {calibration_method} concluída")
-    return calibrator
-
-
-def evaluate_calibration_quality(y_true, y_prob, ticker_name):
-    """
-    Avalia a qualidade da calibração usando Brier Score.
-    
-    Args:
-        y_true: Labels verdadeiros
-        y_prob: Probabilidades preditas
-        ticker_name: Nome do ticker para logging
-    
-    Returns:
-        dict: Métricas de calibração
-    """
-    from sklearn.metrics import brier_score_loss
-    
-    # Converter para problema binário (Up vs Not-Up)
-    y_true_binary = (y_true == 2).astype(int)  # 2 = Up class
-    y_prob_up = y_prob[:, 2]  # Probabilidade da classe Up
-    
-    # Calcular Brier Score
-    brier_score = brier_score_loss(y_true_binary, y_prob_up)
-    
-    # Calcular métricas adicionais
-    n_up = np.sum(y_true_binary)
-    n_total = len(y_true_binary)
-    up_ratio = n_up / n_total if n_total > 0 else 0
-    
-    metrics = {
-        'brier_score': brier_score,
-        'up_ratio': up_ratio,
-        'n_up': n_up,
-        'n_total': n_total
-    }
-    
-    print(f"  {ticker_name} - Brier Score: {brier_score:.4f}, Up Ratio: {up_ratio:.3f}")
-    
-    return metrics
 
 
 def analyze_feature_importance(model, feature_names, ticker, top_n=15):
@@ -791,10 +710,7 @@ def main():
                 print(f"⚠️  Não foi possível obter colunas essenciais para {ticker}")
                 df_essential = pd.DataFrame()
         
-        # 2. Para find_optimal_target_params, usar dados com colunas essenciais
         if not df_essential.empty:
-            # CORRIGIDO: Remover colunas duplicadas antes de concatenar
-            # Remove colunas do df_features que já existem no df_essential
             df_features_clean = df_features.drop(columns=df_essential.columns, errors='ignore')
             df_for_targets = pd.concat([df_features_clean, df_essential], axis=1)
             print(f"✅ Usando {len(df_essential.columns)} colunas essenciais para criar targets: {df_essential.columns.tolist()}")
@@ -824,15 +740,13 @@ def main():
                 **best_target_params
             )
         
-        # IMPORTANTE: Manter apenas as features selecionadas para o modelo (sem data leakage)
-        # As colunas essenciais foram usadas apenas para criar os targets
-        model_features = [col for col in df_features.columns if col not in df_essential.columns]
+        essential_cols_to_exclude = ['Open', 'High', 'Low', 'Close']  # Apenas colunas de preço
+        model_features = [col for col in df_features.columns if col not in essential_cols_to_exclude]
         df_final_labels = df_final_labels[model_features + [model_training_config["target_column"]]]
         
         print(f"🎯 Modelo treinará com {len(model_features)} features (sem data leakage): {model_features[:5]}...")
         print(f"📊 Targets criados usando colunas essenciais: {df_essential.columns.tolist()}")
                         
-        #Salvar dataframe com target para reutilização
         df_final_labels.to_csv(labeled_file_path)
         
         meta = {
@@ -915,48 +829,6 @@ def main():
             importance_df.to_csv(importance_output_path, index=False)
             print(f"  Feature importance salva em: {importance_output_path}")
 
-        # Calibração (opcional via config)
-        calibration_cfg = model_training_config.get('calibration', {"enabled": False})
-        if calibration_cfg.get('enabled', False):
-            # Avaliar calibração antes da calibração
-            dval_test = xgb.DMatrix(x_val)
-            prob_before = final_model.predict(dval_test)
-            calib_before = evaluate_calibration_quality(y_val, prob_before, f"{ticker} (ANTES)")
-
-            # Testar ambos os métodos de calibração
-            methods = ['isotonic', 'sigmoid']
-            best_calibrator = None
-            best_brier = float('inf')
-            best_method = None
-
-            for method in methods:
-                try:
-                    calibrator = create_calibrated_model(
-                        final_model, x_train, y_train, x_val, y_val, method
-                    )
-                    # Avaliar calibração após calibração
-                    prob_after = calibrator.predict_proba(x_val)
-                    calib_after = evaluate_calibration_quality(y_val, prob_after, f"{ticker} ({method.upper()})")
-                    if calib_after['brier_score'] < best_brier:
-                        best_brier = calib_after['brier_score']
-                        best_calibrator = calibrator
-                        best_method = method
-                except Exception as e:
-                    print(f"  Erro na calibração {method}: {str(e)}")
-                    continue
-
-            if best_calibrator is not None:
-                print(f" Melhor método: {best_method.upper()} (Brier: {best_brier:.4f})")
-                # Salvar modelo calibrado
-                calibrated_model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / "02_calibrated" / f"{ticker.replace('.csv', '')}_calibrated.pkl"
-                import pickle
-                with open(calibrated_model_path, 'wb') as f:
-                    pickle.dump(best_calibrator, f)
-                print(f" Modelo calibrado salvo: {calibrated_model_path}")
-            else:
-                print(f" Falha na calibração para {ticker}")
-        else:
-            print("Calibração desabilitada via configuração. Pulando etapa de calibração.")
 
         # Salvar modelo original também
         model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / "01_original" / f"{ticker.replace('.csv', '')}.json"

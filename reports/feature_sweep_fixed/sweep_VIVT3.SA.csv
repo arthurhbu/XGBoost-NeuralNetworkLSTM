@@ -1,0 +1,7 @@
+ticker,k,sharpe_val,adjusted_sharpe,features_used
+VIVT3.SA,1,0.0,0.0,BB_lower
+VIVT3.SA,2,1.462123932290807,1.462123932290807,"BB_lower, ATR"
+VIVT3.SA,3,0.0,0.0,"BB_lower, ATR, BB_middle"
+VIVT3.SA,5,0.0,0.0,"BB_lower, ATR, BB_middle, BB_upper, EMA_long"
+VIVT3.SA,8,0.6433211007137405,0.6433211007137405,"BB_lower, ATR, BB_middle, BB_upper, EMA_long, wavelet_cA, OBV, EMA_short"
+VIVT3.SA,10,-0.27906973860719614,-0.27906973860719614,"BB_lower, ATR, BB_middle, BB_upper, EMA_long, wavelet_cA, OBV, EMA_short, wavelet_cD, RSI"
