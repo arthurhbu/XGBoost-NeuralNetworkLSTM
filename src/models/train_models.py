@@ -11,17 +11,16 @@ import optuna
 import json
 from itertools import product
 
-# Criar wrapper para o modelo XGBoost
 class XGBoostWrapper:
+    """Wrapper para compatibilidade com sklearn."""
+    
     def __init__(self, model):
         self.model = model
         self.is_fitted_ = True
         self._estimator_type = 'classifier'
         self.classes_ = None
 
-    
     def fit(self, X, y):
-        # O modelo já foi treinado, apenas armazenar
         return self
     
     def predict_proba(self, X):
@@ -36,14 +35,26 @@ class XGBoostWrapper:
 
 
 def create_dynamic_triple_barrier_target(df, target_column, profit_multiplier, loss_multiplier, holding_days=7):
+    """
+    Cria target ternário usando Triple Barrier com ATR dinâmico.
+    
+    Args:
+        df: DataFrame com dados OHLCV e ATR
+        target_column: Nome da coluna target
+        profit_multiplier: Multiplicador ATR para lucro
+        loss_multiplier: Multiplicador ATR para perda
+        holding_days: Dias máximos de holding
+        
+    Returns:
+        DataFrame com target criado
+    """
     if 'ATR' not in df.columns:
-        raise ValueError('A coluna ATR não foi encontrada no DataFrame')
+        raise ValueError('Coluna ATR não encontrada no DataFrame')
     
     target = np.full(len(df), np.nan)
     
     for i in range(len(df) - holding_days):
         entry_price = df['Open'].iloc[i].item()
-        # CORRIGIDO: Garantir que atr_value seja um valor escalar
         atr_value = df['ATR'].iloc[i-1].item() if i > 0 else df['ATR'].iloc[i].item()
         
         if pd.isna(atr_value) or atr_value == 0:
@@ -78,38 +89,43 @@ def create_dynamic_triple_barrier_target(df, target_column, profit_multiplier, l
     return df.dropna(subset=[target_column])
 
 
-def create_FIXED_triple_barrier_target(
-    df: pd.DataFrame, 
-    target_column_name: str, 
-    holding_days: int, 
-    profit_threshold: float, # ex: 0.03 para 3%
-    loss_threshold: float    # ex: -0.015 para -1.5%
-) -> pd.DataFrame:
+def create_FIXED_triple_barrier_target(df, target_column_name, holding_days, profit_threshold, loss_threshold):
     """
-    Cria um target ternário [-1, 0, 1] usando o método Triple Barrier com
-    barreiras de lucro e perda FIXAS (em porcentagem).
+    Cria target ternário usando Triple Barrier com barreiras fixas.
+    
+    Args:
+        df: DataFrame com dados OHLCV
+        target_column_name: Nome da coluna target
+        holding_days: Dias máximos de holding
+        profit_threshold: Threshold de lucro (ex: 0.03 para 3%)
+        loss_threshold: Threshold de perda (ex: -0.015 para -1.5%)
+        
+    Returns:
+        DataFrame com target criado
     """
     target = np.full(len(df), np.nan) 
 
     for i in range(len(df) - holding_days):
         entry_price = df['Open'].iloc[i].item()
         
-        # Barreiras fixas
         profit_barrier = entry_price * (1 + profit_threshold)
-        loss_barrier = entry_price * (1 + loss_threshold) # loss_threshold já é negativo
+        loss_barrier = entry_price * (1 + loss_threshold)
         
         outcome = np.nan
 
         for j in range(1, holding_days + 1):
-            if i + j >= len(df): break
+            if i + j >= len(df): 
+                break
 
             day_high = df['High'].iloc[i+j].item()
             day_low = df['Low'].iloc[i+j].item()
 
             if day_high >= profit_barrier:
-                outcome = 1; break
+                outcome = 1
+                break
             elif day_low <= loss_barrier:
-                outcome = -1; break
+                outcome = -1
+                break
         
         if pd.isna(outcome):
             outcome = 0
@@ -126,6 +142,21 @@ def create_FIXED_triple_barrier_target(
 
 def split_data(df, train_final_date, validation_start_date, validation_end_date, 
                test_start_date, test_end_date, target_column_name):
+    """
+    Divide dados em conjuntos de treino, validação e teste.
+    
+    Args:
+        df: DataFrame com dados
+        train_final_date: Data final do treino
+        validation_start_date: Data inicial da validação
+        validation_end_date: Data final da validação
+        test_start_date: Data inicial do teste
+        test_end_date: Data final do teste
+        target_column_name: Nome da coluna target
+        
+    Returns:
+        Tupla com (x_train, y_train, x_val, y_val, x_test, y_test)
+    """
     df.index = pd.to_datetime(df.index)
     
     train_data = df[df.index <= train_final_date]
@@ -143,12 +174,23 @@ def split_data(df, train_final_date, validation_start_date, validation_end_date,
 
 
 def run_optimization_backtest(validation_df, probabilities, buy_threshold, sell_threshold):
+    """
+    Executa backtest simplificado para otimização de thresholds.
+    
+    Args:
+        validation_df: DataFrame de validação
+        probabilities: Probabilidades do modelo
+        buy_threshold: Threshold de compra
+        sell_threshold: Threshold de venda
+        
+    Returns:
+        Sharpe ratio do backtest
+    """
     initial_capital, transaction_cost = 100000.0, 0.001
     cash, stocks_held = initial_capital, 0.0
     portfolio_history = []
     scores = probabilities[:, 2] - probabilities[:, 0]
     
-    # Verificar se temos dados suficientes
     if len(validation_df) < 10 or len(scores) < 10:
         return -np.inf
     
@@ -187,9 +229,18 @@ def run_optimization_backtest(validation_df, probabilities, buy_threshold, sell_
 
 
 def find_optimal_score_thresholds(validation_df, probabilities):
-    # Grid mais amplo e realista para thresholds
-    buy_grid = np.arange(0.05, 0.8, 0.05)  # De 0.05 a 0.75
-    sell_grid = np.arange(-0.8, 0.1, 0.05)  # De -0.75 a 0.05
+    """
+    Encontra thresholds ótimos baseado em score.
+    
+    Args:
+        validation_df: DataFrame de validação
+        probabilities: Probabilidades do modelo
+        
+    Returns:
+        Tupla com (best_thresholds, best_sharpe)
+    """
+    buy_grid = np.arange(0.05, 0.8, 0.05)
+    sell_grid = np.arange(-0.8, 0.1, 0.05)
     best_sharpe, best_thresholds = -np.inf, (0.5, -0.5)
     
     for th_buy in buy_grid:
@@ -206,7 +257,18 @@ def find_optimal_score_thresholds(validation_df, probabilities):
 
 
 def find_optimal_target_params(df_features, config, base_model_params, ticker):
+    """
+    Encontra parâmetros ótimos para criação de targets.
     
+    Args:
+        df_features: DataFrame com features
+        config: Configuração do modelo
+        base_model_params: Parâmetros base do modelo
+        ticker: Símbolo do ticker
+        
+    Returns:
+        Dicionário com parâmetros ótimos
+    """
     strategy_grid = config['model_training']['triple_barrier_grid']
     atr_grid_cfg = config['model_training'].get('target_grid_atr', None)
     rules = config['model_training'].get('target_selection_rules', {})
@@ -232,7 +294,7 @@ def find_optimal_target_params(df_features, config, base_model_params, ticker):
         k_profit_grid = atr_grid_cfg.get('k_profit_atr_grid', [1.0, 1.5, 2.0])
         k_loss_grid = atr_grid_cfg.get('k_loss_atr_grid', [0.8, 1.0])
         
-        print(f"Testando grid ATR para {ticker}: {len(holding_days_grid)}x{len(k_profit_grid)}x{len(k_loss_grid)} = {len(holding_days_grid)*len(k_profit_grid)*len(k_loss_grid)} combinações")
+        print(f"Testando grid ATR para {ticker}: {len(holding_days_grid)}x{len(k_profit_grid)}x{len(k_loss_grid)} combinações")
         
         for h, kpa, kla in product(holding_days_grid, k_profit_grid, k_loss_grid):
             cache_csv = cache_dir / f"{ticker}_ATR_h{h}_kp{kpa}_kl{kla}.csv"
@@ -244,9 +306,7 @@ def find_optimal_target_params(df_features, config, base_model_params, ticker):
                     df_labeled = create_dynamic_triple_barrier_target(
                         df_features.copy(), 
                         config['model_training']['target_column'], 
-                        kpa,
-                        kla,
-                        h
+                        kpa, kla, h
                     )
                     df_labeled.to_csv(cache_csv)
                 except Exception as e:
@@ -275,7 +335,7 @@ def find_optimal_target_params(df_features, config, base_model_params, ticker):
             if (up_ratio_val < min_up_ratio or up_ratio_val > max_up_ratio or 
                 len(unique_classes) < min_num_classes or 
                 (min_samples_per_class and min_class_count < min_samples_per_class)):
-                print(f"  Rejeitado: h={h}, kp={kpa}, kl={kla} - up_ratio={up_ratio_val:.3f}, classes={len(unique_classes)}, min_count={min_class_count}")
+                print(f"  Rejeitado: h={h}, kp={kpa}, kl={kla} - up_ratio={up_ratio_val:.3f}")
                 _append_log_row(log_path, {
                     'ticker': ticker, 'holding_days': h, 'k_profit_atr': kpa, 'k_loss_atr': kla,
                     'up_ratio_val': up_ratio_val, 'num_classes_val': len(unique_classes), 'min_class_count_val': min_class_count,
@@ -302,7 +362,6 @@ def find_optimal_target_params(df_features, config, base_model_params, ticker):
             }
             _append_log_row(log_path, row)
 
-            # Score composto (ordem de prioridade do config)
             metric_order = config['model_training'].get('target_selection_metric', ["auc_pr_up", "f1_up"])
             score = 0.0
             for idx, m in enumerate(metric_order):
@@ -318,7 +377,7 @@ def find_optimal_target_params(df_features, config, base_model_params, ticker):
                 best_score = score
                 best_params = {'holding_days': h, 'k_profit_atr': kpa, 'k_loss_atr': kla}
 
-    # Fallback: grid percentual (se ATR não definido ou nada aceito)
+    # Fallback: grid percentual
     if not best_params and strategy_grid:
         print(f"Testando {len(strategy_grid)} combinações de parâmetros...")
         for i, params in enumerate(strategy_grid):
@@ -362,9 +421,10 @@ def find_optimal_target_params(df_features, config, base_model_params, ticker):
                 continue
 
     return best_params
-    
+
 
 def _append_log_row(log_csv, row_dict):
+    """Anexa linha ao log CSV."""
     import csv
     header = list(row_dict.keys())
     with open(log_csv, 'a', newline='', encoding='utf-8') as f:
@@ -372,8 +432,10 @@ def _append_log_row(log_csv, row_dict):
         if not log_csv.exists():
             w.writeheader()
         w.writerow(row_dict)
-        
+
+
 def _train_xgb_quick(x_train, y_train, x_val, y_val, base_model_params):
+    """Treina modelo XGBoost rapidamente para validação."""
     params = dict(base_model_params)
     params['n_estimators'] = 100
     dtrain = xgb.DMatrix(x_train, label=y_train)
@@ -388,132 +450,38 @@ def _train_xgb_quick(x_train, y_train, x_val, y_val, base_model_params):
     )
     return model
 
+
 def _compute_metrics(y_true, proba_matrix):
-    from sklearn.metrics import roc_auc_score, f1_score, average_precision_score
+    """Computa métricas de avaliação."""
+    from sklearn.metrics import average_precision_score
     
     y_bin = (y_true == 2).astype(int)
     if proba_matrix.ndim == 1:
         p_up = proba_matrix
     else: 
         p_up = proba_matrix[:, 2] if proba_matrix.shape[1] >= 3 else proba_matrix[:, -1]
-    # Verificar diversidade em y_bin (não em p_up, que é numpy array)
+    
     if len(np.unique(y_bin)) < 2:
         return float('nan')
     return float(average_precision_score(y_bin, p_up))
 
-def calculate_class_weights(y_train):
-    """
-    Calcula pesos para balanceamento de classes usando sklearn.
-    
-    Args:
-        y_train: Array com labels de treinamento
-    
-    Returns:
-        dict: Dicionário com pesos para cada classe
-    """
-    from sklearn.utils.class_weight import compute_class_weight
-    
-    classes = np.unique(y_train)
-    class_weights = compute_class_weight('balanced', classes=classes, y=y_train)
-    weight_dict = dict(zip(classes, class_weights))
-    
-    print(f"Pesos das classes calculados: {weight_dict}")
-    return weight_dict
-
-def calculate_sample_weights(y_train, class_weights):
-    """
-    Calcula sample_weights para cada amostra baseado nos pesos das classes.
-    
-    Args:
-        y_train: Array com labels de treinamento
-        class_weights: Dicionário com pesos para cada classe
-    
-    Returns:
-        array: Array com pesos para cada amostra
-    """
-    sample_weights = np.array([class_weights[label] for label in y_train])
-    print(f"Sample weights calculados - Min: {sample_weights.min():.3f}, Max: {sample_weights.max():.3f}, Mean: {sample_weights.mean():.3f}")
-    return sample_weights
-
-def apply_aggressive_class_balancing(x_train, y_train):
-    """
-    Aplica balanceamento mais agressivo para classes desbalanceadas.
-    
-    Args:
-        x_train: Features de treinamento
-        y_train: Labels de treinamento
-    
-    Returns:
-        tuple: (x_train_balanced, y_train_balanced)
-    """
-    from sklearn.utils import resample
-    
-    # Verificar distribuição atual
-    class_counts = pd.Series(y_train).value_counts().sort_index()
-    print(f"Distribuição original: {dict(class_counts)}")
-    
-    # Encontrar a classe majoritária
-    majority_class = class_counts.idxmax()
-    majority_count = class_counts.max()
-    
-    # Balancear para ter pelo menos 10% de cada classe minoritária
-    target_minority_count = max(int(majority_count * 0.1), 10)
-    
-    x_train_balanced = [x_train]
-    y_train_balanced = [y_train]
-    
-    for class_label in class_counts.index:
-        if class_label == majority_class:
-            continue
-            
-        class_mask = y_train == class_label
-        x_class = x_train[class_mask]
-        y_class = y_train[class_mask]
-        
-        if len(y_class) < target_minority_count:
-            # Oversample da classe minoritária
-            n_samples = target_minority_count - len(y_class)
-            x_oversampled, y_oversampled = resample(
-                x_class, y_class, 
-                n_samples=n_samples, 
-                random_state=42, 
-                replace=True
-            )
-            x_train_balanced.append(x_oversampled)
-            y_train_balanced.append(y_oversampled)
-            print(f"Oversampled classe {class_label}: {len(y_class)} -> {len(y_class) + n_samples}")
-    
-    # Concatenar todos os dados
-    x_final = pd.concat(x_train_balanced, ignore_index=True)
-    y_final = pd.concat(y_train_balanced, ignore_index=True)
-    
-    # Verificar distribuição final
-    final_counts = pd.Series(y_final).value_counts().sort_index()
-    print(f"Distribuição após balanceamento: {dict(final_counts)}")
-    
-    return x_final, y_final
-
-
-
 
 def analyze_feature_importance(model, feature_names, ticker, top_n=15):
     """
-    Analisa a importância das features para um modelo XGBoost.
+    Analisa importância das features do modelo.
     
     Args:
         model: Modelo XGBoost treinado
         feature_names: Lista com nomes das features
-        ticker: Nome do ticker para logging
-        top_n: Número de features mais importantes para mostrar
-    
+        ticker: Nome do ticker
+        top_n: Número de features top para mostrar
+        
     Returns:
-        pd.DataFrame: DataFrame com importância das features
+        DataFrame com importância das features
     """
     try:
-        # Obter importância das features (gain)
         importance_dict = model.get_score(importance_type='gain')
         
-        # Criar DataFrame com importância
         importance_data = []
         for feature in feature_names:
             importance_value = importance_dict.get(feature, 0.0)
@@ -526,14 +494,12 @@ def analyze_feature_importance(model, feature_names, ticker, top_n=15):
         importance_df = pd.DataFrame(importance_data)
         importance_df = importance_df.sort_values('importance_gain', ascending=False)
         
-        # Normalizar importância (0-100%)
         total_importance = importance_df['importance_gain'].sum()
         if total_importance > 0:
             importance_df['importance_pct'] = (importance_df['importance_gain'] / total_importance) * 100
         else:
             importance_df['importance_pct'] = 0.0
         
-        # Mostrar top features
         print(f"\n=== FEATURE IMPORTANCE - {ticker} ===")
         print(f"Total features: {len(feature_names)}")
         print(f"Features com importância > 0: {(importance_df['importance_gain'] > 0).sum()}")
@@ -547,62 +513,25 @@ def analyze_feature_importance(model, feature_names, ticker, top_n=15):
         return pd.DataFrame()
 
 
-def compare_feature_importance_across_tickers(importance_dfs, top_n=10):
+def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
     """
-    Compara importância das features entre diferentes tickers.
+    Função objetivo para otimização com Optuna.
     
     Args:
-        importance_dfs: Lista de DataFrames de importância por ticker
-        top_n: Número de features top para comparar
-    
+        trial: Trial do Optuna
+        x_train: Features de treino
+        y_train: Labels de treino
+        x_val: Features de validação
+        y_val: Labels de validação
+        objective_type: Tipo de métrica objetivo
+        
     Returns:
-        pd.DataFrame: Comparação consolidada
+        Score do trial
     """
-    if not importance_dfs:
-        return pd.DataFrame()
-    
-    # Consolidar todas as importâncias
-    all_importance = []
-    for df in importance_dfs:
-        if not df.empty:
-            all_importance.append(df)
-    
-    if not all_importance:
-        return pd.DataFrame()
-    
-    # Concatenar todos os DataFrames
-    combined_df = pd.concat(all_importance, ignore_index=True)
-    
-    # Pivotar para ter tickers como colunas
-    pivot_df = combined_df.pivot_table(
-        index='feature', 
-        columns='ticker', 
-        values='importance_gain', 
-        fill_value=0
-    )
-    
-    # Calcular estatísticas
-    pivot_df['mean_importance'] = pivot_df.mean(axis=1)
-    pivot_df['std_importance'] = pivot_df.std(axis=1)
-    pivot_df['max_importance'] = pivot_df.max(axis=1)
-    pivot_df['min_importance'] = pivot_df.min(axis=1)
-    
-    # Ordenar por importância média
-    pivot_df = pivot_df.sort_values('mean_importance', ascending=False)
-    
-    print(f"\n=== COMPARAÇÃO DE FEATURE IMPORTANCE (Top {top_n}) ===")
-    print(pivot_df.head(top_n)[['mean_importance', 'std_importance', 'max_importance', 'min_importance']].to_string())
-    
-    return pivot_df
-
-
-def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
-    # Verificar se há classes suficientes
     unique_classes = np.unique(y_train)
     if len(unique_classes) < 2:
         return -np.inf
     
-    # Parâmetros do modelo
     params = {
         'objective': 'multi:softprob',
         'num_class': 3,
@@ -632,7 +561,6 @@ def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
     if 'max_delta_step' not in params:
         params['max_delta_step'] = 1.0
 
-    # Treinar modelo
     model = xgb.train(
         params,
         dtrain,
@@ -643,7 +571,6 @@ def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
         callbacks=[pruning_callback]
     )
     
-    # Calcular score baseado no tipo de objetivo
     try:
         score = model.best_score
         if score is None or np.isnan(score):
@@ -655,6 +582,7 @@ def objective(trial, x_train, y_train, x_val, y_val, objective_type='f1_macro'):
 
 
 def main():
+    """Função principal para treinamento dos modelos."""
     labeled_dir = Path(__file__).resolve().parents[2] / "data" / "04_labeled"
     labeled_dir.mkdir(parents=True, exist_ok=True)
     config_path = Path(__file__).resolve().parents[2] / "config.yaml"
@@ -665,7 +593,6 @@ def main():
     feature_data_path = config["data"]["features_data_path"]
     model_training_config = config["model_training"]
     
-    # Importar gerenciador de colunas essenciais
     from ..data.essential_columns_manager import EssentialColumnsManager
     essential_manager = EssentialColumnsManager()
     
@@ -681,7 +608,6 @@ def main():
         'max_delta_step': 1.0                   
     }
 
-    # Iterar apenas sobre tickers definidos no config para evitar arquivos não relacionados
     tickers = config["data"].get("tickers", [])
     for ticker in tickers:
         ticker_file = f"{ticker}.csv"
@@ -695,28 +621,25 @@ def main():
         print(f"\n{'='*60}\nProcessando Ticker: {ticker}\n{'='*60}")
         df_features = pd.read_csv(str(feature_csv_path), index_col=0, parse_dates=True)
         
-        # CORRIGIDO: Separar features do modelo das colunas essenciais
-        print(f"🔧 Separando features do modelo das colunas essenciais para {ticker}...")
+        print(f"Separando features do modelo das colunas essenciais para {ticker}...")
         
-        # 1. Carregar colunas essenciais separadamente (sem injetar no modelo)
         df_essential = essential_manager.load_essential_columns(ticker)
         if df_essential is None:
-            # Se não existir, extrair do arquivo original
             original_features_path = Path(__file__).resolve().parents[2] / "data" / "03_features" / ticker_file
             if original_features_path.exists():
                 df_original = pd.read_csv(original_features_path, index_col=0, parse_dates=True)
                 df_essential = essential_manager.extract_essential_columns(df_original, ticker)
             else:
-                print(f"⚠️  Não foi possível obter colunas essenciais para {ticker}")
+                print(f"Não foi possível obter colunas essenciais para {ticker}")
                 df_essential = pd.DataFrame()
         
         if not df_essential.empty:
             df_features_clean = df_features.drop(columns=df_essential.columns, errors='ignore')
             df_for_targets = pd.concat([df_features_clean, df_essential], axis=1)
-            print(f"✅ Usando {len(df_essential.columns)} colunas essenciais para criar targets: {df_essential.columns.tolist()}")
+            print(f"Usando {len(df_essential.columns)} colunas essenciais para criar targets")
         else:
             df_for_targets = df_features.copy()
-            print(f"⚠️  Usando apenas features selecionadas para criar targets")
+            print(f"Usando apenas features selecionadas para criar targets")
 
         best_target_params = find_optimal_target_params(df_for_targets, config, base_params, ticker)
         
@@ -724,10 +647,9 @@ def main():
             print(f"Não foi possível determinar parâmetros de target para {ticker}. Pulando...")
             continue
 
-        # CORRIGIDO: Criar targets usando dados com colunas essenciais
         if 'k_profit_atr' in best_target_params:
             df_final_labels = create_dynamic_triple_barrier_target(
-                df_for_targets.copy(),  # Usar dados com colunas essenciais
+                df_for_targets.copy(),
                 model_training_config["target_column"],
                 profit_multiplier=best_target_params['k_profit_atr'],
                 loss_multiplier=best_target_params['k_loss_atr'],
@@ -735,17 +657,17 @@ def main():
             )
         else:
             df_final_labels = create_FIXED_triple_barrier_target(
-                df_for_targets.copy(),  # Usar dados com colunas essenciais
+                df_for_targets.copy(),
                 model_training_config["target_column"],
                 **best_target_params
             )
         
-        essential_cols_to_exclude = ['Open', 'High', 'Low', 'Close']  # Apenas colunas de preço
+        essential_cols_to_exclude = ['Open', 'High', 'Low', 'Close']
         model_features = [col for col in df_features.columns if col not in essential_cols_to_exclude]
         df_final_labels = df_final_labels[model_features + [model_training_config["target_column"]]]
         
-        print(f"🎯 Modelo treinará com {len(model_features)} features (sem data leakage): {model_features[:5]}...")
-        print(f"📊 Targets criados usando colunas essenciais: {df_essential.columns.tolist()}")
+        print(f"Modelo treinará com {len(model_features)} features (sem data leakage)")
+        print(f"Targets criados usando colunas essenciais: {df_essential.columns.tolist()}")
                         
         df_final_labels.to_csv(labeled_file_path)
         
@@ -774,7 +696,6 @@ def main():
         study = optuna.create_study(direction='maximize', sampler=optuna.samplers.TPESampler(seed=42))
         study.optimize(lambda trial: objective(trial, x_train, y_train, x_val, y_val), n_trials=200)
             
-        # Verificar se há trials completos
         if len(study.trials) == 0 or all(trial.state != optuna.trial.TrialState.COMPLETE for trial in study.trials):
             print(f"Nenhum trial completo para {ticker}. Usando parâmetros padrão.")
             final_params = {
@@ -819,23 +740,19 @@ def main():
             
         final_model = booster
 
-        # ANÁLISE DE FEATURE IMPORTANCE
         feature_names = x_train.columns.tolist()
         importance_df = analyze_feature_importance(final_model, feature_names, ticker, top_n=15)
             
-        # Salvar análise de importância
         importance_output_path = Path(__file__).resolve().parents[2] / "reports" / "feature_importance" / f"feature_importance_{ticker}.csv"
         if not importance_df.empty:
             importance_df.to_csv(importance_output_path, index=False)
-            print(f"  Feature importance salva em: {importance_output_path}")
+            print(f"Feature importance salva em: {importance_output_path}")
 
-
-        # Salvar modelo original também
         model_path = Path(__file__).resolve().parents[2] / "models" / "01_xgboost" / "01_original" / f"{ticker.replace('.csv', '')}.json"
         model_path.parent.mkdir(parents=True, exist_ok=True)
         booster.save_model(model_path)
             
-        print(f"\nModelo para {ticker} salvos com sucesso.")
+        print(f"Modelo para {ticker} salvo com sucesso.")
 
 
 if __name__ == "__main__":

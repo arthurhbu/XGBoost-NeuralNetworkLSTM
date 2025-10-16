@@ -146,6 +146,12 @@ model_training:
     min_samples_per_class: 50  # Mais amostras por classe
   
   target_selection_metric: ['auc_pr_up', 'f1_up', 'sharpe_val']
+  
+  # NOVO: Configuração de pesos para score financeiro composto
+  financial_score_weights:
+    sharpe_ratio: 0.6      # Peso principal - Sharpe ratio
+    auc_pr: 0.25           # Peso secundário - AUC-PR
+    f1_up: 0.15            # Peso terciário - F1-Score
 
 
   triple_barrier_grid:
